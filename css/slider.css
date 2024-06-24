@@ -1,0 +1,135 @@
+/* carousel */
+#miCarousel {
+    margin: 0 7% 7% 7%;    
+}
+
+.cards-wrapper {
+    display: flex;
+}
+
+/* card x 3 */
+.card {
+    margin: 0.5em;
+    width: calc(100%/3);
+    border: none;
+    border-radius: 0;
+    box-shadow: 2px 6px 8px rgba( 22, 22, 26, 0.18);
+}
+
+.card:hover {
+    cursor: pointer;
+}
+
+/* Responsive */
+@media screen and (max-width: 1024px ) {
+    .card-body{
+        width: 100%;
+        height: 250px !important;
+    }
+}
+
+@media screen and (max-width: 768px ) {
+    .card-body{
+        width: 100%;
+        height: 300px !important;
+    }
+
+    #miCarousel{
+        margin: 10px;
+    }
+}
+
+@media screen and (max-width: 567px) {
+    .card:not(:first-child){
+        display: none;
+    }
+
+    .card {
+        width: 100%;
+        margin: 0;
+    }
+
+    #miCarousel {
+        margin: 10px;
+    }
+
+    .carousel-control-prev span,
+    .carousel-control-next span {
+        width: 2vh;
+        height: 2vh;
+        margin: 0;
+    }
+
+    .card-body {
+        width: 100%;
+        height: 220px !important;
+    }
+}
+
+/* Imagen card */
+.image-wrapper {
+    margin: 0; 
+
+}
+
+.image-wrapper img {
+    max-width: 100%;
+    max-height: 100%;
+    margin-bottom: 15px;
+}
+
+.card-body {
+    background-color: #8b8bec;
+    margin-bottom: 15px;
+}
+
+.card-p {
+    color: white;
+}
+
+/* Venta */
+.tag-for {
+    top: 0;
+    margin-top: 15px;
+    margin-left: 15px;
+    z-index: 20;
+    background-color: rgba( 0, 0, 0, 0.7);
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 400;
+    color: #fff;
+    position: absolute;
+}
+
+
+/* control prev-next */
+.carousel-control-prev,.carousel-control-next {
+    background-color: rgba(0, 0, 0, .5);
+    border: 0;
+    border-radius: 50%;
+    opacity: 1;
+    outline: 0;
+    position: absolute;
+    transition: all .5s;
+    z-index: 10;
+    width:8vh;
+    height: 8vh;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.carousel-control-prev span,
+.carousel-control-next span {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.carousel-control-prev {
+    left: calc(4% + 1px);
+}
+
+.carousel-control-next {
+    right: calc(4% + 1px);
+}

@@ -1,0 +1,32 @@
+/* Accordion */
+#accordion-prop .accordion-header,
+#accordion-prop .accordion-button,
+#accordion-prop .accordion-body {
+  background-color: #f7f6f6;
+}
+
+#accordion-prop dd,
+#accordion-prop ul {
+  margin-left: 1rem;
+}
+
+#accordion-prop li {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  list-style-type: circle;
+}
+
+#accordion-prop .accordion-body {
+  font-size: 0.8rem;
+}
+
+/* fin Acordion */
+
+.descrip-prop p {
+  font-size: 0.9rem;
+}
+
+#mapa-maps {
+  width: 100%;
+  height: 300px;
+}
