@@ -75,10 +75,34 @@ class Catalogo:
                             telefono VARCHAR(255) NOT NULL,
                             url_foto VARCHAR(255) NOT NULL
         )''')
-        self.conn.commit()
 
         # Se completa la tabla de brokers de forma estática,
-        # no se va a ustilizar un CRUD para esta tabla
+        # no se va a utilizar un CRUD para esta tabla
+        url_img_path = "./static/img/brokers/"
+        brokers = [
+            {'name': 'John Doe', 'phone': '123-456-7890', 'email': 'john.doe@example.com', 'url_img': url_img_path + 'm1' + '.jpg'},
+            {'name': 'Jane Smith', 'phone': '987-654-3210', 'email': 'jane.smith@example.com', 'url_img': url_img_path + 'f1' + '.jpg'},
+            {'name': 'Alice Johnson', 'phone': '555-123-4567', 'email': 'alice.johnson@example.com', 'url_img': url_img_path + 'f2' + '.jpg'},
+            {'name': 'Bob Brown', 'phone': '555-987-6543', 'email': 'bob.brown@example.com', 'url_img': url_img_path + 'm2' + '.jpg'},
+            {'name': 'Carol White', 'phone': '555-555-5555', 'email': 'carol.white@example.com', 'url_img': url_img_path + 'f3' + '.jpg'},
+            {'name': 'David Black', 'phone': '555-444-3333', 'email': 'david.black@example.com', 'url_img': url_img_path + 'm3' + '.jpg'},
+            {'name': 'Eva Green', 'phone': '555-222-1111', 'email': 'eva.green@example.com', 'url_img': url_img_path + 'f4' + '.jpg'},
+            {'name': 'Frank Blue', 'phone': '555-666-7777', 'email': 'frank.blue@example.com', 'url_img': url_img_path + 'm4' + '.jpg'},
+            {'name': 'Grace Yellow', 'phone': '555-888-9999', 'email': 'grace.yellow@example.com', 'url_img': url_img_path + 'f5' + '.jpg'},
+            {'name': 'Hank Red', 'phone': '555-000-1111', 'email': 'hank.red@example.com', 'url_img': url_img_path + 'm5' + '.jpg'}
+        ]
+
+        self.cursor.execute("SELECT COUNT(*) FROM brokers")
+        # Si el resultado es mayor a 0, la tabla existe        
+        if not (self.cursor.fetchone()[0]) > 0:
+            for broker in brokers:
+                self.cursor.execute(f'''INSERT INTO brokers (nombre, mail, telefono, url_foto)
+                                        VALUES ('{broker['name']}',
+                                                '{broker['email']}',
+                                                '{broker['phone']}',
+                                                '{broker['url_img']}')
+                                    ''')
+        self.conn.commit()
 
         # Cerrar el cursor inicial y abrir uno nuevo con el parámetro dictionary=True
         self.cursor.close()
@@ -86,25 +110,25 @@ class Catalogo:
 
 
     #----------------------------------------------------------------
-    def agregar_producto(self,
-                          descripcion,
-                            cantidad,
-                              precio,
-                                imagen,
-                                  proveedor):
-        sql = '''INSERT INTO propiedades (
-                    descripcion,
+    # def agregar_producto(self,
+    #                       descripcion,
+    #                         cantidad,
+    #                           precio,
+    #                             imagen,
+    #                               proveedor):
+    #     sql = '''INSERT INTO propiedades (
+    #                 descripcion,
 
-                      cantidad,
-                        precio,
-                          imagen_url,
-                            proveedor
-                            ) VALUES (%s, %s, %s, %s, %s)'''
-        valores = (descripcion, cantidad, precio, imagen, proveedor)
+    #                   cantidad,
+    #                     precio,
+    #                       imagen_url,
+    #                         proveedor
+    #                         ) VALUES (%s, %s, %s, %s, %s)'''
+    #     valores = (descripcion, cantidad, precio, imagen, proveedor)
         
-        self.cursor.execute(sql, valores)
-        self.conn.commit()
-        return self.cursor.lastrowid
+    #     self.cursor.execute(sql, valores)
+    #     self.conn.commit()
+    #     return self.cursor.lastrowid
     
     
     #----------------------------------------------------------------
