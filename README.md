@@ -1,4 +1,7 @@
+![pautas](https://github.com/GI-gabriel/cac-24166-grupo-10-be/assets/161953323/4cd66354-065d-417f-b36b-1a648712c8f4)
+
 [https://inmobiliarialorem.netlify.app/](https://inmobiliarialorem.netlify.app/)
+
 # Sitio web para empresa de servicios inmobiliarios
 Trabajo práctico integrador Front-End  
 Codo a Codo 4.0, comisión 24166, grupo 10  
