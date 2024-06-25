@@ -46,7 +46,7 @@ class Catalogo:
             
         # Una vez que la base de datos está establecida
         # Crea tabla de propiedades inmobiliarias
-        self.cursor.execute('''CREATE TABLE IF NOT EXISTS productos (
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS propiedades (
                             id INT AUTO_INCREMENT PRIMARY KEY,
                             descrip_corta VARCHAR(255) NOT NULL,
                             descrip_larga VARCHAR(2048) NOT NULL,
@@ -65,10 +65,10 @@ class Catalogo:
                             cocheras INT,
                             basicos VARCHAR(1024) NOT NULL,
                             servicios VARCHAR(1024) NOT NULL,
-                            amenities VARCHAR(1024) NOT NULL INT
+                            amenities VARCHAR(1024) NOT NULL
         )''')
         # Crea tabla de brokers
-        self.cursor.execute('''CREATE TABLE IF NOT EXISTS productos (
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS brokers (
                             id INT AUTO_INCREMENT PRIMARY KEY,
                             nombre VARCHAR(255) NOT NULL,
                             mail VARCHAR(255) NOT NULL,
@@ -77,14 +77,29 @@ class Catalogo:
         )''')
         self.conn.commit()
 
+        # Se completa la tabla de brokers de forma estática,
+        # no se va a ustilizar un CRUD para esta tabla
+
         # Cerrar el cursor inicial y abrir uno nuevo con el parámetro dictionary=True
         self.cursor.close()
         self.cursor = self.conn.cursor(dictionary=True)
 
 
     #----------------------------------------------------------------
-    def agregar_producto(self, descripcion, cantidad, precio, imagen, proveedor):
-        sql = "INSERT INTO productos (descripcion, cantidad, precio, imagen_url, proveedor) VALUES (%s, %s, %s, %s, %s)"
+    def agregar_producto(self,
+                          descripcion,
+                            cantidad,
+                              precio,
+                                imagen,
+                                  proveedor):
+        sql = '''INSERT INTO propiedades (
+                    descripcion,
+
+                      cantidad,
+                        precio,
+                          imagen_url,
+                            proveedor
+                            ) VALUES (%s, %s, %s, %s, %s)'''
         valores = (descripcion, cantidad, precio, imagen, proveedor)
         
         self.cursor.execute(sql, valores)
@@ -144,19 +159,16 @@ class Catalogo:
 # Cuerpo del programa
 #--------------------------------------------------------------------
 # Crear una instancia de la clase Catalogo
-#catalogo = Catalogo(host='localhost', user='root', password='', database='miapp')
-#catalogo = Catalogo(host='USUARIO.mysql.pythonanywhere-services.com', user='USUARIO', password='CLAVE', database='USUARIO$miapp')
-catalogo = Catalogo(host='mysql4.serv00.com',
-                    user='m10808_gigabriel',
-                    password="",
-                    database='m10808_miapp')
+catalogo = Catalogo(host='localhost', user='root', password='', database='miapp')
+# catalogo = Catalogo(host='mysql4.serv00.com',
+#                     user='m10808_gigabriel',
+#                     password="",
+#                     database='m10808_miapp')
 
 
 # Carpeta para guardar las imagenes.
-#RUTA_DESTINO = './static/imagenes/'
-RUTA_DESTINO = '/home/GIgabriel/mysite/static/imagenes'
-#Al subir al servidor, deberá utilizarse la siguiente ruta. USUARIO debe ser reemplazado por el nombre de usuario de Pythonanywhere
-#RUTA_DESTINO = '/home/USUARIO/mysite/static/imagenes'
+RUTA_DESTINO = '../static/img/'
+# RUTA_DESTINO = '/home/GIgabriel/mysite/static/imagenes'
 
 
 #--------------------------------------------------------------------
