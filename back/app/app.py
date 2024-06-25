@@ -44,14 +44,37 @@ class Catalogo:
             else:
                 raise err
             
-        # Una vez que la base de datos está establecida, creamos la tabla si no existe
+        # Una vez que la base de datos está establecida
+        # Crea tabla de propiedades inmobiliarias
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS productos (
-            codigo INT AUTO_INCREMENT PRIMARY KEY,
-            descripcion VARCHAR(255) NOT NULL,
-            cantidad INT NOT NULL,
-            precio DECIMAL(10, 2) NOT NULL,
-            imagen_url VARCHAR(255),
-            proveedor INT(4))''')
+                            id INT AUTO_INCREMENT PRIMARY KEY,
+                            descrip_corta VARCHAR(255) NOT NULL,
+                            descrip_larga VARCHAR(2048) NOT NULL,
+                            direccion VARCHAR(255) NOT NULL,
+                            nota VARCHAR(255) NOT NULL,
+                            url_foto_1 VARCHAR(255) NOT NULL,
+                            url_foto_2 VARCHAR(255) NOT NULL,
+                            url_foto_3 VARCHAR(255) NOT NULL,
+                            url_maps VARCHAR(255) NOT NULL,
+                            id_broker INT,
+                            precio DECIMAL(10, 2) NOT NULL,
+                            superf INT,
+                            superf_tot INT,
+                            baños INT,
+                            dormitorios INT,
+                            cocheras INT,
+                            basicos VARCHAR(1024) NOT NULL,
+                            servicios VARCHAR(1024) NOT NULL,
+                            amenities VARCHAR(1024) NOT NULL INT
+        )''')
+        # Crea tabla de brokers
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS productos (
+                            id INT AUTO_INCREMENT PRIMARY KEY,
+                            nombre VARCHAR(255) NOT NULL,
+                            mail VARCHAR(255) NOT NULL,
+                            telefono VARCHAR(255) NOT NULL,
+                            url_foto VARCHAR(255) NOT NULL
+        )''')
         self.conn.commit()
 
         # Cerrar el cursor inicial y abrir uno nuevo con el parámetro dictionary=True
