@@ -1,8 +1,14 @@
 ![pautas](https://github.com/GI-gabriel/cac-24166-grupo-10-be/assets/161953323/4cd66354-065d-417f-b36b-1a648712c8f4)
+Tomar como ejemplo: https://cac-crud.netlify.app/,
 
-[https://inmobiliarialorem.netlify.app/](https://inmobiliarialorem.netlify.app/)
+el codigo está en: https://github.com/GI-gabriel/cac-24166-ej-crud
 
-# Sitio web para empresa de servicios inmobiliarios
+el manual que explica todo el código en detalle está en: https://drive.google.com/file/d/1eA93vMFprxsE1on_cTaumZOD8W2wjUjU/view?usp=drive_link
+
+
+
+
+# Sitio web para empresa de servicios inmobiliarios [https://inmobiliarialorem.netlify.app/](https://inmobiliarialorem.netlify.app/)
 Trabajo práctico integrador Front-End  
 Codo a Codo 4.0, comisión 24166, grupo 10  
 
