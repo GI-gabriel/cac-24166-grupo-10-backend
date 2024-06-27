@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administración - Agregar propiedad</title>
+  <link rel="stylesheet" href="./css/crud_styles.css">
+</head>
+
+<body>
+  <h1>Agregar Propiedad</h1><br>
+  <form id="formulario" enctype="multipart/form-data">
+    <!-- Descripción corta -->
+    <label for="descrip_corta">Descripción corta:</label>
+    <input type="text" id="descrip_corta" name="descrip_corta" required><br>
+    <!-- Descripción larga -->
+    <label for="descrip_larga">Descripción larga:</label>
+    <input type="text" id="descrip_larga" name="descrip_larga" required><br>
+    <!-- Dirección -->
+    <label for="direccion">Dirección:</label>
+    <input type="text" id="direccion" name="direccion" required><br>
+    <!-- Nota -->
+    <label for="nota">Dirección:</label>
+    <input type="text" id="nota" name="nota" required><br>
+    <!-- Foto 1 -->
+    <label for="url_foto_1">Foto 1:</label>
+    <input type="file" id="url_foto_1" name="url_foto_1"><br><br>
+    <!-- Foto 2 -->
+    <label for="url_foto_2">Foto 2:</label>
+    <input type="file" id="url_foto_2" name="url_foto_2"><br><br>
+    <!-- Foto 3 -->
+    <label for="url_foto_3">Foto 3:</label>
+    <input type="file" id="url_foto_3" name="url_foto_3"><br><br>
+    <!-- URL Google Maps -->
+    <label for="url_maps">URL Google Maps:</label>
+    <input type="text" id="url_maps" name="url_maps" required><br>
+    <!-- Broker -->
+    <label for="id_broker">ID Broker:</label>
+    <input type="number" id="id_broker" name="id_broker" required><br>
+    <!-- Precio -->
+    <label for="precio">Precio:</label>
+    <input type="number" step="0.01" id="precio" name="precio" required><br>
+    <!-- Superficie -->
+    <label for="superf">Superficie:</label>
+    <input type="number" id="superf" name="superf" required><br>
+    <!-- Superficie total -->
+    <label for="superf_tot">Superficie total:</label>
+    <input type="number" id="superf_tot" name="superf_tot" required><br>
+    <!-- Baños -->
+    <label for="baños">Baños:</label>
+    <input type="number" id="baños" name="baños" required><br>
+    <!-- Dormitorios -->
+    <label for="dormitorios">Dormitorios:</label>
+    <input type="number" id="dormitorios" name="dormitorios" required><br>
+    <!-- Cocheras -->
+    <label for="cocheras">Cocheras:</label>
+    <input type="number" id="cocheras" name="cocheras" required><br>
+    <!-- Básicos -->
+    <label for="basicos">Básicos:</label>
+    <input type="text" id="basicos" name="basicos" required><br>
+    <!-- Servicios -->
+    <label for="servicios">Servicios:</label>
+    <input type="text" id="servicios" name="servicios" required><br>
+    <!-- Amenities -->
+    <label for="amenities">Amenities:</label>
+    <input type="text" id="amenities" name="amenities" required><br>
+
+    <br>
+    <button type="submit">Agregar Producto</button>
+    <a href="index.html">Menu principal</a>
+  </form>
+
+  <script src="./js/crud_altas.js"></script>
+</body>
+
+</html>
