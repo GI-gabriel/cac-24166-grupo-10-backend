@@ -144,8 +144,8 @@ class Catalogo:
     
     #----------------------------------------------------------------
     def consultar_prop(self, id):
-        # Consultamos a partir de su código
-        self.cursor.execute(f"SELECT * FROM productos WHERE codigo = {id}")
+        # Consultamos a partir de su id
+        self.cursor.execute(f"SELECT * FROM propiedades WHERE id = {id}")
         return self.cursor.fetchone()
     
 
@@ -188,7 +188,7 @@ class Catalogo:
     #----------------------------------------------------------------
     def eliminar_prop(self, id):
         # Eliminamos de la tabla a partir de su código
-        self.cursor.execute(f"DELETE FROM productos WHERE codigo = {id}")
+        self.cursor.execute(f"DELETE FROM propiedades WHERE id = {id}")
         self.conn.commit()
         return self.cursor.rowcount > 0
 
@@ -213,6 +213,7 @@ class Catalogo:
 #--------------------------------------------------------------------
 # Cuerpo del programa
 #--------------------------------------------------------------------
+
 # Crear una instancia de la clase Catalogo
 catalogo = Catalogo(host='localhost', user='root', password='', database='miapp')
 # catalogo = Catalogo(host='mysql4.serv00.com',
@@ -308,12 +309,12 @@ def agregar_prop():
 
         # Si el producto se agrega con éxito, se devuelve una respuesta JSON con un mensaje de éxito
         # y un código de estado HTTP 201 (Creado).
-        return jsonify({"mensaje": "Producto agregado correctamente.", "codigo": nuevo_id}), 201
+        return jsonify({"mensaje": "Agregado correctamente.", "id": nuevo_id}), 201
     else:
         # Si el producto no se puede agregar, se devuelve una respuesta JSON con un mensaje de error
         # y un código de estado HTTP 500 (Internal Server Error).
         print ('316')
-        return jsonify({"mensaje": "Error al agregar el producto."}), 500
+        return jsonify({"mensaje": "Error al agregar."}), 500
 
 
 #--------------------------------------------------------------------
@@ -369,32 +370,49 @@ def modificar_producto(codigo):
     
     
 #--------------------------------------------------------------------
-# Eliminar un producto según su código
+# Eliminar una propiedad según su id
 #--------------------------------------------------------------------
-@app.route("/productos/<int:codigo>", methods=["DELETE"])
-# La función eliminar_producto se asocia con esta URL y es llamada cuando se realiza una solicitud DELETE a /productos/ seguido de un número (el código del producto).
-def eliminar_producto(codigo):
-    # Busco el producto en la base de datos
-    producto = catalogo.consultar_producto(codigo)
-    if producto: # Si el producto existe, verifica si hay una imagen asociada en el servidor.
-        imagen_vieja = producto["imagen_url"]
-        # Armo la ruta a la imagen
-        ruta_imagen = os.path.join(RUTA_DESTINO, imagen_vieja)
-        
-        # Y si existe, la elimina del sistema de archivos.
-        if os.path.exists(ruta_imagen):
-            os.remove(ruta_imagen)
-        
-        # Luego, elimina el producto del catálogo
-        if catalogo.eliminar_producto(codigo):
-            #Si el producto se elimina correctamente, se devuelve una respuesta JSON con un mensaje de éxito y un código de estado HTTP 200 (OK).
-            return jsonify({"mensaje": "Producto eliminado"}), 200
+@app.route("/propiedades/<int:id>", methods=["DELETE"])
+# La función eliminar_prop se asocia con esta URL y es llamada cuando se realiza una solicitud
+# DELETE a /propiedades/ seguido de un número (el id de la propiedad).
+def eliminar_prop(id):
+    # Busca en la base de datos
+    propiedad = catalogo.consultar_prop(id)
+
+    # Si el producto existe... 
+    if propiedad:
+        ###################################################################
+        # Verifica si hay imagenes asociadas en el servidor.
+        #
+        imgs_viejas = [propiedad["url_foto_1"],
+                       propiedad["url_foto_2"],
+                       propiedad["url_foto_3"]]
+
+        for img in imgs_viejas:
+            # Ruta a la imagen
+            ruta_imagen = os.path.join(RUTA_DESTINO, img)
+            
+            # Y si existe, la elimina del sistema de archivos.
+            if os.path.exists(ruta_imagen):
+                os.remove(ruta_imagen)
+        #
+        #
+        ###################################################################
+
+        # Luego, elimina la propiedad del catálogo
+        if catalogo.eliminar_prop(id):
+            # Si el producto se elimina correctamente, se devuelve una respuesta JSON con un mensaje
+            # de éxito y un código de estado HTTP 200 (OK).
+            return jsonify({"mensaje": "Eliminado"}), 200
         else:
-            #Si ocurre un error durante la eliminación (por ejemplo, si el producto no se puede eliminar de la base de datos por alguna razón), se devuelve un mensaje de error con un código de estado HTTP 500 (Error Interno del Servidor).
-            return jsonify({"mensaje": "Error al eliminar el producto"}), 500
+            # Si ocurre un error durante la eliminación (por ejemplo, si la propiedad no se puede
+            # eliminar de la base de datos por alguna razón), se devuelve un mensaje de error con un
+            # código de estado HTTP 500 (Error Interno del Servidor).
+            return jsonify({"mensaje": "Error al eliminar"}), 500
     else:
-        #Si el producto no se encuentra (por ejemplo, si no existe un producto con el codigo proporcionado), se devuelve un mensaje de error con un código de estado HTTP 404 (No Encontrado).
-        return jsonify({"mensaje": "Producto no encontrado"}), 404
+        # Si la propiedad no se encuentra (por ejemplo, si no existe el id proporcionado), se devuelve
+        # un mensaje de error con un código de estado HTTP 404 (No Encontrado).
+        return jsonify({"mensaje": "No encontrado"}), 404
 
     
 #--------------------------------------------------------------------
