@@ -8,6 +8,7 @@ from flask_cors import CORS
 
 # Instalar con pip install mysql-connector-python
 import mysql.connector
+from mysql.connector import Error
 
 # Si es necesario, pip install Werkzeug
 from werkzeug.utils import secure_filename
@@ -24,95 +25,109 @@ CORS(app) # Esto habilitará CORS para todas las rutas
 RUTA_DESTINO = './static/img/'
 # RUTA_DESTINO = '/home/GIgabriel/mysite/static/imagenes'
 
+# Funciones para abrir y cerrar la base de datos en cada consulta
+def open_db_connection():
+    try:
+        cnx = mysql.connector.connect(
+            user='root',
+            password='',
+            host='localhost',
+            database='miapp'
+        )
+        if cnx.is_connected():
+            print("Conexión a la base de datos establecida.")
+            return cnx
+    except Error as e:
+        raise ValueError(f"Error al conectar a la base de datos: {e}")
+
+def close_db_connection(cnx):
+    if cnx.is_connected():
+        cnx.close()
+        print("Conexión a la base de datos cerrada.")
+
+
 #--------------------------------------------------------------------
 class Catalogo:
-#----------------------------------------------------------------
+#--------------------------------------------------------------------
     # Constructor de la clase
-    def __init__(self, host, user, password, database):
-        # Primero, establecemos una conexión sin especificar la base de datos
-        self.conn = mysql.connector.connect(
-            host=host,
-            user=user,
-            password=password
-        )
+    def __init__(self):        
+        conn = None
+        cursor = None
+        try:        
+            conn = open_db_connection()
+            cursor = conn.cursor()
 
-        self.cursor = self.conn.cursor()
-        # Intentamos seleccionar la base de datos
-        try:
-            self.cursor.execute(f"USE {database}")
-        except mysql.connector.Error as err:
-            # Si la base de datos no existe, la creamos
-            if err.errno == mysql.connector.errorcode.ER_BAD_DB_ERROR:
-                self.cursor.execute(f"CREATE DATABASE {database}")
-                self.conn.database = database
-            else:
-                raise err
-            
-        # Una vez que la base de datos está establecida
-        # Crea tabla de propiedades inmobiliarias
-        self.cursor.execute('''CREATE TABLE IF NOT EXISTS propiedades (
-                            id INT AUTO_INCREMENT PRIMARY KEY,
-                            descrip_corta VARCHAR(255) NOT NULL,
-                            descrip_larga VARCHAR(2048) NOT NULL,
-                            direccion VARCHAR(255) NOT NULL,
-                            nota VARCHAR(255) NOT NULL,
-                            url_foto_1 VARCHAR(255) NOT NULL,
-                            url_foto_2 VARCHAR(255) NOT NULL,
-                            url_foto_3 VARCHAR(255) NOT NULL,
-                            url_maps VARCHAR(255) NOT NULL,
-                            id_broker INT,
-                            precio DECIMAL(10, 2) NOT NULL,
-                            superf INT,
-                            superf_tot INT,
-                            baños INT,
-                            dormitorios INT,
-                            cocheras INT,
-                            basicos VARCHAR(1024) NOT NULL,
-                            servicios VARCHAR(1024) NOT NULL,
-                            amenities VARCHAR(1024) NOT NULL
-        )''')
-        # Crea tabla de brokers
-        self.cursor.execute('''CREATE TABLE IF NOT EXISTS brokers (
-                            id INT AUTO_INCREMENT PRIMARY KEY,
-                            nombre VARCHAR(255) NOT NULL,
-                            mail VARCHAR(255) NOT NULL,
-                            telefono VARCHAR(255) NOT NULL,
-                            url_foto VARCHAR(255) NOT NULL
-        )''')
+            # Una vez que la base de datos está establecida
+            # Crea tabla de propiedades inmobiliarias
+            cursor.execute('''CREATE TABLE IF NOT EXISTS propiedades (
+                                id INT AUTO_INCREMENT PRIMARY KEY,
+                                descrip_corta VARCHAR(255) NOT NULL,
+                                descrip_larga VARCHAR(2048) NOT NULL,
+                                direccion VARCHAR(255) NOT NULL,
+                                nota VARCHAR(255) NOT NULL,
+                                url_foto_1 VARCHAR(255) NOT NULL,
+                                url_foto_2 VARCHAR(255) NOT NULL,
+                                url_foto_3 VARCHAR(255) NOT NULL,
+                                url_maps VARCHAR(255) NOT NULL,
+                                id_broker INT,
+                                precio DECIMAL(10, 2) NOT NULL,
+                                superf INT,
+                                superf_tot INT,
+                                baños INT,
+                                dormitorios INT,
+                                cocheras INT,
+                                basicos VARCHAR(1024) NOT NULL,
+                                servicios VARCHAR(1024) NOT NULL,
+                                amenities VARCHAR(1024) NOT NULL
+            )''')
+            # Crea tabla de brokers
+            cursor.execute('''CREATE TABLE IF NOT EXISTS brokers (
+                                id INT AUTO_INCREMENT PRIMARY KEY,
+                                nombre VARCHAR(255) NOT NULL,
+                                mail VARCHAR(255) NOT NULL,
+                                telefono VARCHAR(255) NOT NULL,
+                                url_foto VARCHAR(255) NOT NULL
+            )''')
 
-        # Se completa la tabla de brokers de forma estática,
-        # no se va a utilizar un CRUD para esta tabla
-        # url_img_path = "./static/img/brokers/"
-        url_img_path = RUTA_DESTINO + 'brokers/'
-        brokers = [
-            {'name': 'John Doe', 'phone': '123-456-7890', 'email': 'john.doe@example.com', 'url_img': url_img_path + 'm1' + '.jpg'},
-            {'name': 'Jane Smith', 'phone': '987-654-3210', 'email': 'jane.smith@example.com', 'url_img': url_img_path + 'f1' + '.jpg'},
-            {'name': 'Alice Johnson', 'phone': '555-123-4567', 'email': 'alice.johnson@example.com', 'url_img': url_img_path + 'f2' + '.jpg'},
-            {'name': 'Bob Brown', 'phone': '555-987-6543', 'email': 'bob.brown@example.com', 'url_img': url_img_path + 'm2' + '.jpg'},
-            {'name': 'Carol White', 'phone': '555-555-5555', 'email': 'carol.white@example.com', 'url_img': url_img_path + 'f3' + '.jpg'},
-            {'name': 'David Black', 'phone': '555-444-3333', 'email': 'david.black@example.com', 'url_img': url_img_path + 'm3' + '.jpg'},
-            {'name': 'Eva Green', 'phone': '555-222-1111', 'email': 'eva.green@example.com', 'url_img': url_img_path + 'f4' + '.jpg'},
-            {'name': 'Frank Blue', 'phone': '555-666-7777', 'email': 'frank.blue@example.com', 'url_img': url_img_path + 'm4' + '.jpg'},
-            {'name': 'Grace Yellow', 'phone': '555-888-9999', 'email': 'grace.yellow@example.com', 'url_img': url_img_path + 'f5' + '.jpg'},
-            {'name': 'Hank Red', 'phone': '555-000-1111', 'email': 'hank.red@example.com', 'url_img': url_img_path + 'm5' + '.jpg'}
-        ]
+            # Se completa la tabla de brokers de forma estática,
+            # no se va a utilizar un CRUD para esta tabla
+            # url_img_path = "./static/img/brokers/"
+            url_img_path = RUTA_DESTINO + 'brokers/'
+            brokers = [
+                {'name': 'John Doe', 'phone': '123-456-7890', 'email': 'john.doe@example.com', 'url_img': url_img_path + 'm1' + '.jpg'},
+                {'name': 'Jane Smith', 'phone': '987-654-3210', 'email': 'jane.smith@example.com', 'url_img': url_img_path + 'f1' + '.jpg'},
+                {'name': 'Alice Johnson', 'phone': '555-123-4567', 'email': 'alice.johnson@example.com', 'url_img': url_img_path + 'f2' + '.jpg'},
+                {'name': 'Bob Brown', 'phone': '555-987-6543', 'email': 'bob.brown@example.com', 'url_img': url_img_path + 'm2' + '.jpg'},
+                {'name': 'Carol White', 'phone': '555-555-5555', 'email': 'carol.white@example.com', 'url_img': url_img_path + 'f3' + '.jpg'},
+                {'name': 'David Black', 'phone': '555-444-3333', 'email': 'david.black@example.com', 'url_img': url_img_path + 'm3' + '.jpg'},
+                {'name': 'Eva Green', 'phone': '555-222-1111', 'email': 'eva.green@example.com', 'url_img': url_img_path + 'f4' + '.jpg'},
+                {'name': 'Frank Blue', 'phone': '555-666-7777', 'email': 'frank.blue@example.com', 'url_img': url_img_path + 'm4' + '.jpg'},
+                {'name': 'Grace Yellow', 'phone': '555-888-9999', 'email': 'grace.yellow@example.com', 'url_img': url_img_path + 'f5' + '.jpg'},
+                {'name': 'Hank Red', 'phone': '555-000-1111', 'email': 'hank.red@example.com', 'url_img': url_img_path + 'm5' + '.jpg'}
+            ]
 
-        self.cursor.execute("SELECT COUNT(*) FROM brokers")
-        # Si el resultado es mayor a 0, la tabla existe
-        # Entonces no es necesario llenarla nuevamente       
-        if not (self.cursor.fetchone()[0]) > 0:
-            for broker in brokers:
-                self.cursor.execute(f'''INSERT INTO brokers (nombre, mail, telefono, url_foto)
-                                        VALUES ('{broker['name']}',
-                                                '{broker['email']}',
-                                                '{broker['phone']}',
-                                                '{broker['url_img']}')
-                                    ''')
-        self.conn.commit()
+            cursor.execute("SELECT COUNT(*) FROM brokers")
+            # Si el resultado es mayor a 0, la tabla existe
+            # Entonces no es necesario llenarla nuevamente       
+            if not (cursor.fetchone()[0]) > 0:
+                for broker in brokers:
+                    self.cursor.execute(f'''INSERT INTO brokers (nombre, mail, telefono, url_foto)
+                                            VALUES ('{broker['name']}',
+                                                    '{broker['email']}',
+                                                    '{broker['phone']}',
+                                                    '{broker['url_img']}')
+                                        ''')
+            conn.commit()
+        
+        except ValueError as e:
+            print(f"Error al ejecutar la consulta: {e}")
 
-        # Cerrar el cursor inicial y abrir uno nuevo con el parámetro dictionary=True
-        self.cursor.close()
-        self.cursor = self.conn.cursor(dictionary=True)
+        finally:
+            if cursor:
+                cursor.close()
+            close_db_connection(conn)
+
+        # self.cursor = self.conn.cursor(dictionary=True)
 
 
     #----------------------------------------------------------------
@@ -122,33 +137,63 @@ class Catalogo:
                      url_maps, id_broker, precio, superf,
                      superf_tot, baños, dormitorios, cocheras,
                      basicos, servicios, amenities):
-        sql = '''INSERT INTO propiedades (
-                    descrip_corta, descrip_larga, direccion,
+        
+        conn = None
+        cursor = None
+        try:        
+            conn = open_db_connection()
+            cursor = conn.cursor(dictionary=True)
+        
+            sql = '''INSERT INTO propiedades (
+                        descrip_corta, descrip_larga, direccion,
+                        nota, url_foto_1, url_foto_2, url_foto_3,
+                        url_maps, id_broker, precio, superf,
+                        superf_tot, baños, dormitorios, cocheras,
+                        basicos, servicios, amenities )
+                    VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s,
+                            %s, %s, %s, %s, %s, %s, %s, %s, %s)'''
+
+            valores = (descrip_corta, descrip_larga, direccion,
                     nota, url_foto_1, url_foto_2, url_foto_3,
                     url_maps, id_broker, precio, superf,
                     superf_tot, baños, dormitorios, cocheras,
-                    basicos, servicios, amenities )
-                 VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s,
-                          %s, %s, %s, %s, %s, %s, %s, %s, %s)'''
+                    basicos, servicios, amenities)
+            
+            cursor.execute(sql, valores)
+            conn.commit()
+            ret_val = cursor.lastrowid
 
-        valores = (descrip_corta, descrip_larga, direccion,
-                   nota, url_foto_1, url_foto_2, url_foto_3,
-                   url_maps, id_broker, precio, superf,
-                   superf_tot, baños, dormitorios, cocheras,
-                   basicos, servicios, amenities)
-        
-        self.cursor.execute(sql, valores)
-        self.conn.commit()
-        return self.cursor.lastrowid
-    
+        except ValueError as e:
+            print(f"Error al ejecutar la consulta: {e}")
+
+        finally:
+            if cursor:
+                cursor.close()
+            close_db_connection(conn)
+
+        return ret_val
     
     #----------------------------------------------------------------
     def consultar_prop(self, id):
-        # Consultamos a partir de su id
-        self.cursor.execute(f"SELECT * FROM propiedades WHERE id = {id}")
-        return self.cursor.fetchone()
-    
+        conn = None
+        cursor = None
+        try:        
+            conn = open_db_connection()
+            cursor = conn.cursor(dictionary=True)
 
+            # Consultamos a partir de su id
+            cursor.execute(f"SELECT * FROM propiedades WHERE id = {id}")
+            ret_val = cursor.fetchone()
+        
+        except ValueError as e:
+            print(f"Error al ejecutar la consulta: {e}")
+
+        finally:
+            if cursor:
+                cursor.close()
+            close_db_connection(conn)
+    
+        return ret_val
     #----------------------------------------------------------------
     def modificar_prop(self, id,
                        descrip_corta, descrip_larga, direccion,
@@ -157,41 +202,87 @@ class Catalogo:
                        superf_tot, baños, dormitorios, cocheras,
                        basicos, servicios, amenities):
         
-        # CUIDADO! - Tienen el mismo nombre, pero no son los argumentos de la función
-        # Son los parámetros de la consulta
-        sql = '''UPDATE productos SET 
-                    descrip_corta = %s, descrip_larga = %s, direccion = %s,
-                    nota = %s, url_foto_1 = %s, url_foto_2 = %s, url_foto_3 = %s,
-                    url_maps = %s, id_broker = %s, precio = %s, superf = %s,
-                    superf_tot = %s, baños = %s, dormitorios = %s, cocheras = %s,
-                    basicos = %s, servicios = %s, amenities = %s
-                WHERE id = %s'''
-        
-        valores = (descrip_corta, descrip_larga, direccion,
-                   nota, url_foto_1, url_foto_2, url_foto_3,
-                   url_maps, id_broker, precio, superf,
-                   superf_tot, baños, dormitorios, cocheras,
-                   basicos, servicios, amenities, id)
+        conn = None
+        cursor = None
+        try:        
+            conn = open_db_connection()
+            cursor = conn.cursor(dictionary=True)
 
-        self.cursor.execute(sql, valores)
-        self.conn.commit()
-        return self.cursor.rowcount > 0
+            # CUIDADO! - Tienen el mismo nombre, pero no son los argumentos de la función
+            # Son los parámetros de la consulta
+            sql = '''UPDATE productos SET 
+                        descrip_corta = %s, descrip_larga = %s, direccion = %s,
+                        nota = %s, url_foto_1 = %s, url_foto_2 = %s, url_foto_3 = %s,
+                        url_maps = %s, id_broker = %s, precio = %s, superf = %s,
+                        superf_tot = %s, baños = %s, dormitorios = %s, cocheras = %s,
+                        basicos = %s, servicios = %s, amenities = %s
+                    WHERE id = %s'''
+            
+            valores = (descrip_corta, descrip_larga, direccion,
+                    nota, url_foto_1, url_foto_2, url_foto_3,
+                    url_maps, id_broker, precio, superf,
+                    superf_tot, baños, dormitorios, cocheras,
+                    basicos, servicios, amenities, id)
+
+            cursor.execute(sql, valores)
+            conn.commit()
+            ret_val = cursor.rowcount > 0
+
+        except ValueError as e:
+            print(f"Error al ejecutar la consulta: {e}")
+
+        finally:
+            if cursor:
+                cursor.close()
+            close_db_connection(conn)
+    
+        return ret_val
 
 
     #----------------------------------------------------------------
     def listar_prop(self):
-        self.cursor.execute("SELECT * FROM propiedades")
-        propiedades = self.cursor.fetchall()
-        return propiedades
+        conn = None
+        cursor = None
+        try:        
+            conn = open_db_connection()
+            cursor = conn.cursor(dictionary=True)
+
+            cursor.execute("SELECT * FROM propiedades")
+            propiedades = cursor.fetchall()
+            ret_val = propiedades
+
+        except ValueError as e:
+            print(f"Error al ejecutar la consulta: {e}")
+
+        finally:
+            if cursor:
+                cursor.close()
+            close_db_connection(conn)
     
+        return ret_val    
 
     #----------------------------------------------------------------
     def eliminar_prop(self, id):
-        # Eliminamos de la tabla a partir de su código
-        self.cursor.execute(f"DELETE FROM propiedades WHERE id = {id}")
-        self.conn.commit()
-        return self.cursor.rowcount > 0
+        conn = None
+        cursor = None
+        try:        
+            conn = open_db_connection()
+            cursor = conn.cursor(dictionary=True)    
 
+            # Eliminamos de la tabla a partir de su código
+            cursor.execute(f"DELETE FROM propiedades WHERE id = {id}")
+            conn.commit()
+            ret_val = cursor.rowcount > 0
+            
+        except ValueError as e:
+            print(f"Error al ejecutar la consulta: {e}")
+
+        finally:
+            if cursor:
+                cursor.close()
+            close_db_connection(conn)
+    
+        return ret_val 
 
     #----------------------------------------------------------------
     # def mostrar_producto(self, id):
@@ -215,7 +306,7 @@ class Catalogo:
 #--------------------------------------------------------------------
 
 # Crear una instancia de la clase Catalogo
-catalogo = Catalogo(host='localhost', user='root', password='', database='miapp')
+catalogo = Catalogo()
 # catalogo = Catalogo(host='mysql4.serv00.com',
 #                     user='m10808_gigabriel',
 #                     password="",
