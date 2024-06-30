@@ -335,7 +335,7 @@ def listar_prop():
 #--------------------------------------------------------------------
 # El método busca en la base de datos la propiedad con el id especificado y 
 # devuelve un JSON con los detalles si lo encuentra, o None si no lo encuentra.
-@app.route("/propiedades/<int:codigo>", methods=["GET"])
+@app.route("/propiedades/<int:id>", methods=["GET"])
 def mostrar_prop(id):
     propiedad = catalogo.consultar_prop(id)
     if propiedad:
@@ -419,7 +419,7 @@ def agregar_prop():
 #--------------------------------------------------------------------
 # Modificar uno, según su id
 #--------------------------------------------------------------------
-@app.route("/productos/<int:codigo>", methods=["PUT"])
+@app.route("/propiedades/<int:codigo>", methods=["PUT"])
 @login_required
 # La función modificar_producto se asocia con esta URL y es invocada cuando se realiza una solicitud PUT a /productos/ seguido de un número (el código del producto).
 def modificar_producto(codigo):
