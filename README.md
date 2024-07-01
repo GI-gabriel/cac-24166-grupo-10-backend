@@ -1,9 +1,7 @@
 ![Untitled](https://github.com/GI-gabriel/cac-24166-grupo-10-be/assets/161953323/62b40126-b3e8-40ea-a3ad-e85ae09f16cd)
 
 ![pautas](https://github.com/GI-gabriel/cac-24166-grupo-10-be/assets/161953323/4cd66354-065d-417f-b36b-1a648712c8f4)
-Tomar como ejemplo: https://cac-crud.netlify.app/,
-
-el codigo está en: https://github.com/GI-gabriel/cac-24166-ej-crud
+Tomar como ejemplo: https://github.com/GI-gabriel/cac-24166-ej-crud
 
 el manual que explica todo el código en detalle está en: https://drive.google.com/file/d/1eA93vMFprxsE1on_cTaumZOD8W2wjUjU/view?usp=drive_link
 
