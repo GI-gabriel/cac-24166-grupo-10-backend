@@ -21,7 +21,7 @@ import os
 import time
 #--------------------------------------------------------------------
 
-# Importa claves NUNCA SUBIR ESTE ARCHIVO AL REPOSITORIO
+# Importa claves
 from keys import keys
 
 app = Flask(__name__)
