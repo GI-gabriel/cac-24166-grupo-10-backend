@@ -516,8 +516,6 @@ def eliminar_prop(id):
         return jsonify({"mensaje": "No encontrado"}), 404
 
 
-
-
 #--------------------------------------------------------------------
 # Control de acceso
 # Configuración de Flask-Login
