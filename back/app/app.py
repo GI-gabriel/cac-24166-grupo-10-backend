@@ -1,6 +1,9 @@
 #--------------------------------------------------------------------
 # Instalar con pip install Flask
 from flask import Flask, request, jsonify, render_template
+from flask import Flask, render_template, redirect, url_for, request, flash
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from werkzeug.security import generate_password_hash, check_password_hash
 # from flask import request
 
 # Instalar con pip install flask-cors
@@ -18,7 +21,11 @@ import os
 import time
 #--------------------------------------------------------------------
 
+# Importa claves
+from keys import keys
+
 app = Flask(__name__)
+app.secret_key = keys['secret_key']
 CORS(app) # Esto habilitará CORS para todas las rutas
 
 # Carpeta para guardar las imagenes.
@@ -29,13 +36,13 @@ RUTA_DESTINO = './static/img/'
 def open_db_connection():
     try:
         cnx = mysql.connector.connect(
-            user='root',
-            password='',
+            user=keys['sql_user'],
+            password=keys['sql_pass'],
             host='localhost',
             database='miapp'
         )
         if cnx.is_connected():
-            print("Conexión a la base de datos establecida.")
+            # print("Conexión a la base de datos establecida.")
             return cnx
     except Error as e:
         raise ValueError(f"Error al conectar a la base de datos: {e}")
@@ -43,7 +50,7 @@ def open_db_connection():
 def close_db_connection(cnx):
     if cnx.is_connected():
         cnx.close()
-        print("Conexión a la base de datos cerrada.")
+        # print("Conexión a la base de datos cerrada.")
 
 
 #--------------------------------------------------------------------
@@ -328,7 +335,7 @@ def listar_prop():
 #--------------------------------------------------------------------
 # El método busca en la base de datos la propiedad con el id especificado y 
 # devuelve un JSON con los detalles si lo encuentra, o None si no lo encuentra.
-@app.route("/propiedades/<int:codigo>", methods=["GET"])
+@app.route("/propiedades/<int:id>", methods=["GET"])
 def mostrar_prop(id):
     propiedad = catalogo.consultar_prop(id)
     if propiedad:
@@ -341,6 +348,7 @@ def mostrar_prop(id):
 # Agregar uno
 #--------------------------------------------------------------------
 @app.route("/propiedades", methods=["POST"])
+@login_required
 # La función agregar_prop se asocia con esta URL y es llamada cuando se hace
 # una solicitud POST a /propiedades.
 def agregar_prop():
@@ -411,7 +419,8 @@ def agregar_prop():
 #--------------------------------------------------------------------
 # Modificar uno, según su id
 #--------------------------------------------------------------------
-@app.route("/productos/<int:codigo>", methods=["PUT"])
+@app.route("/propiedades/<int:codigo>", methods=["PUT"])
+@login_required
 # La función modificar_producto se asocia con esta URL y es invocada cuando se realiza una solicitud PUT a /productos/ seguido de un número (el código del producto).
 def modificar_producto(codigo):
     #Se recuperan los nuevos datos del formulario
@@ -464,6 +473,7 @@ def modificar_producto(codigo):
 # Eliminar una propiedad según su id
 #--------------------------------------------------------------------
 @app.route("/propiedades/<int:id>", methods=["DELETE"])
+@login_required
 # La función eliminar_prop se asocia con esta URL y es llamada cuando se realiza una solicitud
 # DELETE a /propiedades/ seguido de un número (el id de la propiedad).
 def eliminar_prop(id):
@@ -505,7 +515,66 @@ def eliminar_prop(id):
         # un mensaje de error con un código de estado HTTP 404 (No Encontrado).
         return jsonify({"mensaje": "No encontrado"}), 404
 
+
+#--------------------------------------------------------------------
+# Control de acceso
+# Configuración de Flask-Login
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+# Simulación de una base de datos de usuarios
+users = {}
+
+class User(UserMixin):
+    def __init__(self, id, username, password):
+        self.id = id
+        self.username = username
+        self.password = password
+
+@login_manager.user_loader
+def load_user(user_id):
+    return users.get(user_id)
+
+# @app.route('/')
+# def index():
+#     return 'Página pública'
+
+@app.route('/menu')
+def menu():
+    if current_user.is_authenticated:
+        return redirect('http://localhost:5500/front/crud_menu.html')
+    else:
+        return redirect(url_for('login'))
     
+# @app.route('/protected')
+# @login_required
+# def protected():
+#     return f'Página protegida. Bienvenido, {current_user.username}!'
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = next((u for u in users.values() if u.username == username), None)
+        if user and check_password_hash(user.password, password):
+            login_user(user)
+            return redirect('http://localhost:5500/front/crud_menu.html')
+        else:
+            flash('Nombre de usuario o contraseña incorrectos')
+    return render_template('login.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
+# Agregar usuarios
+users['1'] = User(id='1', username=keys['admin_user'], password=generate_password_hash(keys['admin_pass']))
+users['2'] = User(id='2', username=keys['guest_user'], password=generate_password_hash(keys['guest_pass']))
+
 #--------------------------------------------------------------------
 if __name__ == "__main__":
     app.run(debug=True)
