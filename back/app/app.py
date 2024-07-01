@@ -36,8 +36,8 @@ RUTA_DESTINO = './static/img/'
 def open_db_connection():
     try:
         cnx = mysql.connector.connect(
-            user='root',
-            password='',
+            user=keys['sql_user'],
+            password=keys['sql_pass'],
             host='localhost',
             database='miapp'
         )
@@ -574,8 +574,8 @@ def logout():
     return redirect(url_for('login'))
 
 # Agregar usuarios
-users['1'] = User(id='1', username='admin', password=generate_password_hash(keys['admin_pass']))
-users['2'] = User(id='2', username='guest', password=generate_password_hash(keys['guest_pass']))
+users['1'] = User(id='1', username=keys['admin_user'], password=generate_password_hash(keys['admin_pass']))
+users['2'] = User(id='2', username=keys['guest_user'], password=generate_password_hash(keys['guest_pass']))
 
 #--------------------------------------------------------------------
 if __name__ == "__main__":

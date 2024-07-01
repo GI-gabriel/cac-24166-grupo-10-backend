@@ -2,4 +2,3 @@
 .vscode/
 back/app/static/img/
 __pycache__/
-keys.py
