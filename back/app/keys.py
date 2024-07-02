@@ -4,7 +4,7 @@ keys = {
     'admin_user': 'admin',
     'admin_pass': 'admin',
     'guest_user': 'guest',
-    'guest_pass': 'pYthoN50',
+    'guest_pass': 'guest',
 
     # Para mysql
     'sql_user': 'root',

@@ -47,30 +47,32 @@
       <!-- Nota -->
       <label for="nota">Notas:</label>
       <input type="text" id="nota" name="nota" required><br>
-
-      <!-- ------------------------------------------------------------------------------- -->
-
-      <!-- Imagen actual del producto - Debe comentarse al subirse al servidor -->
-      <img id="imagen-actual" style="max-width: 200px; display: none;">
-
-      <!-- Vista previa de la nueva imagen seleccionada -->
-      <img id="imagen-vista-previa" style="max-width: 200px; display: none;">
-
-      <!-- Input para nueva imagen -->
-      <label for="nuevaImagen">Nueva Imagen:</label>
-      <input type="file" id="nuevaImagen"><br>
       <br>
 
+      <!-- ------------------------------------------------------------------------------- -->
       <!-- Foto 1 -->
-      <label for="url_foto_1">Foto 1:</label>
-      <input type="file" id="url_foto_1" name="url_foto_1"><br><br>
+      <!-- Imagen actual del producto - Debe comentarse al subirse al servidor -->
+      <img id="foto-1-actual" style="max-width: 200px; display: none;">
+      <!-- Vista previa de la nueva imagen seleccionada -->
+      <img id="foto-1-vista-previa" style="max-width: 200px; display: none;">
+      <label for="url-foto-1">Foto 1:</label>
+      <input type="file" id="url-foto-1"><br><br>
+      
       <!-- Foto 2 -->
-      <label for="url_foto_2">Foto 2:</label>
-      <input type="file" id="url_foto_2" name="url_foto_2"><br><br>
+      <!-- Imagen actual del producto - Debe comentarse al subirse al servidor -->
+      <img id="foto-2-actual" style="max-width: 200px; display: none;">
+      <!-- Vista previa de la nueva imagen seleccionada -->
+      <img id="foto-2-vista-previa" style="max-width: 200px; display: none;">
+      <label for="url-foto-2">Foto 2:</label>
+      <input type="file" id="url-foto-2"><br><br>
+      
       <!-- Foto 3 -->
-      <label for="url_foto_3">Foto 3:</label>
-      <input type="file" id="url_foto_3" name="url_foto_3"><br><br>
-
+      <!-- Imagen actual del producto - Debe comentarse al subirse al servidor -->
+      <img id="foto-3-actual" style="max-width: 200px; display: none;">
+      <!-- Vista previa de la nueva imagen seleccionada -->
+      <img id="foto-3-vista-previa" style="max-width: 200px; display: none;">
+      <label for="url-foto-3">Foto 3:</label>
+      <input type="file" id="url-foto-3"><br><br>
       <!-- ------------------------------------------------------------------------------- -->
 
       <!-- URL Google Maps -->
@@ -107,27 +109,8 @@
       <label for="amenities">Amenities:</label>
       <input type="text" id="amenities" name="amenities" required><br>
 
-
-
-
-      <!-- Imagen actual del producto - Debe comentarse al subirse al servidor -->
-      <!-- <img id="imagen-actual" style="max-width: 200px; display: none;"> -->
-
-      <!-- Vista previa de la nueva imagen seleccionada -->
-      <!-- <img id="imagen-vista-previa" style="max-width: 200px; display: none;"> -->
-
-      <!-- Input para nueva imagen -->
-      <!-- <label for="nuevaImagen">Nueva Imagen:</label>
-            <input type="file" id="nuevaImagen"><br>
-            <br> -->
-
-
-      <!-- <label for="proveModificar">Proveedor:</label>
-            <input type="number" id="proveModificar" required><br> -->
-
-
       <button type="submit">Guardar Cambios</button>
-      <a href="modificaciones.html">Cancelar</a>
+      <button type="button" id="btn-cancelar">Cancelar</button>
     </form>
   </div>
 

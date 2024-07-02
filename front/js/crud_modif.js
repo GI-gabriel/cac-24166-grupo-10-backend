@@ -1,8 +1,8 @@
-const URL = "http://127.0.0.1:5000/"
+const URL = "http://localhost:5000/"
 // const URL = "https://gigabriel.serv00.net/"
 
 // Variables de estado para controlar la visibilidad y los datos del formulario
-let id = '';
+let id_ = '';
 let descrip_corta = '';
 let descrip_larga = '';
 let direccion = '';
@@ -14,7 +14,7 @@ let url_maps = '';
 let id_broker = '';
 let precio = '';
 let superf = '';
-let superf_total = '';
+let superf_tot = '';
 let baños = '';
 let dormitorios = '';
 let cocheras = '';
@@ -22,9 +22,19 @@ let basicos = '';
 let servicios = '';
 let amenities = '';
 
-// let imagenSeleccionada = null;
-// let imagenUrlTemp = null;
+let foto_1_Seleccionada = null;
+let foto_2_Seleccionada = null;
+let foto_3_Seleccionada = null;
+let foto_1_UrlTemp = null;
+let foto_2_UrlTemp = null;
+let foto_3_UrlTemp = null;
 let mostrarDatosProp = false;
+
+document.getElementById('form-guardar-cambios').addEventListener('submit', guardarCambios);
+document.getElementById('btn-cancelar').addEventListener('click', limpiarFormulario);
+document.getElementById('url-foto-1').addEventListener('change', seleccionarFoto_1);
+document.getElementById('url-foto-2').addEventListener('change', seleccionarFoto_2);
+document.getElementById('url-foto-3').addEventListener('change', seleccionarFoto_3);
 
 
 // Obtiene el contenido del inventario
@@ -71,7 +81,7 @@ function eliminarProp(id) {
   // Se muestra un diálogo de confirmación. Si el usuario confirma, se realiza una solicitud
   // DELETE servidor a través de fetch(URL + 'propiedad/${id}', { method: 'DELETE' }).
   if (confirm('¿Estás seguro de que quieres eliminar esta propiedad?')) {
-    fetch(URL + `propiedades/${id}`, { method: 'DELETE' })
+    fetch(URL + `propiedades/${id}`, { method: 'DELETE', credentials: 'include' })
       .then(response => {
         // Si es exitosa (response.ok), elimina y da mensaje de ok.
         if (response.ok) {
@@ -110,23 +120,114 @@ function mostrarFormulario() {
 
     document.getElementById('datos-prop').style.display = 'block';
 
-    // const imagenActual = document.getElementById('imagen-actual');
+    const foto_1_actual = document.getElementById('foto-1-actual');
+    const foto_2_actual = document.getElementById('foto-2-actual');
+    const foto_3_actual = document.getElementById('foto-3-actual');
 
-    // // Verifica si imagen_url no está vacía y no se ha seleccionado una imagen
-    // if (imagen_url && !imagenSeleccionada) {
-    //   //imagenActual.src = './static/imagenes/' + imagen_url;
-    //   imagenActual.src = 'https://gigabriel.serv00.net/imagenes/' + imagen_url;
-    //   //Al subir al servidor, deberá utilizarse la siguiente ruta.USUARIO debe ser reemplazado por el nombre de usuario de Pythonanywhere
-    //   //imagenActual.src = 'https://www.pythonanywhere.com/user/USUARIO/files/home/USUARIO/mysite/static / imagenes / ' + imagen_url;
+    // #1 Verifica si imagen_url no está vacía y no se ha seleccionado una imagen
+    if (url_foto_1 && !foto_1_Seleccionada) {
+      foto_1_actual.src = '../../back/app/static/img/' + url_foto_1;
+      // imagenActual.src = 'https://gigabriel.serv00.net/imagenes/' + imagen_url;
+      
+      // Muestra la imagen actual
+      foto_1_actual.style.display = 'block';
+    } else {
+      // Oculta la imagen si no hay URL
+      foto_1_actual.style.display = 'none';
+    }
 
-    //   // Muestra la imagen actual
-    //   imagenActual.style.display = 'block';
-    // } else {
-    //   // Oculta la imagen si no hay URL
-    //   imagenActual.style.display = 'none';
-    // }
+    // #2 Verifica si imagen_url no está vacía y no se ha seleccionado una imagen
+    if (url_foto_2 && !foto_2_Seleccionada) {
+      foto_2_actual.src = '../../back/app/static/img/' + url_foto_2;
+      // imagenActual.src = 'https://gigabriel.serv00.net/imagenes/' + imagen_url;
+      
+      // Muestra la imagen actual
+      foto_2_actual.style.display = 'block';
+    } else {
+      // Oculta la imagen si no hay URL
+      foto_2_actual.style.display = 'none';
+    }
+
+    // #3 Verifica si imagen_url no está vacía y no se ha seleccionado una imagen
+    if (url_foto_3 && !foto_3_Seleccionada) {
+      foto_3_actual.src = '../../back/app/static/img/' + url_foto_3;
+      // imagenActual.src = 'https://gigabriel.serv00.net/imagenes/' + imagen_url;
+      
+      // Muestra la imagen actual
+      foto_3_actual.style.display = 'block';
+    } else {
+      // Oculta la imagen si no hay URL
+      foto_3_actual.style.display = 'none';
+    }
+    
   } else {
     document.getElementById('datos-prop').style.display = 'none';
+  }
+}
+
+
+// Se activa cuando el usuario selecciona una imagen para cargar.
+function seleccionarFoto_1(event) {
+  const file = event.target.files[0];
+  if (file) {
+    foto_1_Seleccionada = file;
+    // Crea una URL temporal para la vista previa
+    const foto_1_UrlTemp = window.URL.createObjectURL(file);
+    const imagenVistaPrevia = document.getElementById('foto-1-vista-previa');
+    imagenVistaPrevia.src = foto_1_UrlTemp;
+    imagenVistaPrevia.style.display = 'block';
+
+    // Oculta la imagen reemplazada
+    const foto_1_Actual = document.getElementById('foto-1-actual');
+    foto_1_Actual.style.display = 'none';
+
+    imagenVistaPrevia.onload = function() {
+      window.URL.revokeObjectURL(foto_1_UrlTemp);
+    }
+  }
+}
+
+
+// Se activa cuando el usuario selecciona una imagen para cargar.
+function seleccionarFoto_2(event) {
+  const file = event.target.files[0];
+  if (file) {
+    foto_2_Seleccionada = file;
+    // Crea una URL temporal para la vista previa
+    const foto_2_UrlTemp = window.URL.createObjectURL(file);
+    const imagenVistaPrevia = document.getElementById('foto-2-vista-previa');
+    imagenVistaPrevia.src = foto_2_UrlTemp;
+    imagenVistaPrevia.style.display = 'block';
+
+    // Oculta la imagen reemplazada
+    const foto_2_Actual = document.getElementById('foto-2-actual');
+    foto_2_Actual.style.display = 'none';
+
+    imagenVistaPrevia.onload = function() {
+      window.URL.revokeObjectURL(foto_2_UrlTemp);
+    }
+  }
+}
+
+
+// Se activa cuando el usuario selecciona una imagen para cargar.
+function seleccionarFoto_3(event) {
+  const file = event.target.files[0];
+  if (file) {
+    foto_3_Seleccionada = file;
+    // Crea una URL temporal para la vista previa
+    const foto_3_UrlTemp = window.URL.createObjectURL(file);
+    const imagenVistaPrevia = document.getElementById('foto-3-vista-previa');
+    imagenVistaPrevia.src = foto_3_UrlTemp;
+    imagenVistaPrevia.style.display = 'block';
+
+    // Oculta la imagen reemplazada
+    const foto_3_Actual = document.getElementById('foto-3-actual');
+    foto_3_Actual.style.display = 'none';
+
+    imagenVistaPrevia.onload = function() {
+      window.URL.revokeObjectURL(foto_3_UrlTemp);
+    }
   }
 }
 
@@ -163,6 +264,7 @@ function modificarProp(id) {
 
       // Activa la vista del segundo formulario
       mostrarDatosProp = true;
+      id_ = id;
       mostrarFormulario();
     })
     .catch(error => {
@@ -171,27 +273,126 @@ function modificarProp(id) {
 }
 
 
+// Se usa para enviar los datos modificados del producto al servidor.
+function guardarCambios(event) {
+  event.preventDefault();
+
+  const formData = new FormData();
+  formData.append('id', id_);
+  formData.append('descrip_corta', document.getElementById('descrip_corta').value);
+  formData.append('descrip_larga', document.getElementById('descrip_larga').value);
+  formData.append('direccion', document.getElementById('direccion').value);
+  formData.append('nota', document.getElementById('nota').value);
+  formData.append('url_maps', document.getElementById('url_maps').value);
+  formData.append('id_broker', document.getElementById('id_broker').value);
+  formData.append('precio', document.getElementById('precio').value);
+  formData.append('superf', document.getElementById('superf').value);
+  formData.append('superf_tot', document.getElementById('superf_tot').value);
+  formData.append('baños', document.getElementById('baños').value);
+  formData.append('dormitorios', document.getElementById('dormitorios').value);
+  formData.append('cocheras', document.getElementById('cocheras').value);
+  formData.append('basicos', document.getElementById('basicos').value);
+  formData.append('servicios', document.getElementById('servicios').value);
+  formData.append('amenities', document.getElementById('amenities').value);
+
+  // Si se ha seleccionado una imagen nueva, la añade al formData.
+  if (foto_1_Seleccionada) {
+    formData.append('url_foto_1', foto_1_Seleccionada,
+      foto_1_Seleccionada.name);
+  }
+
+  if (foto_2_Seleccionada) {
+    formData.append('url_foto_2', foto_2_Seleccionada,
+      foto_2_Seleccionada.name);
+  }
+
+  if (foto_3_Seleccionada) {
+    formData.append('url_foto_3', foto_3_Seleccionada,
+      foto_3_Seleccionada.name);
+  }
+
+  fetch(URL + 'propiedades/' + id_, {
+    method: 'PUT',
+    credentials: 'include',
+    body: formData,
+  })
+    .then(response => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        throw new Error('Error al guardar los cambios del producto.')
+      }
+    })
+    .then(data => {
+      alert('Producto actualizado correctamente.');
+      limpiarFormulario();
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Error al actualizar el producto.');
+    });
+}
+
+
+// Restablece todas las variables relacionadas con el formulario a sus valores iniciales,
+// lo que efectivamente "limpia" el formulario.
+function limpiarFormulario() {
+  elems = document.querySelectorAll('#form-guardar-cambios > input');
+
+  elems.forEach(elem => {
+    elem.value = "";
+  });
+  
+  const foto_1_Actual = document.getElementById('foto-1-actual');
+  foto_1_Actual.style.display = 'none';
+  const foto_1_VistaPrevia = document.getElementById('foto-1-vista-previa');
+  foto_1_VistaPrevia.style.display = 'none';
+
+  const foto_2_Actual = document.getElementById('foto-2-actual');
+  foto_2_Actual.style.display = 'none';
+  const foto_2_VistaPrevia = document.getElementById('foto-2-vista-previa');
+  foto_2_VistaPrevia.style.display = 'none';
+
+  const foto_3_Actual = document.getElementById('foto-3-actual');
+  foto_3_Actual.style.display = 'none';
+  const foto_3_VistaPrevia = document.getElementById('foto-3-vista-previa');
+  foto_3_VistaPrevia.style.display = 'none';
+
+  id_ = '';
+  descrip_corta = '';
+  descrip_larga = '';
+  direccion = '';
+  nota = '';
+  url_foto_1 = '';
+  url_foto_2 = '';
+  url_foto_3 = '';
+  url_maps = '';
+  id_broker = '';
+  precio = '';
+  superf = '';
+  superf_tot = '';
+  baños = '';
+  dormitorios = '';
+  cocheras = '';
+  basicos = '';
+  servicios = '';
+  amenities = '';
+
+  foto_1_Seleccionada = null;
+  foto_1_UrlTemp = null;
+  foto_2_Seleccionada = null;
+  foto_2_UrlTemp = null;
+  foto_3_Seleccionada = null;
+  foto_3_UrlTemp = null;
+
+  mostrarDatosProducto = false;
+
+  document.getElementById('datos-prop').style.display = 'none';
+}
+
+
 // Cuando la página se carga, llama a obtenerProp para cargar la lista.
 document.addEventListener('DOMContentLoaded', obtenerLista);
-
-
-// const URL = "http://127.0.0.1:5000/"
-// // const URL = "https://gigabriel.serv00.net/"
-
-
-// // Variables de estado para controlar la visibilidad y los datos del formulario
-// let codigo = '';
-// let descripcion = '';
-// let cantidad = '';
-// let precio = '';
-// let proveedor = '';
-// let imagen_url = '';
-// let imagenSeleccionada = null;
-// let imagenUrlTemp = null;
-// let mostrarDatosProducto = false;
-// document.getElementById('form-obtener-producto').addEventListener('submit', obtenerProducto);
-// document.getElementById('form-guardar-cambios').addEventListener('submit', guardarCambios);
-// document.getElementById('nuevaImagen').addEventListener('change', seleccionarImagen);
 
 
 // // Se ejecuta cuando se envía el formulario de consulta. Realiza una solicitud GET a la API y
@@ -254,78 +455,5 @@ document.addEventListener('DOMContentLoaded', obtenerLista);
 // }
 
 
-// // Se activa cuando el usuario selecciona una imagen para cargar.
-// function seleccionarImagen(event) {
-//   const file = event.target.files[0];
-//   imagenSeleccionada = file;
-
-//   // Crea una URL temporal para la vista previa
-//   imagenUrlTemp = URL.createObjectURL(file);
-//   const imagenVistaPrevia = document.getElementById('imagen-vista-previa');
-//   imagenVistaPrevia.src = imagenUrlTemp;
-//   imagenVistaPrevia.style.display = 'block';
-// }
 
 
-// // Se usa para enviar los datos modificados del producto al servidor.
-// function guardarCambios(event) {
-//   event.preventDefault();
-//   const formData = new FormData();
-//   formData.append('codigo', codigo);
-//   formData.append('descripcion', document.getElementById('descripcionModificar').value);
-//   formData.append('cantidad', document.getElementById('cantidadModificar').value);
-//   formData.append('proveedor', document.getElementById('proveModificar').value);
-//   formData.append('precio', document.getElementById('precioModificar').value);
-
-//   // Si se ha seleccionado una imagen nueva, la añade al formData.
-//   if (imagenSeleccionada) {
-//     formData.append('imagen', imagenSeleccionada,
-//       imagenSeleccionada.name);
-//   }
-
-//   fetch(URL + 'productos/' + codigo, {
-//     method: 'PUT',
-//     body: formData,
-//   })
-//     .then(response => {
-//       if (response.ok) {
-//         return response.json()
-//       } else {
-//         throw new Error('Error al guardar los cambios del producto.')
-//       }
-//     })
-//     .then(data => {
-//       alert('Producto actualizado correctamente.');
-//       limpiarFormulario();
-//     })
-//     .catch(error => {
-//       console.error('Error:', error);
-//       alert('Error al actualizar el producto.');
-//     });
-// }
-
-
-// // Restablece todas las variables relacionadas con el formulario a sus valores iniciales,
-// // lo que efectivamente "limpia" el formulario.
-// function limpiarFormulario() {
-//   document.getElementById('codigo').value = '';
-//   document.getElementById('descripcionModificar').value = '';
-//   document.getElementById('cantidadModificar').value = '';
-//   document.getElementById('precioModificar').value = '';
-//   document.getElementById('proveModificar').value = '';
-//   document.getElementById('nuevaImagen').value = '';
-//   const imagenActual = document.getElementById('imagen-actual');
-//   imagenActual.style.display = 'none';
-//   const imagenVistaPrevia = document.getElementById('imagen-vista-previa');
-//   imagenVistaPrevia.style.display = 'none';
-//   codigo = '';
-//   descripcion = '';
-//   cantidad = '';
-//   precio = '';
-//   proveedor = '';
-//   imagen_url = '';
-//   imagenSeleccionada = null;
-//   imagenUrlTemp = null;
-//   mostrarDatosProducto = false;
-//   document.getElementById('datos-producto').style.display = 'none';
-// }
