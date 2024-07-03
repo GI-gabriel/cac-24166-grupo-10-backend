@@ -1,7 +1,6 @@
 #--------------------------------------------------------------------
 # Instalar con pip install Flask
-from flask import Flask, request, jsonify, render_template
-from flask import Flask, render_template, redirect, url_for, request, flash
+from flask import Flask, request, jsonify, render_template, redirect, url_for, request, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 # from flask import request
@@ -26,7 +25,7 @@ from keys import keys
 
 app = Flask(__name__)
 app.secret_key = keys['secret_key']
-CORS(app) # Esto habilitará CORS para todas las rutas
+CORS(app, resources={r"/*": {"origins": "http://localhost:5500"}}, supports_credentials=True)
 
 # Carpeta para guardar las imagenes.
 RUTA_DESTINO = './static/img/'
@@ -217,7 +216,7 @@ class Catalogo:
 
             # CUIDADO! - Tienen el mismo nombre, pero no son los argumentos de la función
             # Son los parámetros de la consulta
-            sql = '''UPDATE productos SET 
+            sql = '''UPDATE propiedades SET 
                         descrip_corta = %s, descrip_larga = %s, direccion = %s,
                         nota = %s, url_foto_1 = %s, url_foto_2 = %s, url_foto_3 = %s,
                         url_maps = %s, id_broker = %s, precio = %s, superf = %s,
@@ -290,22 +289,6 @@ class Catalogo:
             close_db_connection(conn)
     
         return ret_val 
-
-    #----------------------------------------------------------------
-    # def mostrar_producto(self, id):
-    #     # Mostramos los datos a partir de su código
-    #     propiedad = self.consultar_producto(id)
-    #     if propiedad:
-    #         print("-" * 40)
-    #         print(f"Código.....: {producto['codigo']}")
-    #         print(f"Descripción: {producto['descripcion']}")
-    #         print(f"Cantidad...: {producto['cantidad']}")
-    #         print(f"Precio.....: {producto['precio']}")
-    #         print(f"Imagen.....: {producto['imagen_url']}")
-    #         print(f"Proveedor..: {producto['proveedor']}")
-    #         print("-" * 40)
-    #     else:
-    #         print("Producto no encontrado.")
 
 
 #--------------------------------------------------------------------
@@ -419,54 +402,91 @@ def agregar_prop():
 #--------------------------------------------------------------------
 # Modificar uno, según su id
 #--------------------------------------------------------------------
-@app.route("/propiedades/<int:codigo>", methods=["PUT"])
+@app.route("/propiedades/<int:id>", methods=["PUT"])
 @login_required
-# La función modificar_producto se asocia con esta URL y es invocada cuando se realiza una solicitud PUT a /productos/ seguido de un número (el código del producto).
-def modificar_producto(codigo):
+# La función modificar_producto se asocia con esta URL y es invocada cuando se
+# realiza una solicitud PUT a /productos/ seguido de un número (el código del producto).
+def modificar_prop(id):
     #Se recuperan los nuevos datos del formulario
-    nueva_descripcion = request.form.get("descripcion")
-    nueva_cantidad = request.form.get("cantidad")
-    nuevo_precio = request.form.get("precio")
+    descrip_corta = request.form.get("descrip_corta")
+    descrip_larga = request.form.get("descrip_larga")
+    direccion = request.form.get("direccion")
+    nota = request.form.get("nota")
+    url_maps = request.form.get("url_maps")
+    id_broker = request.form.get("id_broker")
+    precio = request.form.get("precio")
+    superf = request.form.get("superf")
+    superf_tot = request.form.get("superf_tot")
+    baños = request.form.get("baños")
+    dormitorios = request.form.get("dormitorios")
+    cocheras = request.form.get("cocheras")
+    basicos = request.form.get("basicos")
+    servicios = request.form.get("servicios")
+    amenities = request.form.get("amenities")
 
-    nuevo_proveedor = request.form.get("proveedor")
-    # Verifica si se proporcionó una nueva imagen
-    if 'imagen' in request.files:
-        imagen = request.files['imagen']
-        # Procesamiento de la imagen
-        nombre_imagen = secure_filename(imagen.filename) #Chequea el nombre del archivo de la imagen, asegurándose de que sea seguro para guardar en el sistema de archivos
-        nombre_base, extension = os.path.splitext(nombre_imagen) #Separa el nombre del archivo de su extensión.
-        nombre_imagen = f"{nombre_base}_{int(time.time())}{extension}"
-        #Genera un nuevo nombre para la imagen usando un timestamp, para evitar sobreescrituras y conflictos de nombres.
+    ######################################################################################
+    #
+    imgs = [None, None, None]
+    urls = ['url_foto_1', 'url_foto_2', 'url_foto_3']
+    img_urls = [None, None, None]
 
-        # Guardar la imagen en el servidor
-        imagen.save(os.path.join(RUTA_DESTINO, nombre_imagen))
+    for i in range(3):
+        # Verifica si se proporcionó una nueva imagen
+        if urls[i] in request.files:
+            imgs[i] = request.files[urls[i]]
 
-        # Busco el producto guardado
-        producto = catalogo.consultar_producto(codigo)
-        if producto: # Si existe el producto...
-            imagen_vieja = producto["imagen_url"]
-            # Armo la ruta a la imagen
-            ruta_imagen = os.path.join(RUTA_DESTINO, imagen_vieja)
-            
-            # Y si existe la borro.
-            if os.path.exists(ruta_imagen):
-                os.remove(ruta_imagen)
+            # Procesamiento de la imagen
+            # Chequea el nombre del archivo de la imagen, asegurándose de que sea seguro
+            # para guardar en el sistema de archivos
+            img_urls[i] = secure_filename(imgs[i].filename)
 
-    else:
-        # Si no se proporciona una nueva imagen, simplemente usa la imagen existente del producto
-        producto = catalogo.consultar_producto(codigo)
-        if producto:
-            nombre_imagen = producto["imagen_url"]
+            # Separa el nombre del archivo de su extensión.
+            nombre_base, extension = os.path.splitext(img_urls[i])
+
+            # Genera un nuevo nombre para la imagen usando un timestamp, para evitar
+            # sobreescrituras y conflictos de nombres.
+            img_urls[i] = f"{nombre_base}_{int(time.time())}_{i}{extension}"
+
+            # Guardar la imagen en el servidor
+            imgs[i].save(os.path.join(RUTA_DESTINO, img_urls[i]))
+
+            # Busco el producto guardado
+            propiedad = catalogo.consultar_prop(id)
+            # Si existe el producto...
+            if propiedad:
+                imagen_vieja = propiedad[urls[i]]
+                # Armo la ruta a la imagen
+                ruta_imagen = os.path.join(RUTA_DESTINO, imagen_vieja)            
+                # Y si existe la borro.
+                if os.path.exists(ruta_imagen):
+                    os.remove(ruta_imagen)
+
+        else:
+            # Si no se proporciona una nueva imagen, simplemente usa la imagen existente
+            propiedad = catalogo.consultar_prop(id)
+            if propiedad:
+                img_urls[i] = propiedad[urls[i]]
         
-    # Se llama al método modificar_producto pasando el codigo del producto y los nuevos datos.
-    if catalogo.modificar_producto(codigo, nueva_descripcion,
-    nueva_cantidad, nuevo_precio, nombre_imagen, nuevo_proveedor):
+        i = i + 1
+    #
+    ######################################################################################
+
         
-        #Si la actualización es exitosa, se devuelve una respuesta JSON con un mensaje de éxito y un código de estado HTTP 200 (OK).
-        return jsonify({"mensaje": "Producto modificado"}), 200
+    # Se llama al método modificar_producto pasando el id y los nuevos datos.
+    if catalogo.modificar_prop(id,
+                                descrip_corta, descrip_larga, direccion,
+                                nota, img_urls[0], img_urls[1], img_urls[2],
+                                url_maps, id_broker, precio, superf,
+                                superf_tot, baños, dormitorios, cocheras,
+                                basicos, servicios, amenities):
+        
+        # Si la actualización es exitosa, se devuelve una respuesta JSON con un mensaje de éxito
+        # y un código de estado HTTP 200 (OK).
+        return jsonify({"mensaje": "Modificado"}), 200
     else:
-        #Si el producto no se encuentra (por ejemplo, si no hay ningún producto con el código dado), se devuelve un mensaje de error con un código de estado HTTP 404 (No Encontrado).
-        return jsonify({"mensaje": "Producto no encontrado"}), 403
+        # Si la propiedad no se encuentra (por ejemplo, si no hay ninguna con ese id),
+        # se devuelve un mensaje de error con un código de estado HTTP 404 (No Encontrado).
+        return jsonify({"mensaje": "No encontrado"}), 403
     
     
 #--------------------------------------------------------------------
@@ -523,22 +543,22 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-# Simulación de una base de datos de usuarios
-users = {}
-
 class User(UserMixin):
     def __init__(self, id, username, password):
         self.id = id
         self.username = username
         self.password = password
 
+# Simulación de una base de datos de usuarios
+users = {'1': User(id='1', username=keys['admin_user'], password=generate_password_hash(keys['admin_pass'])),
+         '2': User(id='2', username=keys['guest_user'], password=generate_password_hash(keys['guest_pass']))
+        }
+
+
 @login_manager.user_loader
 def load_user(user_id):
     return users.get(user_id)
 
-# @app.route('/')
-# def index():
-#     return 'Página pública'
 
 @app.route('/menu')
 def menu():
@@ -547,10 +567,6 @@ def menu():
     else:
         return redirect(url_for('login'))
     
-# @app.route('/protected')
-# @login_required
-# def protected():
-#     return f'Página protegida. Bienvenido, {current_user.username}!'
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -565,16 +581,15 @@ def login():
             flash('Nombre de usuario o contraseña incorrectos')
     return render_template('login.html')
 
+
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))
 
-# Agregar usuarios
-users['1'] = User(id='1', username=keys['admin_user'], password=generate_password_hash(keys['admin_pass']))
-users['2'] = User(id='2', username=keys['guest_user'], password=generate_password_hash(keys['guest_pass']))
 
 #--------------------------------------------------------------------
 if __name__ == "__main__":
     app.run(debug=True)
+
