@@ -67,6 +67,10 @@ h6 {
   color: #ffd200;
 }
 
+h1 {
+  padding-top: 1rem;
+}
+
 form {
   max-width: 400px;
   margin: 0 auto;
