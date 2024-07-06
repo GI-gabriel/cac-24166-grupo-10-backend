@@ -40,9 +40,10 @@ Personas interesadas en comprar, vender o realizar inversiones en el mercado de 
 ---
 
 ## Equipo
-- [Claudia Miranda](https://github.com/claumiranda) - (desarrollo HTML, CSS, JS, Bootstrap)
-- [Michel Diamant](https://github.com/mikeowl) - (desarrollo HTML, CSS, Diseño UX/UI)
-- [Gabriel Iarussi](https://github.com/GI-gabriel) - (desarrollo HTML, CSS, Diseño UX/UI)
+- [Claudia Miranda](https://github.com/claumiranda) - (desarrollo HTML, CSS, JS, Bootstrap, Backend)
+- [Michel Diamant](https://github.com/mikeowl) - (desarrollo HTML, CSS, Diseño UX/UI, Backend)
+- [Gabriel Iarussi](https://github.com/GI-gabriel) - (desarrollo HTML, CSS, Diseño UX/UI, Backend)
+- [Victoria G. Curzi](https://github.com/vixcurzi) - (desarrollo HTML, CSS, Diseño UX/UI, Backend)
 
 ## Etapas del proyecto
 - **Diseño y planificación:** 1 semana
