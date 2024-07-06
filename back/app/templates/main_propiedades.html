@@ -1,0 +1,298 @@
+{% extends "base.html" %}
+
+{% block mainPropiedades %}
+<!-- Sección ofertas -->
+<!-- spacer -->
+<div style="height: 8vh;"></div>
+<section id="container-ofertas">
+  <div>
+    <h2 class="istok-web-bold">Ofertas</h2>
+  </div>
+
+  <ul id="ofertas-bar">
+    <li>
+      <article>
+        <div class="card-hov">
+          <a href="#">
+            <div class="overlay-card">
+              <img src="{{ url_for('static', filename='img/pileta.jpg') }}" alt="casa">
+            </div>
+            <div class="texto-card">
+              <h3>Canning 870</h3>
+            </div>
+          </a>
+        </div>
+      </article>
+    </li>
+
+    <li>
+      <article>
+        <div class="card-hov">
+          <a href="#">
+            <div class="overlay-card">
+              <img src="{{ url_for('static', filename='img/gotico.jpg') }}" alt="casa">
+            </div>
+            <div class="texto-card">
+              <h3>L'Mansion - Estilo gótico</h3>
+            </div>
+          </a>
+        </div>
+      </article>
+    </li>
+
+    <li>
+      <article>
+        <div class="card-hov">
+          <a href="#">
+            <div class="overlay-card">
+              <img src="{{ url_for('static', filename='img/neutral.jpg') }}" alt="casa">
+            </div>
+            <div class="texto-card">
+              <h3>Punta Alta, con pileta</h3>
+            </div>
+          </a>
+        </div>
+      </article>
+    </li>
+
+    <li>
+      <article>
+        <div class="card-hov">
+          <a href="#">
+            <div class="overlay-card">
+              <img src="{{ url_for('static', filename='img/mansion.jpg') }}" alt="casa">
+            </div>
+            <div class="texto-card">
+              <h3>Mansión a estrenar - Longchamps</h3>
+            </div>
+          </a>
+        </div>
+      </article>
+    </li>
+  </ul>
+</section>
+<!-- fin Sección ofertas -->
+
+<!-- Propiedades -->
+<section class="container pb-5">
+  <div>
+    <h2 class="istok-web-bold">Propiedades</h2>
+  </div>
+
+  <div class="row">
+    <!-- Aside filtros -->
+    <aside class="col-lg-3">
+      <div id="prop-filtros" class="px-2 bg-warning-subtle border border-warning-subtle rounded rounded-2">
+
+        <!-- Título del aside -->
+        <h2 style="font-size: 1.3rem;" class="istok-web-bold py-3">Filtrar</h2>
+
+        <div id="filtros-container" class="d-flex flex-wrap">
+          <!-- Filtro ubicación -->
+          <div class="flex-grow-1 mb-4 mx-1 filtro-item">
+            <h4 class="mb-1 text-center">Ubicación</h4>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-warning">
+                <input class="form-check-input me-1" type="checkbox" value="1" id="chk-1-ubic">
+                <label class="form-check-label" for="chk-1-ubic">Palermo</label>
+              </li>
+              <li class="list-group-item list-group-item-warning">
+                <input class="form-check-input me-1" type="checkbox" value="2" id="chk-2-ubic">
+                <label class="form-check-label" for="chk-2-ubic">Belgrano</label>
+              </li>
+              <li class="list-group-item list-group-item-warning">
+                <input class="form-check-input me-1" type="checkbox" value="3" id="chk-3-ubic">
+                <label class="form-check-label" for="chk-3-ubic">Nuñez</label>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Filtro tipo prop -->
+          <div class="flex-grow-1 mb-4 mx-1 filtro-item">
+            <h4 class="mb-1 text-center">Tipo de propiedad</h4>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-warning">
+                <input class="form-check-input me-1" type="checkbox" value="1" id="chk-1-prop">
+                <label class="form-check-label" for="chk-1-prop">Casa</label>
+              </li>
+              <li class="list-group-item list-group-item-warning">
+                <input class="form-check-input me-1" type="checkbox" value="2" id="chk-2-prop">
+                <label class="form-check-label" for="chk-2-prop">Departamento</label>
+              </li>
+              <li class="list-group-item list-group-item-warning">
+                <input class="form-check-input me-1" type="checkbox" value="3" id="chk-3-prop">
+                <label class="form-check-label" for="chk-3-prop">Terreno</label>
+              </li>
+              <li class="list-group-item list-group-item-warning">
+                <input class="form-check-input me-1" type="checkbox" value="4" id="chk-4-prop">
+                <label class="form-check-label" for="chk-4-prop">Otro</label>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Filtro tipo oper -->
+          <div class="flex-grow-1 mb-4 mx-1 filtro-item">
+            <h4 class="mb-1 text-center">Tipo de operación</h4>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-warning">
+                <input class="form-check-input me-1" type="checkbox" value="1" id="chk-1-oper">
+                <label class="form-check-label" for="chk-1-oper">Venta</label>
+              </li>
+              <li class="list-group-item list-group-item-warning">
+                <input class="form-check-input me-1" type="checkbox" value="2" id="chk-2-oper">
+                <label class="form-check-label" for="chk-2-oper">Alquiler</label>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Filtro precio -->
+          <div class="flex-grow-1 mb-4 mx-1 filtro-item">
+            <h4 class="mb-1 text-center">Precio $USD</h4>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-warning">
+                <input class="form-check-input me-1" type="checkbox" value="1" id="chk-1-precio">
+                <label class="form-check-label" for="chk-1-precio">&lt;30k</label>
+              </li>
+              <li class="list-group-item list-group-item-warning">
+                <input class="form-check-input me-1" type="checkbox" value="2" id="chk-2-precio">
+                <label class="form-check-label" for="chk-2-precio">30k - 50k</label>
+              </li>
+              <li class="list-group-item list-group-item-warning">
+                <input class="form-check-input me-1" type="checkbox" value="3" id="chk-3-precio">
+                <label class="form-check-label" for="chk-3-precio">&gt;120k</label>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Filtro dormitorios -->
+          <div class="flex-grow-1 mb-4 mx-1 filtro-item">
+            <h4 class="mb-1 text-center">Dormitorios</h4>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-warning">
+                <input class="form-check-input me-1" type="checkbox" value="1" id="chk-1-dorm">
+                <label class="form-check-label" for="chk-1-dorm">1</label>
+              </li>
+              <li class="list-group-item list-group-item-warning">
+                <input class="form-check-input me-1" type="checkbox" value="2" id="chk-2-dorm">
+                <label class="form-check-label" for="chk-2-dorm">2 / 3</label>
+              </li>
+              <li class="list-group-item list-group-item-warning">
+                <input class="form-check-input me-1" type="checkbox" value="4" id="chk-3-dorm">
+                <label class="form-check-label" for="chk-3-dorm">&gt;3</label>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Filtro baños -->
+          <div class="flex-grow-1 mb-4 mx-1 filtro-item">
+            <h4 class="mb-1 text-center">Baños</h4>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-warning">
+                <input class="form-check-input me-1" type="checkbox" value="1" id="chk-1-banos">
+                <label class="form-check-label" for="chk-1-banos">1</label>
+              </li>
+              <li class="list-group-item list-group-item-warning">
+                <input class="form-check-input me-1" type="checkbox" value="2" id="chk-2-banos">
+                <label class="form-check-label" for="chk-2-banos">2</label>
+              </li>
+              <li class="list-group-item list-group-item-warning">
+                <input class="form-check-input me-1" type="checkbox" value="3" id="chk-3-banos">
+                <label class="form-check-label" for="chk-3-banos">&gt;2</label>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Filtro superficie -->
+          <div class="flex-grow-1 mb-4 mx-1 filtro-item">
+            <h4 class="mb-1 text-center">Superficie</h4>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-warning">
+                <input class="form-check-input me-1" type="checkbox" value="1" id="chk-1-sup">
+                <label class="form-check-label" for="chk-1-sup">100m<sup>2</sup></label>
+              </li>
+              <li class="list-group-item list-group-item-warning">
+                <input class="form-check-input me-1" type="checkbox" value="2" id="chk-2-sup">
+                <label class="form-check-label" for="chk-2-sup">100m<sup>2</sup> - 500m<sup>2</sup></label>
+              </li>
+              <li class="list-group-item list-group-item-warning">
+                <input class="form-check-input me-1" type="checkbox" value="3" id="chk-3-sup">
+                <label class="form-check-label" for="chk-3-sup">&gt;500m<sup>2</sup></label>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Botón aplicar -->
+        <div class="d-block text-center mb-4">
+          <button type="button" class="btn btn-primary btn-sm">Aplicar</button>
+        </div>
+      </div>
+    </aside>
+    <!-- fin Aside filtros -->
+
+    <!-- spacer para pantallas chicas -->
+    <div class="d-lg-none mb-5"></div>
+
+    <!-- Cards propiedades -->
+    <div class="col-lg-9">      
+      
+      {% for item in listaProp %}
+      <a href="/buscar/{{ item.id }}" class="card-anchor">
+        <div class="card mb-3">
+          <div class="row g-0">
+            <!-- Imagen -->
+            <div class="col-sm-4">
+              <img src="img/{{ item.url_foto_1 }}" class="img-fluid img-auto-round" alt="foto propiedad">
+            </div>
+
+            <!-- Tarjeta -->
+            <div class="col-sm-8 card-body d-flex flex-column justify-content-between">
+              <div class="flex flex-column">
+
+                <!-- Título y precio -->
+                <div class="row mb-0">
+                  <div class="col-8">
+                    <h4 class="card-title">{{ item.descrip_corta }}</h4>
+                  </div>
+                  <div class="col-4 text-end">
+                    <div class="d-flex flex-column">
+                      <div style="font-size: 0.7rem;">PRECIO</div>
+                      <div style="font-size: 1.5rem;"><span style="font-size: 0.7rem;">$USD</span>{{ item.precio }}</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Dirección -->
+                <div class="mb-2">
+                  <p class="card-text">Dirección: {{ item.direccion }}</p>
+                </div>
+
+                <!-- Otros datos -->
+                <div class="mb-2">
+                  <p class="card-text">{{ item.nota }}</p>
+                </div>
+
+              </div>
+
+              <!-- Tablita características -->
+              <div class="d-flex flex-wrap">
+                <span style="font-size: 0.8rem;" class="card-text card-txt-tbl"><strong>Sup.: </strong>{{ item.superf }}m<sup>2</sup></span>
+                <span style="font-size: 0.8rem;" class="card-text card-txt-tbl"><strong>Sup. total: </strong>{{ item.superf_tot }}m<sup>2</sup></span>
+                <span style="font-size: 0.8rem;" class="card-text card-txt-tbl"><strong>Baños: </strong>{{ item.baños }}</span>
+                <span style="font-size: 0.8rem;" class="card-text card-txt-tbl"><strong>Dormitorios: </strong>{{ item.dormitorios }}</span>
+                <span style="font-size: 0.8rem;" class="card-text card-txt-tbl"><strong>Cochera: </strong>{{ item.cochera }}</span>
+                <span style="font-size: 0.8rem;" class="card-text card-txt-tbl"><strong>Otros: </strong></span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+
+    </div>
+    <!-- fin Cards propiedades -->
+  </div>
+</section>
+<!-- fin Propiedades -->
+{% endblock %}

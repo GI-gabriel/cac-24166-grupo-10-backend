@@ -94,17 +94,25 @@ table {
 label {
   display: block;
   margin-bottom: 5px;
+  width: 90%;
 }
 
 input[type="text"],
 input[type="number"],
 input[type="password"],
-textarea {
-  width: 90%;
+textarea,
+select {
+  width: 100%;
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #000000;
   border-radius: 5px;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+textarea{
+  font-size: 0.7rem;
 }
 
 input[type="submit"] {
@@ -151,4 +159,20 @@ a {
 a:hover {
   background-color: #000000;
   color: #a58e95
+}
+
+th,
+td {
+  text-align: left;
+  padding-right: 1rem;
+}
+
+th:last-child,
+td:last-child,
+td {
+  padding-right: 0;
+}
+
+.sqrbtn {
+  padding-right: 0 !important;
 }

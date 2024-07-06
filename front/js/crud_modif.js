@@ -3,6 +3,8 @@ const URL = "http://localhost:5000/"
 
 // Variables de estado para controlar la visibilidad y los datos del formulario
 let id_ = '';
+let tipo_oper = ''
+let tipo_prop = ''
 let descrip_corta = '';
 let descrip_larga = '';
 let direccion = '';
@@ -54,15 +56,15 @@ function obtenerLista() {
       data.forEach(propiedad => {
         const row = propTable.insertRow();
         row.innerHTML = `<td>${propiedad.id}</td>
-                          <td>${propiedad.descrip_corta}</td>
+                          <td>${propiedad.tipo_oper}</td>
+                          <td>${propiedad.tipo_prop}</td>
                           <td>${propiedad.direccion}</td>
-                          <td style="text-align: right;">${propiedad.precio}</td>
-                          <td><button title="Editar" onclick="modificarProp('${propiedad.id}')">
+                          <td class="sqrbtn"><button title="Editar" onclick="modificarProp('${propiedad.id}')">
                           <svg style="display: block" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
                             <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
                           </svg></button></td></button></td>
-                          <td><button title="Eliminar" onclick="eliminarProp('${propiedad.id}')">
-                          <svg style="display: block" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                          <td class="sqrbtn"><button title="Eliminar" onclick="eliminarProp('${propiedad.id}')">
+                          <svg class="2col style="display: block" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
                             <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
                           </svg></button></td></button></td>`;
@@ -102,6 +104,8 @@ function eliminarProp(id) {
 // sobre una propiedad que se desea modificar
 function mostrarFormulario() {
   if (mostrarDatosProp) {
+    document.getElementById('tipo_oper').value = tipo_oper;
+    document.getElementById('tipo_prop').value = tipo_prop;
     document.getElementById('descrip_corta').value = descrip_corta;
     document.getElementById('descrip_larga').value = descrip_larga;
     document.getElementById('direccion').value = direccion;
@@ -243,6 +247,8 @@ function modificarProp(id) {
       }
     })
     .then(data => {
+      tipo_oper = data.tipo_oper;
+      tipo_prop = data.tipo_prop;
       descrip_corta = data.descrip_corta;
       descrip_larga = data.descrip_larga;
       direccion = data.direccion;
@@ -279,6 +285,8 @@ function guardarCambios(event) {
 
   const formData = new FormData();
   formData.append('id', id_);
+  formData.append('tipo_oper', document.getElementById('tipo_oper').value);
+  formData.append('tipo_prop', document.getElementById('tipo_prop').value);
   formData.append('descrip_corta', document.getElementById('descrip_corta').value);
   formData.append('descrip_larga', document.getElementById('descrip_larga').value);
   formData.append('direccion', document.getElementById('direccion').value);
@@ -326,6 +334,7 @@ function guardarCambios(event) {
     .then(data => {
       alert('Producto actualizado correctamente.');
       limpiarFormulario();
+      obtenerLista();
     })
     .catch(error => {
       console.error('Error:', error);
@@ -359,6 +368,8 @@ function limpiarFormulario() {
   foto_3_VistaPrevia.style.display = 'none';
 
   id_ = '';
+  tipo_oper = ''
+  tipo_prop = ''
   descrip_corta = '';
   descrip_larga = '';
   direccion = '';
@@ -393,67 +404,3 @@ function limpiarFormulario() {
 
 // Cuando la página se carga, llama a obtenerProp para cargar la lista.
 document.addEventListener('DOMContentLoaded', obtenerLista);
-
-
-// // Se ejecuta cuando se envía el formulario de consulta. Realiza una solicitud GET a la API y
-// // obtiene los datos del producto correspondiente al código ingresado.
-// function obtenerProducto(event) {
-//   event.preventDefault();
-//   codigo = document.getElementById('codigo').value;
-
-//   fetch(URL + 'productos/' + codigo)
-//     .then(response => {
-//       if (response.ok) {
-//         return response.json()
-//       } else {
-//         throw new Error('Error al obtener los datos del producto.')
-//       }
-//     })
-//     .then(data => {
-//       descripcion = data.descripcion;
-//       cantidad = data.cantidad;
-//       precio = data.precio;
-//       proveedor = data.proveedor;
-//       imagen_url = data.imagen_url;
-
-//       //Activa la vista del segundo formulario
-//       mostrarDatosProducto = true; 
-//       mostrarFormulario();
-//     })
-//     .catch(error => {
-//       alert('Código no encontrado.');
-//     });
-// }
-
-
-// // Muestra el formulario con los datos del producto
-// function mostrarFormulario() {
-//   if (mostrarDatosProducto) {
-//     document.getElementById('descripcionModificar').value = descripcion;
-//     document.getElementById('cantidadModificar').value = cantidad;
-//     document.getElementById('precioModificar').value = precio;
-//     document.getElementById('proveModificar').value = proveedor;
-//     const imagenActual = document.getElementById('imagen-actual');
-
-//     // Verifica si imagen_url no está vacía y no se ha seleccionado una imagen
-//     if (imagen_url && !imagenSeleccionada) {
-//       //imagenActual.src = './static/imagenes/' + imagen_url;
-//       imagenActual.src = 'https://gigabriel.serv00.net/imagenes/' + imagen_url;
-//       //Al subir al servidor, deberá utilizarse la siguiente ruta.USUARIO debe ser reemplazado por el nombre de usuario de Pythonanywhere
-//       //imagenActual.src = 'https://www.pythonanywhere.com/user/USUARIO/files/home/USUARIO/mysite/static / imagenes / ' + imagen_url;
-      
-//       // Muestra la imagen actual
-//       imagenActual.style.display = 'block'; 
-//     } else {
-//       // Oculta la imagen si no hay URL
-//       imagenActual.style.display = 'none'; 
-//     }
-//     document.getElementById('datos-producto').style.display = 'block';
-//   } else {
-//     document.getElementById('datos-producto').style.display = 'none';
-//   }
-// }
-
-
-
-

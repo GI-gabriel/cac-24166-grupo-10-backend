@@ -16,9 +16,9 @@
     <thead>
       <tr>
         <th>Código</th>
-        <th>Descripción</th>
+        <th>Operación</th>
+        <th>Propiedad</th>
         <th>Dirección</th>
-        <th style="text-align: right;">Precio</th>
         <th colspan="2">Acciones</th>
       </tr>
     </thead>
@@ -35,18 +35,33 @@
   <div id="datos-prop" style="display: none;">
     <h2>Datos del Producto</h2>
     <form id="form-guardar-cambios">
+      <!-- Tipo de operación -->
+      <label for="tipo_oper">Operación:</label>
+      <select id="tipo_oper" name="tipo_oper">
+        <option value="Alquiler">Alquiler</option>
+        <option value="Venta">Venta</option>
+        <option value="Otra">Otra</option>
+      </select><br>
+      <!-- Tipo de propiedad -->
+      <label for="tipo_prop">Tipo de propiedad:</label>
+      <select id="tipo_prop" name="tipo_prop">
+        <option value="Casa">Casa</option>
+        <option value="Departamento">Departamento</option>
+        <option value="Local">Local</option>
+        <option value="Otro">Otro</option>
+      </select><br>
       <!-- Descripción corta -->
       <label for="descrip_corta">Descripción corta:</label>
       <input type="text" id="descrip_corta" name="descrip_corta" required><br>
       <!-- Descripción larga -->
       <label for="descrip_larga">Descripción larga:</label>
-      <input type="text" id="descrip_larga" name="descrip_larga" required><br>
+      <textarea id="descrip_larga" name="descrip_larga" rows="10" required></textarea><br>
       <!-- Dirección -->
       <label for="direccion">Dirección:</label>
       <input type="text" id="direccion" name="direccion" required><br>
       <!-- Nota -->
       <label for="nota">Notas:</label>
-      <input type="text" id="nota" name="nota" required><br>
+      <input type="text" id="nota" name="nota"><br>
       <br>
 
       <!-- ------------------------------------------------------------------------------- -->
@@ -77,7 +92,7 @@
 
       <!-- URL Google Maps -->
       <label for="url_maps">URL Google Maps:</label>
-      <input type="text" id="url_maps" name="url_maps" required><br>
+      <input type="text" id="url_maps" name="url_maps"><br>
       <!-- Broker -->
       <label for="id_broker">ID Broker:</label>
       <input type="number" id="id_broker" name="id_broker" required><br>
@@ -101,13 +116,13 @@
       <input type="number" id="cocheras" name="cocheras" required><br>
       <!-- Básicos -->
       <label for="basicos">Básicos:</label>
-      <input type="text" id="basicos" name="basicos" required><br>
+      <textarea id="basicos" name="basicos" rows="5" required></textarea><br>
       <!-- Servicios -->
       <label for="servicios">Servicios:</label>
-      <input type="text" id="servicios" name="servicios" required><br>
+      <textarea id="servicios" name="servicios" rows="5" required></textarea><br>
       <!-- Amenities -->
       <label for="amenities">Amenities:</label>
-      <input type="text" id="amenities" name="amenities" required><br>
+      <textarea id="amenities" name="amenities" rows="5" required></textarea><br>
 
       <button type="submit">Guardar Cambios</button>
       <button type="button" id="btn-cancelar">Cancelar</button>
