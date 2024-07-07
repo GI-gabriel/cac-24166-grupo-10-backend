@@ -1,4 +1,4 @@
 .venv/
 .vscode/
-back/app/static/img/
+static/img/prop/
 __pycache__/

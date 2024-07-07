@@ -1,12 +1,12 @@
 #--------------------------------------------------------------------
 # Instalar con pip install Flask
-from flask import Flask, request, jsonify, render_template, redirect, url_for, request, flash
+from flask import Flask, request, jsonify, render_template, redirect, url_for, request, flash, send_from_directory
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 # from flask import request
 
 # Instalar con pip install flask-cors
-from flask_cors import CORS
+# from flask_cors import CORS
 
 # Instalar con pip install mysql-connector-python
 import mysql.connector
@@ -25,10 +25,10 @@ from keys import keys
 
 app = Flask(__name__)
 app.secret_key = keys['secret_key']
-CORS(app, resources={r"/*": {"origins": "http://localhost:5500"}}, supports_credentials=True)
+# CORS(app, resources={r"/*": {"origins": "http://localhost:5500"}}, supports_credentials=True)
 
 # Carpeta para guardar las imagenes.
-RUTA_DESTINO = './static/img/'
+RUTA_DESTINO = './static/img/prop'
 # RUTA_DESTINO = '/home/GIgabriel/mysite/static/imagenes'
 
 # Funciones para abrir y cerrar la base de datos en cada consulta
@@ -63,29 +63,6 @@ class Catalogo:
             conn = open_db_connection()
             cursor = conn.cursor()
 
-            # Una vez que la base de datos está establecida
-            # Crea tabla de propiedades inmobiliarias
-            cursor.execute('''CREATE TABLE IF NOT EXISTS propiedades (
-                                id INT AUTO_INCREMENT PRIMARY KEY,
-                                descrip_corta VARCHAR(255) NOT NULL,
-                                descrip_larga VARCHAR(2048) NOT NULL,
-                                direccion VARCHAR(255) NOT NULL,
-                                nota VARCHAR(255) NOT NULL,
-                                url_foto_1 VARCHAR(255) NOT NULL,
-                                url_foto_2 VARCHAR(255) NOT NULL,
-                                url_foto_3 VARCHAR(255) NOT NULL,
-                                url_maps VARCHAR(255) NOT NULL,
-                                id_broker INT,
-                                precio DECIMAL(10, 2) NOT NULL,
-                                superf INT,
-                                superf_tot INT,
-                                baños INT,
-                                dormitorios INT,
-                                cocheras INT,
-                                basicos VARCHAR(1024) NOT NULL,
-                                servicios VARCHAR(1024) NOT NULL,
-                                amenities VARCHAR(1024) NOT NULL
-            )''')
             # Crea tabla de brokers
             cursor.execute('''CREATE TABLE IF NOT EXISTS brokers (
                                 id INT AUTO_INCREMENT PRIMARY KEY,
@@ -95,21 +72,46 @@ class Catalogo:
                                 url_foto VARCHAR(255) NOT NULL
             )''')
 
+            # Una vez que la base de datos está establecida
+            # Crea tabla de propiedades inmobiliarias
+            cursor.execute('''CREATE TABLE IF NOT EXISTS propiedades (
+                                id INT AUTO_INCREMENT PRIMARY KEY,
+                                tipo_oper VARCHAR(255) NOT NULL,
+                                tipo_prop VARCHAR(255) NOT NULL,
+                                descrip_corta VARCHAR(255) NOT NULL,
+                                descrip_larga VARCHAR(2048) NOT NULL,
+                                direccion VARCHAR(255) NOT NULL,
+                                nota VARCHAR(255) NOT NULL,
+                                url_foto_1 VARCHAR(255) NOT NULL,
+                                url_foto_2 VARCHAR(255) NOT NULL,
+                                url_foto_3 VARCHAR(255) NOT NULL,
+                                url_maps VARCHAR(512) NOT NULL,
+                                id_broker INT,
+                                precio DECIMAL(10, 2) NOT NULL,
+                                superf INT,
+                                superf_tot INT,
+                                baños INT,
+                                dormitorios INT,
+                                cocheras INT,
+                                basicos VARCHAR(1024) NOT NULL,
+                                servicios VARCHAR(1024) NOT NULL,
+                                amenities VARCHAR(1024) NOT NULL,
+                                FOREIGN KEY (id_broker) REFERENCES brokers(id) ON DELETE CASCADE ON UPDATE CASCADE
+            )''')
+
             # Se completa la tabla de brokers de forma estática,
             # no se va a utilizar un CRUD para esta tabla
-            # url_img_path = "./static/img/brokers/"
-            url_img_path = RUTA_DESTINO + 'brokers/'
             brokers = [
-                {'name': 'John Doe', 'phone': '123-456-7890', 'email': 'john.doe@example.com', 'url_img': url_img_path + 'm1' + '.jpg'},
-                {'name': 'Jane Smith', 'phone': '987-654-3210', 'email': 'jane.smith@example.com', 'url_img': url_img_path + 'f1' + '.jpg'},
-                {'name': 'Alice Johnson', 'phone': '555-123-4567', 'email': 'alice.johnson@example.com', 'url_img': url_img_path + 'f2' + '.jpg'},
-                {'name': 'Bob Brown', 'phone': '555-987-6543', 'email': 'bob.brown@example.com', 'url_img': url_img_path + 'm2' + '.jpg'},
-                {'name': 'Carol White', 'phone': '555-555-5555', 'email': 'carol.white@example.com', 'url_img': url_img_path + 'f3' + '.jpg'},
-                {'name': 'David Black', 'phone': '555-444-3333', 'email': 'david.black@example.com', 'url_img': url_img_path + 'm3' + '.jpg'},
-                {'name': 'Eva Green', 'phone': '555-222-1111', 'email': 'eva.green@example.com', 'url_img': url_img_path + 'f4' + '.jpg'},
-                {'name': 'Frank Blue', 'phone': '555-666-7777', 'email': 'frank.blue@example.com', 'url_img': url_img_path + 'm4' + '.jpg'},
-                {'name': 'Grace Yellow', 'phone': '555-888-9999', 'email': 'grace.yellow@example.com', 'url_img': url_img_path + 'f5' + '.jpg'},
-                {'name': 'Hank Red', 'phone': '555-000-1111', 'email': 'hank.red@example.com', 'url_img': url_img_path + 'm5' + '.jpg'}
+                {'name': 'John Doe', 'phone': '123-456-7890', 'email': 'john.doe@example.com', 'url_img': 'm1' + '.jpg'},
+                {'name': 'Jane Smith', 'phone': '987-654-3210', 'email': 'jane.smith@example.com', 'url_img': 'f1' + '.jpg'},
+                {'name': 'Alice Johnson', 'phone': '555-123-4567', 'email': 'alice.johnson@example.com', 'url_img': 'f2' + '.jpg'},
+                {'name': 'Bob Brown', 'phone': '555-987-6543', 'email': 'bob.brown@example.com', 'url_img': 'm2' + '.jpg'},
+                {'name': 'Carol White', 'phone': '555-555-5555', 'email': 'carol.white@example.com', 'url_img': 'f3' + '.jpg'},
+                {'name': 'David Black', 'phone': '555-444-3333', 'email': 'david.black@example.com', 'url_img': 'm3' + '.jpg'},
+                {'name': 'Eva Green', 'phone': '555-222-1111', 'email': 'eva.green@example.com', 'url_img': 'f4' + '.jpg'},
+                {'name': 'Frank Blue', 'phone': '555-666-7777', 'email': 'frank.blue@example.com', 'url_img': 'm4' + '.jpg'},
+                {'name': 'Grace Yellow', 'phone': '555-888-9999', 'email': 'grace.yellow@example.com', 'url_img': 'f5' + '.jpg'},
+                {'name': 'Hank Red', 'phone': '555-000-1111', 'email': 'hank.red@example.com', 'url_img': 'm5' + '.jpg'}
             ]
 
             cursor.execute("SELECT COUNT(*) FROM brokers")
@@ -117,7 +119,7 @@ class Catalogo:
             # Entonces no es necesario llenarla nuevamente       
             if not (cursor.fetchone()[0]) > 0:
                 for broker in brokers:
-                    self.cursor.execute(f'''INSERT INTO brokers (nombre, mail, telefono, url_foto)
+                    cursor.execute(f'''INSERT INTO brokers (nombre, mail, telefono, url_foto)
                                             VALUES ('{broker['name']}',
                                                     '{broker['email']}',
                                                     '{broker['phone']}',
@@ -133,11 +135,10 @@ class Catalogo:
                 cursor.close()
             close_db_connection(conn)
 
-        # self.cursor = self.conn.cursor(dictionary=True)
-
 
     #----------------------------------------------------------------
     def agregar_prop(self,
+                     tipo_oper, tipo_prop,
                      descrip_corta, descrip_larga, direccion,
                      nota, url_foto_1, url_foto_2, url_foto_3,
                      url_maps, id_broker, precio, superf,
@@ -151,15 +152,18 @@ class Catalogo:
             cursor = conn.cursor(dictionary=True)
         
             sql = '''INSERT INTO propiedades (
+                        tipo_oper, tipo_prop,
                         descrip_corta, descrip_larga, direccion,
                         nota, url_foto_1, url_foto_2, url_foto_3,
                         url_maps, id_broker, precio, superf,
                         superf_tot, baños, dormitorios, cocheras,
                         basicos, servicios, amenities )
-                    VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s,
+                    VALUES ( %s, %s,
+                            %s, %s, %s, %s, %s, %s, %s, %s, %s,
                             %s, %s, %s, %s, %s, %s, %s, %s, %s)'''
 
-            valores = (descrip_corta, descrip_larga, direccion,
+            valores = (tipo_oper, tipo_prop,
+                    descrip_corta, descrip_larga, direccion,
                     nota, url_foto_1, url_foto_2, url_foto_3,
                     url_maps, id_broker, precio, superf,
                     superf_tot, baños, dormitorios, cocheras,
@@ -200,8 +204,65 @@ class Catalogo:
             close_db_connection(conn)
     
         return ret_val
+    
+
+    #----------------------------------------------------------------
+    def consultar_ficha(self, id):
+        conn = None
+        cursor = None
+        try:        
+            conn = open_db_connection()
+            cursor = conn.cursor(dictionary=True)
+
+            # Consultamos a partir de su id
+            query = '''SELECT p.id,
+                        p.tipo_oper,
+                        p.tipo_prop,
+                        p.descrip_corta,
+                        p.descrip_larga,
+                        p.direccion,
+                        p.nota,
+                        p.url_foto_1,
+                        p.url_foto_2,
+                        p.url_foto_3,
+                        p.url_maps,
+                        p.id_broker,
+                        p.precio,
+                        p.superf,
+                        p.superf_tot,
+                        p.baños,
+                        p.dormitorios,
+                        p.cocheras,
+                        p.basicos,
+                        p.servicios,
+                        p.amenities,
+                        b.id AS broker_id,
+                        b.nombre AS broker_nombre,
+                        b.mail AS broker_mail,
+                        b.telefono AS broker_telefono,
+                        b.url_foto AS broker_url_foto
+                    FROM propiedades p
+                    JOIN brokers b ON p.id_broker = b.id
+                    WHERE p.id = %s;
+                    '''
+            
+            cursor.execute(query, (id,))
+            ret_val = cursor.fetchone()
+        
+        except ValueError as e:
+            print(f"Error al ejecutar la consulta: {e}")
+
+        finally:
+            if cursor:
+                cursor.close()
+            close_db_connection(conn)
+
+        return ret_val
+    
+
     #----------------------------------------------------------------
     def modificar_prop(self, id,
+                       tipo_oper, tipo_prop,
                        descrip_corta, descrip_larga, direccion,
                        nota, url_foto_1, url_foto_2, url_foto_3,
                        url_maps, id_broker, precio, superf,
@@ -216,7 +277,8 @@ class Catalogo:
 
             # CUIDADO! - Tienen el mismo nombre, pero no son los argumentos de la función
             # Son los parámetros de la consulta
-            sql = '''UPDATE propiedades SET 
+            sql = '''UPDATE propiedades SET
+                        tipo_oper = %s, tipo_prop = %s,
                         descrip_corta = %s, descrip_larga = %s, direccion = %s,
                         nota = %s, url_foto_1 = %s, url_foto_2 = %s, url_foto_3 = %s,
                         url_maps = %s, id_broker = %s, precio = %s, superf = %s,
@@ -224,7 +286,8 @@ class Catalogo:
                         basicos = %s, servicios = %s, amenities = %s
                     WHERE id = %s'''
             
-            valores = (descrip_corta, descrip_larga, direccion,
+            valores = (tipo_oper, tipo_prop,
+                    descrip_corta, descrip_larga, direccion,
                     nota, url_foto_1, url_foto_2, url_foto_3,
                     url_maps, id_broker, precio, superf,
                     superf_tot, baños, dormitorios, cocheras,
@@ -254,8 +317,7 @@ class Catalogo:
             cursor = conn.cursor(dictionary=True)
 
             cursor.execute("SELECT * FROM propiedades")
-            propiedades = cursor.fetchall()
-            ret_val = propiedades
+            ret_val = cursor.fetchall()
 
         except ValueError as e:
             print(f"Error al ejecutar la consulta: {e}")
@@ -266,6 +328,7 @@ class Catalogo:
             close_db_connection(conn)
     
         return ret_val    
+
 
     #----------------------------------------------------------------
     def eliminar_prop(self, id):
@@ -288,7 +351,34 @@ class Catalogo:
                 cursor.close()
             close_db_connection(conn)
     
-        return ret_val 
+        return ret_val
+    
+
+    #--------------------------------------------------------------------
+    def buscar_prop(self, tipo_oper, tipo_prop, precio, superf):
+        # Conexión a la base de datos
+        conn = open_db_connection()
+        cursor = conn.cursor(dictionary=True) 
+
+        try:
+            # Realizar la consulta
+            query = '''SELECT id,
+                        tipo_prop, tipo_oper,
+                        descrip_corta, direccion, nota, url_foto_1, precio,
+                        superf, superf_tot, baños, dormitorios, cocheras
+                        FROM propiedades
+                        WHERE precio < %s
+                    '''
+            cursor.execute(query, (precio,))
+
+            ret_val = cursor.fetchall()
+    
+        finally:
+            # Cerrar el cursor y la conexión
+            cursor.close()
+            conn.close()
+            
+        return ret_val
 
 
 #--------------------------------------------------------------------
@@ -335,6 +425,8 @@ def mostrar_prop(id):
 # La función agregar_prop se asocia con esta URL y es llamada cuando se hace
 # una solicitud POST a /propiedades.
 def agregar_prop():
+    tipo_oper = request.form['tipo_oper']
+    tipo_prop = request.form['tipo_prop']
     descrip_corta = request.form['descrip_corta']
     descrip_larga = request.form['descrip_larga']
     direccion = request.form['direccion']
@@ -375,11 +467,12 @@ def agregar_prop():
     ########################################################################
     
     #Agrega propiedad a una fila de la tabla
-    nuevo_id = catalogo.agregar_prop(descrip_corta, descrip_larga, direccion,
-                                     nota, img_urls[0], img_urls[1], img_urls[2],
-                                     url_maps, id_broker, precio, superf,
-                                     superf_tot, baños, dormitorios, cocheras,
-                                     basicos, servicios, amenities)
+    nuevo_id = catalogo.agregar_prop(tipo_oper, tipo_prop,
+                                        descrip_corta, descrip_larga, direccion,
+                                        nota, img_urls[0], img_urls[1], img_urls[2],
+                                        url_maps, id_broker, precio, superf,
+                                        superf_tot, baños, dormitorios, cocheras,
+                                        basicos, servicios, amenities)
     # Si el guardado en base de datos fue exitoso, guarda los archivos de imagenes
     # en el sistema de archivos    
     if nuevo_id:
@@ -408,6 +501,8 @@ def agregar_prop():
 # realiza una solicitud PUT a /productos/ seguido de un número (el código del producto).
 def modificar_prop(id):
     #Se recuperan los nuevos datos del formulario
+    tipo_oper = request.form['tipo_oper']
+    tipo_prop = request.form['tipo_prop']
     descrip_corta = request.form.get("descrip_corta")
     descrip_larga = request.form.get("descrip_larga")
     direccion = request.form.get("direccion")
@@ -474,6 +569,7 @@ def modificar_prop(id):
         
     # Se llama al método modificar_producto pasando el id y los nuevos datos.
     if catalogo.modificar_prop(id,
+                                tipo_oper, tipo_prop,
                                 descrip_corta, descrip_larga, direccion,
                                 nota, img_urls[0], img_urls[1], img_urls[2],
                                 url_maps, id_broker, precio, superf,
@@ -536,6 +632,39 @@ def eliminar_prop(id):
         return jsonify({"mensaje": "No encontrado"}), 404
 
 
+# Ruta para servir archivos estáticos desde la raíz del dominio
+# @app.route('/<path:filename>')
+# def serve_static_files(filename):
+#     return send_from_directory('static', filename)
+
+
+# index.html
+@app.route('/')
+def index():
+    return redirect('static/index.html')
+
+#--------------------------------------------------------------------
+# Generar lista de propiedades según criterio de búsqueda
+#--------------------------------------------------------------------
+@app.route("/buscar", methods=["GET"])
+def buscar_prop():
+    # Realiza la búsqueda en la base de datos
+    lista = catalogo.buscar_prop(tipo_oper=None, tipo_prop=None, superf=None, precio=100000)
+
+    return render_template('main_propiedades.html', listaProp=lista)
+
+
+#--------------------------------------------------------------------
+# Generar ficha de propiedad según id
+#--------------------------------------------------------------------
+@app.route("/buscar/<int:id>", methods=["GET"])
+def buscar_ficha(id):
+    # Realiza la búsqueda en la base de datos
+    propiedad = catalogo.consultar_ficha(id)
+
+    return render_template('main_ficha.html', propiedad=propiedad)
+ 
+
 #--------------------------------------------------------------------
 # Control de acceso
 # Configuración de Flask-Login
@@ -543,11 +672,13 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+
 class User(UserMixin):
     def __init__(self, id, username, password):
         self.id = id
         self.username = username
         self.password = password
+
 
 # Simulación de una base de datos de usuarios
 users = {'1': User(id='1', username=keys['admin_user'], password=generate_password_hash(keys['admin_pass'])),
@@ -563,7 +694,7 @@ def load_user(user_id):
 @app.route('/menu')
 def menu():
     if current_user.is_authenticated:
-        return redirect('http://localhost:5500/front/crud_menu.html')
+        return redirect('static/crud_menu.html')
     else:
         return redirect(url_for('login'))
     
@@ -576,7 +707,7 @@ def login():
         user = next((u for u in users.values() if u.username == username), None)
         if user and check_password_hash(user.password, password):
             login_user(user)
-            return redirect('http://localhost:5500/front/crud_menu.html')
+            return redirect('static/crud_menu.html')
         else:
             flash('Nombre de usuario o contraseña incorrectos')
     return render_template('login.html')
@@ -592,4 +723,3 @@ def logout():
 #--------------------------------------------------------------------
 if __name__ == "__main__":
     app.run(debug=True)
-

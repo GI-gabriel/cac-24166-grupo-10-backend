@@ -4,11 +4,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Menú de administración</title>
   <link rel="stylesheet" href="./css/crud_styles.css">
+  <link rel="shortcut icon" href="img/admin.ico" type="image/x-icon">
+  <title>Menú de administración</title>
+
+  <!-- Para evitar FOUC -->
+  <style>
+    .no-js body {
+      visibility: hidden;
+    }
+  </style>
+  <script>
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+  </script>
 </head>
 
-<body>
+<body class="no-js">
+  <header></header>
   <h1>Menú de administración</h1><br>
   <table>
     <tr>
@@ -24,7 +36,7 @@
     </tr>
     <tr>
       <td class="contenedor-centrado">
-        <a href="http://localhost:5000/logout" style="display: block; width: fit-content;">Logout</a>
+        <a href="/logout" style="display: block; width: fit-content;">Logout</a>
         <div style="padding: 0 0.5rem"></div>
         <a href="index.html" style="display: block; width: fit-content;">Volver</a>
       </td>
@@ -33,6 +45,7 @@
       <td class="contenedor-centrado"></td>
     </tr>
   </table>
+  <footer></footer>
 </body>
 
 </html>

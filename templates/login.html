@@ -4,11 +4,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/crud_styles.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/admin.ico') }}" type="image/x-icon">
   <title>Login</title>
-  <link rel="stylesheet" href="./static/css/crud_styles.css">
+
+  <!-- Para evitar FOUC -->
+  <style>
+    .no-js body {
+      visibility: hidden;
+    }
+  </style>
+  <script>
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+  </script>
 </head>
 
-<body>
+<body class="no-js">
   <h1>Login</h1><br>
   <form method="post">
     <label for="username">Username:</label>
@@ -18,7 +29,7 @@
     <input type="password" id="password" name="password" required>
     <br>
     <button type="submit">Login</button>
-    <a href="http://localhost:5500/front/index.html">Volver</a>
+    <a href="{{ url_for('static', filename='index.html') }}">Volver</a>
     <br><br>
     {% with messages = get_flashed_messages() %}
       {% if messages %}

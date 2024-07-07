@@ -695,27 +695,15 @@ main h2 {
 
 /* Estilos de botón Whatsapp */
 .whatsapp {
+    padding: 15px;
     position: fixed;
-    width: 60px;
-    height: 60px;
-    bottom: 40px;
-    right: 40px;
-    background-color: #25d366;
-    color: #FFF;
-    border-radius: 50px;
-    text-align: center;
+    bottom: 20px;
+    right: 20px;
+    background-color: #26ca43;
+    color: white;
+    border-radius: 50%;
     font-size: 30px;
-    z-index: 100;
-}
-
-.whatsapp:hover {
-    color: #FFF;
-}
-
-.whatsapp-icon {
-    margin-top: 13px;
-}
-
+    z-index: 100;}
 /* Fin Estilos de botón Whatsapp */
 
 
