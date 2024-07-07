@@ -1,5 +1,4 @@
-const URL = "http://localhost:5000/"
-// const URL = "https://gigabriel.serv00.net/"
+const URL = "/"
 
 // Capturamos el evento de envío del formulario
 document.getElementById('formulario').addEventListener('submit', function (event) {
@@ -11,7 +10,7 @@ document.getElementById('formulario').addEventListener('submit', function (event
     // Aquí enviamos formData. Dado que formData puede contener archivos,
     // no se utiliza JSON.
     method: 'POST',
-    credentials: 'include',
+    // credentials: 'include',
     body: formData
   })
     // Después de realizar la solicitud POST, se utiliza el método then()

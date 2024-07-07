@@ -88,25 +88,6 @@
         <h2 style="font-size: 1.3rem;" class="istok-web-bold py-3">Filtrar</h2>
 
         <div id="filtros-container" class="d-flex flex-wrap">
-          <!-- Filtro ubicación -->
-          <div class="flex-grow-1 mb-4 mx-1 filtro-item">
-            <h4 class="mb-1 text-center">Ubicación</h4>
-            <ul class="list-group">
-              <li class="list-group-item list-group-item-warning">
-                <input class="form-check-input me-1" type="checkbox" value="1" id="chk-1-ubic">
-                <label class="form-check-label" for="chk-1-ubic">Palermo</label>
-              </li>
-              <li class="list-group-item list-group-item-warning">
-                <input class="form-check-input me-1" type="checkbox" value="2" id="chk-2-ubic">
-                <label class="form-check-label" for="chk-2-ubic">Belgrano</label>
-              </li>
-              <li class="list-group-item list-group-item-warning">
-                <input class="form-check-input me-1" type="checkbox" value="3" id="chk-3-ubic">
-                <label class="form-check-label" for="chk-3-ubic">Nuñez</label>
-              </li>
-            </ul>
-          </div>
-
           <!-- Filtro tipo prop -->
           <div class="flex-grow-1 mb-4 mx-1 filtro-item">
             <h4 class="mb-1 text-center">Tipo de propiedad</h4>
@@ -121,7 +102,7 @@
               </li>
               <li class="list-group-item list-group-item-warning">
                 <input class="form-check-input me-1" type="checkbox" value="3" id="chk-3-prop">
-                <label class="form-check-label" for="chk-3-prop">Terreno</label>
+                <label class="form-check-label" for="chk-3-prop">Local</label>
               </li>
               <li class="list-group-item list-group-item-warning">
                 <input class="form-check-input me-1" type="checkbox" value="4" id="chk-4-prop">
@@ -142,6 +123,10 @@
                 <input class="form-check-input me-1" type="checkbox" value="2" id="chk-2-oper">
                 <label class="form-check-label" for="chk-2-oper">Alquiler</label>
               </li>
+              <li class="list-group-item list-group-item-warning">
+                <input class="form-check-input me-1" type="checkbox" value="3" id="chk-3-oper">
+                <label class="form-check-label" for="chk-2-oper">Otro</label>
+              </li>
             </ul>
           </div>
 
@@ -160,63 +145,6 @@
               <li class="list-group-item list-group-item-warning">
                 <input class="form-check-input me-1" type="checkbox" value="3" id="chk-3-precio">
                 <label class="form-check-label" for="chk-3-precio">&gt;120k</label>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Filtro dormitorios -->
-          <div class="flex-grow-1 mb-4 mx-1 filtro-item">
-            <h4 class="mb-1 text-center">Dormitorios</h4>
-            <ul class="list-group">
-              <li class="list-group-item list-group-item-warning">
-                <input class="form-check-input me-1" type="checkbox" value="1" id="chk-1-dorm">
-                <label class="form-check-label" for="chk-1-dorm">1</label>
-              </li>
-              <li class="list-group-item list-group-item-warning">
-                <input class="form-check-input me-1" type="checkbox" value="2" id="chk-2-dorm">
-                <label class="form-check-label" for="chk-2-dorm">2 / 3</label>
-              </li>
-              <li class="list-group-item list-group-item-warning">
-                <input class="form-check-input me-1" type="checkbox" value="4" id="chk-3-dorm">
-                <label class="form-check-label" for="chk-3-dorm">&gt;3</label>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Filtro baños -->
-          <div class="flex-grow-1 mb-4 mx-1 filtro-item">
-            <h4 class="mb-1 text-center">Baños</h4>
-            <ul class="list-group">
-              <li class="list-group-item list-group-item-warning">
-                <input class="form-check-input me-1" type="checkbox" value="1" id="chk-1-banos">
-                <label class="form-check-label" for="chk-1-banos">1</label>
-              </li>
-              <li class="list-group-item list-group-item-warning">
-                <input class="form-check-input me-1" type="checkbox" value="2" id="chk-2-banos">
-                <label class="form-check-label" for="chk-2-banos">2</label>
-              </li>
-              <li class="list-group-item list-group-item-warning">
-                <input class="form-check-input me-1" type="checkbox" value="3" id="chk-3-banos">
-                <label class="form-check-label" for="chk-3-banos">&gt;2</label>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Filtro superficie -->
-          <div class="flex-grow-1 mb-4 mx-1 filtro-item">
-            <h4 class="mb-1 text-center">Superficie</h4>
-            <ul class="list-group">
-              <li class="list-group-item list-group-item-warning">
-                <input class="form-check-input me-1" type="checkbox" value="1" id="chk-1-sup">
-                <label class="form-check-label" for="chk-1-sup">100m<sup>2</sup></label>
-              </li>
-              <li class="list-group-item list-group-item-warning">
-                <input class="form-check-input me-1" type="checkbox" value="2" id="chk-2-sup">
-                <label class="form-check-label" for="chk-2-sup">100m<sup>2</sup> - 500m<sup>2</sup></label>
-              </li>
-              <li class="list-group-item list-group-item-warning">
-                <input class="form-check-input me-1" type="checkbox" value="3" id="chk-3-sup">
-                <label class="form-check-label" for="chk-3-sup">&gt;500m<sup>2</sup></label>
               </li>
             </ul>
           </div>
@@ -242,7 +170,7 @@
           <div class="row g-0">
             <!-- Imagen -->
             <div class="col-sm-4">
-              <img src="img/{{ item.url_foto_1 }}" class="img-fluid img-auto-round" alt="foto propiedad">
+              <img src="{{ url_for('static', filename='img/prop/') }}{{ item.url_foto_1 }}" class="img-fluid img-auto-round" alt="foto propiedad">
             </div>
 
             <!-- Tarjeta -->
@@ -264,7 +192,7 @@
 
                 <!-- Dirección -->
                 <div class="mb-2">
-                  <p class="card-text">Dirección: {{ item.direccion }}</p>
+                  <p class="card-text">Ubicación: {{ item.direccion }}</p>
                 </div>
 
                 <!-- Otros datos -->

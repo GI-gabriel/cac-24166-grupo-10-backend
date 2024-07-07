@@ -1,5 +1,4 @@
-const URL = "http://localhost:5000/"
-// const URL = "https://gigabriel.serv00.net/"
+const URL = "/"
 
 // Variables de estado para controlar la visibilidad y los datos del formulario
 let id_ = '';
@@ -83,7 +82,8 @@ function eliminarProp(id) {
   // Se muestra un diálogo de confirmación. Si el usuario confirma, se realiza una solicitud
   // DELETE servidor a través de fetch(URL + 'propiedad/${id}', { method: 'DELETE' }).
   if (confirm('¿Estás seguro de que quieres eliminar esta propiedad?')) {
-    fetch(URL + `propiedades/${id}`, { method: 'DELETE', credentials: 'include' })
+    fetch(URL + `propiedades/${id}`, { method: 'DELETE' })
+    // fetch(URL + `propiedades/${id}`, { method: 'DELETE', credentials: 'include' })
       .then(response => {
         // Si es exitosa (response.ok), elimina y da mensaje de ok.
         if (response.ok) {
@@ -130,7 +130,7 @@ function mostrarFormulario() {
 
     // #1 Verifica si imagen_url no está vacía y no se ha seleccionado una imagen
     if (url_foto_1 && !foto_1_Seleccionada) {
-      foto_1_actual.src = '../../back/app/static/img/' + url_foto_1;
+      foto_1_actual.src = '/static/img/prop/' + url_foto_1;
       // imagenActual.src = 'https://gigabriel.serv00.net/imagenes/' + imagen_url;
       
       // Muestra la imagen actual
@@ -142,7 +142,7 @@ function mostrarFormulario() {
 
     // #2 Verifica si imagen_url no está vacía y no se ha seleccionado una imagen
     if (url_foto_2 && !foto_2_Seleccionada) {
-      foto_2_actual.src = '../../back/app/static/img/' + url_foto_2;
+      foto_2_actual.src = '/static/img/prop/' + url_foto_2;
       // imagenActual.src = 'https://gigabriel.serv00.net/imagenes/' + imagen_url;
       
       // Muestra la imagen actual
@@ -154,7 +154,7 @@ function mostrarFormulario() {
 
     // #3 Verifica si imagen_url no está vacía y no se ha seleccionado una imagen
     if (url_foto_3 && !foto_3_Seleccionada) {
-      foto_3_actual.src = '../../back/app/static/img/' + url_foto_3;
+      foto_3_actual.src = '/static/img/prop/' + url_foto_3;
       // imagenActual.src = 'https://gigabriel.serv00.net/imagenes/' + imagen_url;
       
       // Muestra la imagen actual
@@ -321,7 +321,7 @@ function guardarCambios(event) {
 
   fetch(URL + 'propiedades/' + id_, {
     method: 'PUT',
-    credentials: 'include',
+    // credentials: 'include',
     body: formData,
   })
     .then(response => {

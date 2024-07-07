@@ -4,26 +4,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
 
-  <!-- Bootstrap - carrousel -->
-  <!-- Bootstrap / CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <!-- slider.css -->
-  <link rel="stylesheet" href="css/slider.css">
-  <!-- Hoja de estilos -->
-  <link rel="stylesheet" href="css/style.css">
-
-  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-
-  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <!-- Tipografías -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block style %} {% endblock %}
   <title>LOREM Servicios Inmobiliarios</title>
+
+  <!-- Para evitar FOUC -->
+  <style>
+    .no-js body {
+      visibility: hidden;
+    }
+  </style>
+  <script>
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+  </script>
 </head>
 
-<body>
+<body class="no-js">
   <div id="body-wrapper">
     <!-- top-banner -->
     <div id="top-banner-container" class="istok-web-regular">
@@ -70,17 +75,9 @@
               </li>
             </ul>
           </li>
-          <li>
-            <!-- <a href="crud_menu.html" class="a-hov" title="Menú de administración"> -->
-            <a href="http://localhost:5000/menu" class="a-hov" title="Menú de administración">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill-gear" viewBox="0 0 16 16">
-                <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
-              </svg>
-            </a>
-          </li>
         </ul>
       </div>
-    </div>   
+    </div>
     <!-- fin top-banner -->
 
     <header>
@@ -88,11 +85,11 @@
       <div id="title-bar-container">
         <div id="title-bar" class="mw1040 fx-h-c-space">
           <div id="logo-menu">
-            <a id="logo" href="index.html" title="LOREM Inmobiliaria">
-              <img id="logo-graf" src="img/logo.svg" alt="logo">
-              <img id="logo-texto" src="img/logo-texto.svg" alt="texto logo">
+            <a id="logo" href="{{ url_for('static', filename='index.html') }}" title="LOREM Inmobiliaria">
+              <img id="logo-graf" src="{{ url_for('static', filename='img/logo.svg') }}" alt="logo">
+              <img id="logo-texto" src="{{ url_for('static', filename='img/logo-texto.svg') }}" alt="texto logo">
             </a>
-    
+
             <nav id="menu-button">
               <div id="nav-icon1">
                 <span></span>
@@ -101,35 +98,35 @@
               </div>
             </nav>
           </div>
-    
+
           <nav id="main-nav-bar" class="istok-web-regular">
             <ul class="fx-h-c-space">
               <li>
-                <a href=index.html>
+                <a href="{{ url_for('static', filename='index.html') }}">
                   <span>Home</span>
                 </a>
               </li>
-    
+
               <li>
-                <a href="propiedades.html">
+                <a href="/buscar">
                   <span>Propiedades</span>
                 </a>
               </li>
-    
+
               <li>
-                <a href="tasaciones.html">
+                <a href="{{ url_for('static', filename='tasaciones.html') }}">
                   <span>Tasaciones</span>
                 </a>
               </li>
-    
+
               <li>
-                <a href="nosotros.html">
+                <a href="{{ url_for('static', filename='nosotros.html') }}">
                   <span>Nosotros</span>
                 </a>
               </li>
-    
+
               <li>
-                <a href="contacto.html">
+                <a href="{{ url_for('static', filename='contacto.html') }}">
                   <span>Contacto</span>
                 </a>
               </li>
@@ -139,274 +136,18 @@
       </div>
       <!-- fin title-bar -->
     </header>
-  
+
     <main>
-      <!-- search-bar -->
-      <section id="search-bar">
-        <div id="search-prompt">Buscá lo que necesitás.</div>
-  
-        <div id="search-nav-bar">
-          <ul>
-            <li>
-              <a href="propiedades.html">
-                <h3>Comprar</h3>
-              </a>
-            </li>
-            <li>
-              <a href="propiedades.html">
-                <h3>Alquilar</h3>
-              </a>
-            </li>
-            <li>
-              <a href="propiedades.html">
-                <h3>Emprendimientos</h3>
-              </a>
-            </li>
-            <li>
-              <a href="propiedades.html">
-                <h3>Oportunidades</h3>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-      <!-- fin search-bar -->
-  
-      <section id="destacadas">
-        <h2 class="istok-web-bold">Propiedades Destacadas</h2>
-        <!-- Carousel -->
-        <div id="miCarousel" class="carousel slide" data-ride="carousel">
-  
-          <div class="carousel-inner">
-  
-            <!-- imagen 1 -->
-            <div class="carousel-item active">
-              <div class="cards-wrapper">
-                <div class="card" onclick="location.href='ficha.html';">
-                  <div class="image-wrapper">
-                    <img src="img/1casaLomas.jpg" alt="Casa-Lomas de Zamora">
-                    <div class="tag-for">Venta</div>
-                  </div>
-                  <div class="card-body">
-                    <h3 class="card-price">U$S 260.000</h3>
-                    <p class="card-text">193.78m² sup.total 4ambientes 3baños</p>
-                    <h5 class="card-title">Casa 4 ambientes con cochera <br> Álvarez Thomas al 100 <br> Lomas de Zamora</h5>
-                  </div>
-                </div>
- 
-                <!-- imagen 2 -->
-                <div class="card" onclick="location.href='ficha.html';">
-                  <div class="image-wrapper">
-                    <img src="img/2dpto-juramento.jpg" alt="departamento-Juramento">
-                    <div class="tag-for">Venta</div>
-                  </div>
-                  <div class="card-body">
-                    <h3 class="card-price">U$S 110.000</h3>
-                    <p class="card-text">42 m² sup.total 1dormitorio 1baño</p>
-                    <h5 class="card-title">Dpto. 2 Ambientes <br> Juramento 5100 Villa Urquiza</h5>
-                    <p class="card-p">Expensas aproximadas $114.000</p>
-                  </div>
-                </div>
-  
-                <!-- imagen 3 -->
-                <div class="card" onclick="location.href='ficha.html';">
-                  <div class="image-wrapper">
-                    <img src="img/3dpto_patio.jpg" alt="departamento con patio">
-                    <div class="tag-for">Venta</div>
-                  </div>
-                  <div class="card-body">
-                    <h3 class="card-price">U$S 149.900</h3>
-                    <p class="card-text">98 m² sup.total 2dormitorios 1baño</p>
-                    <h5 class="card-title">Dpto. + Jardín <br> San Cristobal - Apto Crédito</h5>
-                    <p class="card-p">Expensas aproximadas $ 78.000</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-  
-            <!-- imagen 4 -->
-            <div class="carousel-item">
-              <div class="cards-wrapper">
-                <div class="card" onclick="location.href='ficha.html';">
-                  <div class="image-wrapper">
-                    <img src="img/4dpto_loft.jpg" alt="Loft">
-                    <div class="tag-for">Venta</div>
-                  </div>
-                  <div class="card-body">
-                    <h3 class="card-price">U$S 99.500</h3>
-                    <p class="card-text">51 m² sup.total 1dormitorio 1baño</p>
-                    <h5 class="card-title">Dpto. 2 Ambientes Tipo Loft <br> En Martinez</h5>
-                    <p class="card-p">Expensas aproximadas $ 1.000</p>
-                  </div>
-                </div>
-  
-                <!-- imagen 5 -->
-                <div class="card" onclick="location.href='ficha.html';">
-                  <div class="image-wrapper">
-                    <img src="img/5costa-santa_Clara.jpg" alt="Casa en Santa Clara">
-                    <div class="tag-for">Venta</div>
-                  </div>
-                  <div class="card-body">
-                    <h3 class="card-price">U$S 120.000</h3>
-                    <p class="card-text">300 m² sup.total 3dormitorios 2baños</p>
-                    <h5 class="card-title">Propiedad Con Cochera/quincho <br> Santa Clara Del Mar</h5>
-                    <p class="card-reserva">RESERVADA !!</p>
-                  </div>
-                </div>
-  
-                <!-- imagen 6 -->
-                <div class="card" onclick="location.href='ficha.html';">
-                  <div class="image-wrapper">
-                    <img src="img/6costa-San_B.jpg" alt="Casa en San Bernardo">
-                    <div class="tag-for">Venta</div>
-                  </div>
-                  <div class="card-body">
-                    <h3 class="card-price">U$S 15.000</h3>
-                    <p class="card-text">380 m² sup.total 3dormitorios 2baños</p>
-                    <h5 class="card-title">Propiedad de 4 Ambientes <br> Con Parque <br> San Bernardo</h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-  
-            <!-- imagen 7 -->
-            <div class="carousel-item">
-              <div class="cards-wrapper">
-                <div class="card" onclick="location.href='ficha.html';">
-                  <div class="image-wrapper">
-                    <img src="img/7terreno-privado.jpg" alt="Barrio privado">
-                    <div class="tag-for">Venta</div>
-                  </div>
-                  <div class="card-body">
-                    <h3 class="card-price">U$S 450.000</h3>
-                    <p class="card-text">20000 m² sup.total 5dormitorios 4baños</p>
-                    <h5 class="card-title"> Casa Sobre Terreno De 2ha <br> Estancia Las Lilas <br> Luján</h5>
-                  </div>
-                </div>
-  
-                <!-- imagen 8 -->
-                <div class="card" onclick="location.href='ficha.html';">
-                  <div class="image-wrapper">
-                    <img src="img/8terreno-lote.jpg" alt="terreno-lote">
-                    <div class="tag-for">Venta</div>
-                  </div>
-                  <div class="card-body">
-                    <h3 class="card-price">U$S 10.000</h3>
-                    <p class="card-text"><strong style="color: white;">Acceso: Asfalto</strong></p>
-                    <h5 class="card-title">Terreno y Lote <br> En Barrio Cerrado Zona Oeste</h5>
-                    <p class="card-p">Con Escritura - Financiados</p>
-                  </div>
-                </div>
-  
-                <!-- imagen 9 -->
-                <div class="card" onclick="location.href='ficha.html';">
-                  <div class="image-wrapper">
-                    <img src="img/9casa_Cordoba.jpg" alt="Casa en Córdoba">
-                    <div class="tag-for">Venta</div>
-                  </div>
-                  <div class="card-body">
-                    <h3 class="card-price">U$S 780.000</h3>
-                    <p class="card-text">8000 m² totales 4dormitorios 3baños</p>
-                    <h5 class="card-title">Casa + terreno <br> Villa Warcalde Córdoba</h5>
-                    <p class="card-reserva">RESERVADA !!</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-  
-            <!--cierre de imagenes -->
-          </div>
-  
-          <!-- controladores derecha-izquierda -->
-          <a class="carousel-control-prev" href="#miCarousel" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-  
-          <a class="carousel-control-next" href="#miCarousel" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-  
-          <!-- cierre final del carousel -->
-        </div>
-      </section>
-  
-      <!-- Sección búsqueda por categorías -->
-      <section id="container-categorias">
-        <h2 class="istok-web-bold">Búsqueda por Categoría</h2>
-        <ul id="categorias-bar">
-          <li>
-            <article>
-              <div class="card-hov">
-                <a href="propiedades.html">
-                  <div class="overlay-card">
-                    <img src="img/img-casa.jpg" alt="casa">
-                  </div>
-                  <div class="texto-card">
-                    <h3>Casas</h3>
-                  </div>
-                </a>
-              </div>
-            </article>
-          </li>
-  
-          <li>
-            <article>
-              <div class="card-hov">
-                <a href="propiedades.html">
-                  <div class="overlay-card">
-                    <img src="img/img-depto.jpg" alt="casa">
-                  </div>
-                  <div class="texto-card">
-                    <h3>Departamentos</h3>
-                  </div>
-                </a>
-              </div>
-            </article>
-          </li>
-  
-          <li>
-            <article>
-              <div class="card-hov">
-                <a href="propiedades.html">
-                  <div class="overlay-card">
-                    <img src="img/img-ph.jpg" alt="casa">
-                  </div>
-                  <div class="texto-card">
-                    <h3>PH</h3>
-                  </div>
-                </a>
-              </div>
-            </article>
-          </li>
-  
-          <li>
-            <article>
-              <div class="card-hov">
-                <a href="propiedades.html">
-                  <div class="overlay-card">
-                    <img src="img/img-campo.jpg" alt="casa">
-                  </div>
-                  <div class="texto-card">
-                    <h3>Terrenos y Lotes</h3>
-                  </div>
-                </a>
-              </div>
-            </article>
-          </li>
-        </ul>
-      </section>
-      <!-- fin Sección búsqueda por categorías -->
+      {% block mainPropiedades %}{% endblock %}
     </main>
-  
+
     <footer>
       <div id="footer-container-s1" class="istok-web-regular">
         <section id="footer-s1" class="mw1040">
           <div id="nosotros">
-            <a id="logo-footer" href="index.html" title="LOREM Inmobiliaria">
-              <img id="logo-graf-footer" src="img/logo.svg" alt="logo">
-              <img id="logo-texto-footer" src="img/logo-texto.svg" alt="texto logo">
+            <a id="logo-footer" href="{{ url_for('static', filename='index.html') }} title="LOREM Inmobiliaria">
+              <img id="logo-graf-footer" src="{{ url_for('static', filename='img/logo.svg') }}" alt="logo">
+              <img id="logo-texto-footer" src="{{ url_for('static', filename='img/logo-texto.svg') }}" alt="texto logo">
             </a>
             <div style="margin: 1rem 0; font-size: 0.8rem; padding: 0 1.5rem; text-align: justify;">
               <p><strong>LOREM Servicios Inmobiliarios</strong>, tu socio confiable en el mundo de los bienes raíces. Ofrecemos soluciones inmobiliarias personalizadas que cumplen tus necesidades y superan tus expectativas.</p>
@@ -416,18 +157,18 @@
           <div id="mapa-sitio">
             <h2 class="footer-title">Mapa del Sitio</h2>
             <ul>
-              <li><a href="index.html" class="hov-subr"><span>Home</span></a></li>
-              <li><a href="propiedades.html" class="hov-subr"><span>Propiedades</span></a>
+              <li><a href="{{ url_for('static', filename='index.html') }}" class="hov-subr"><span>Home</span></a></li>
+              <li><a href="/buscar" class="hov-subr"><span>Propiedades</span></a>
                 <ul>
-                  <li><a href="propiedades.html" class="hov-subr"><span>Comprar</span></a></li>
-                  <li><a href="propiedades.html" class="hov-subr"><span>Alquilar</span></a></li>
-                  <li><a href="propiedades.html" class="hov-subr"><span>Emprendimientos</span></a></li>
-                  <li><a href="propiedades.html" class="hov-subr"><span>Oportunidades</span></a></li>
+                  <li><a href="/buscar" class="hov-subr"><span>Comprar</span></a></li>
+                  <li><a href="/buscar" class="hov-subr"><span>Alquilar</span></a></li>
+                  <li><a href="/buscar" class="hov-subr"><span>Emprendimientos</span></a></li>
+                  <li><a href="/buscar" class="hov-subr"><span>Oportunidades</span></a></li>
                 </ul>
               </li>
-              <li><a href="tasaciones.html" class="hov-subr"><span>Tasaciones</span></a></li>
-              <li><a href="nosotros.html" class="hov-subr"><span>Nosotros</span></a></li>
-              <li><a href="contacto.html" class="hov-subr"><span>Contacto</span></a></li>
+              <li><a href="{{ url_for('static', filename='tasaciones.html') }}" class="hov-subr"><span>Tasaciones</span></a></li>
+              <li><a href="{{ url_for('static', filename='nosotros.html') }}" class="hov-subr"><span>Nosotros</span></a></li>
+              <li><a href="{{ url_for('static', filename='contacto.html') }}" class="hov-subr"><span>Contacto</span></a></li>
             </ul>
           </div>
           <div id="contacto">
@@ -488,13 +229,13 @@
           </div>
         </section>
       </div>
-  
+
       <div id="footer-container-s2" class="istok-web-bold">
         <section id="footer-s2" class="mw1040">
-          <a href="nosotros.html#terminos" class="a-hov">
+          <a href="{{ url_for('static', filename='nosotros.html') }}#terminos" class="a-hov">
             <h3>Términos y Condiciones</h3>
           </a>
-          <a href="nosotros.html#politica" class="a-hov">
+          <a href="{{ url_for('static', filename='nosotros.html') }}#politica" class="a-hov">
             <h3>Política de Privacidad</h3>
           </a>
           <h3>&copy; 2024 LOREM. Todos los derechos reservados</h3>
@@ -513,17 +254,8 @@
   </a>
   <!-- Fin Botón de Whatsapp -->
 
-  <script src="./js/boton-menu.js"></script>
-
-  <!-- Bootstrap - carousel -->
-  <!-- Bootstrap - Jquery -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-
-  <!-- Bootstrap - Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-
-  <!-- Bootstrap - JavaScript -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='./js/boton-menu.js') }}"></script>
 </body>
 
 </html>

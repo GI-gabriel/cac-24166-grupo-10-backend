@@ -4,6 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap - css - info contacto -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+   <!-- css - info contacto -->
+  <link rel="stylesheet" href="css/contacto.css">
+
   <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
 
   <!-- Bootstrap -->
@@ -15,9 +22,19 @@
 
   <link rel="stylesheet" href="css/style.css">
   <title>LOREM Servicios Inmobiliarios</title>
+
+  <!-- Para evitar FOUC -->
+  <style>
+    .no-js body {
+      visibility: hidden;
+    }
+  </style>
+  <script>
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+  </script>
 </head>
 
-<body>
+<body class="no-js">
   <div id="body-wrapper">
     <!-- top-banner -->
     <div id="top-banner-container" class="istok-web-regular">
@@ -97,7 +114,7 @@
               </li>
 
               <li>
-                <a href="propiedades.html">
+                <a href="/buscar">
                   <span>Propiedades</span>
                 </a>
               </li>
@@ -127,92 +144,265 @@
     </header>
 
     <main>
-      <section>
-        <div class="container-fluid pb-5 position-relative">
-          <div id="nosotros-texto" class="row">
-            <div class="col-lg-8">
-              <div class="container pt-5 pb-5 ps-lg-5">
-                <h2 class="d-none">Nosotros</h2>
-                <p>En <strong>LOREM Servicios Inmobiliarios</strong>, nos dedicamos a facilitar los sueños de hogar de nuestros clientes <em>desde 1992</em>. Con una trayectoria sólida y un equipo comprometido, hemos establecido un estándar de excelencia en el sector inmobiliario.</p>
-                <p>Nos distingue la pasión por ofrecer un servicio al cliente superior y nuestro profundo conocimiento del mercado local. Nuestros agentes inmobiliarios son expertos en sus áreas y están comprometidos con la integridad, la transparencia y la excelencia profesional en cada transacción.</p>
-                <p>Desde la compra, venta o alquiler de propiedades residenciales hasta la gestión de inversiones inmobiliarias, estamos aquí para guiarlo en cada paso del camino.</p>
-                <p>En <strong>LOREM</strong>, creemos en la importancia de establecer relaciones sólidas y duraderas con nuestros clientes. Nos esforzamos por brindar un servicio personalizado y una experiencia sin igual que haga que el proceso de bienes raíces sea fluido y gratificante para todos los involucrados.</p>
-                <p>Sea que esté buscando su primer hogar, vender una propiedad o desee expandir su cartera de inversiones; estamos aquí para ayudarlo a alcanzar sus objetivos inmobiliarios. Confíe en nosotros para hacer realidad sus sueños de bienes raíces.</p>
-                <p class="text-center pt-3"><strong><em>¡Bienvenido a la familia de LOREM Servicios Inmobiliarios!</em></strong></p>
+
+      <!-- formulario con validación  -->
+      <section class="page_contact">
+        <div class="container-md data-and-form-container">
+          <div class="row">
+
+            <!-- Información de contacto -->
+            <div class="col-md-5">
+              <div class="info-contacto mb-5">
+                <h3 class="titulo mb-3">Información de contacto</h3>
+
+                <!-- Dirección -->
+                <div class="mb-4">
+                  <b class="d-block mb-2">Dirección</b>
+                  <div class="ps-3">
+                    <a href="https://www.google.com/maps/" id="info-map" class="info d-flex align-items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                        <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10" />
+                        <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                      </svg>
+                      <span class="ms-2">
+                        Alvear 2500, Villa Ballester <br>
+                        Buenos Aires - Argentina - B1653
+                      </span>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Teléfono -->
+                <div class="mb-4">
+                  <b class="d-block mb-2">Teléfono</b>
+                  <div class="ps-3">
+                    <a href="tel:+5491140404040" id="info-tel" class="info d-flex align-items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
+                        <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z" />
+                      </svg>
+                      <span class="ms-2">+54(9)11-40404040</span>
+                    </a>
+                  </div>
+                </div>
+
+
+                <!-- Mail -->
+                <div class="mb-4">
+                  <b class="d-block mb-2">Correo eléctronico</b>
+                  <div class="ps-3">
+                    <a href="mailto:mail@mail.com" id="info-mail" class="info d-flex align-items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z" />
+                      </svg>
+                      <span class="ms-2">mail@mail.com</span>
+                    </a>
+                  </div>
+                </div>
+
+
+                <!-- Redes -->
+                <div class="mb-4">
+                  <b class="redes d-block mb-2">Redes sociales</b>
+                  <div class="ps-3">
+                    <ul class="redes-links d-flex justify-content-start">
+
+                      <!-- Facebook -->
+                      <li class="list-link-item">
+                        <a href="https://www.facebook.com/" class="redes_a">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+                            <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951" />
+                          </svg>
+                        </a>
+                      </li>
+
+                      <!-- Instagram  -->
+                      <li class="list-link-item">
+                        <a href="https://www.instagram.com/" class="redes_a">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
+                            <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334" />
+                          </svg>
+                        </a>
+                      </li>
+
+                      <!-- Linkedin -->
+                      <li class="list-link-item">
+                        <a href="https://www.linkedin.com/" class="redes_a">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+                            <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z" />
+                          </svg>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+
+                </div>
+
+
+                <!-- cierre información de contacto -->
               </div>
             </div>
-            <div class="col d-none d-lg-block">
+
+            <!-- Formulario -->
+            <div class="col-md-7">
+              <h3 class="titulo">Envianos tu mensaje</h3>
+
+              <form id="formulario" class="formulario">
+
+                <!-- Usuario -->
+                <div class="formulario__grupo" id="grupo__usuario">
+
+                  <label for="usuario" class="formulario__label">Usuario *</label>
+
+                  <div class="formulario__grupo-input">
+
+                    <input type="text" class="formulario__input" name="usuario" id="usuario">
+
+                    <i class="formulario__validacion-estado fa fa-times-circle"></i>
+                  </div>
+
+                  <p class="formulario__input-error">El usuario tiene que ser de 4 a 16 dígitos y solo puede contener letras, números y guión bajo.</p>
+                </div>
+
+                <!-- nombre -->
+                <div class="formulario__grupo" id="grupo__nombre">
+
+                  <label for="nombre" class="formulario__label">Nombre completo *</label>
+
+                  <div class="formulario__grupo-input">
+
+                    <input type="text" class="formulario__input" name="nombre" id="nombre">
+
+                    <i class="formulario__validacion-estado fa fa-times-circle"></i>
+                  </div>
+                  <p class="formulario__input-error">El nombre tiene que ser de 4 a 16 dígitos y solo puede utilizar letras (mayúscula y minúscula).</p>
+                </div>
+
+                <!-- Provincia -->
+                <div class="formulario__grupo" id="grupo__provincia">
+                  <label for="nombre" class="formulario__label">Provincia</label>
+                  <div class="formulario__grupo-input">
+                    <select class="formulario__input" name="provincia" id="povincia">
+                      <option value="1">Buenos Aires</option>
+                      <option value="2">CABA</option>
+                      <option value="3">Catamarca</option>
+                      <option value="4">Chaco</option>
+                      <option value="5">Chubut</option>
+                      <option value="6">Córdoba</option>
+                      <option value="7">Corrientes</option>
+                      <option value="8">Entre Ríos</option>
+                      <option value="9">Formosa</option>
+                      <option value="10">Jujuy</option>
+                      <option value="11">La Pampa</option>
+                      <option value="12">La Rioja</option>
+                      <option value="13">Mendoza</option>
+                      <option value="14">Misiones</option>
+                      <option value="15">Neuquén</option>
+                      <option value="16">Río Negro</option>
+                      <option value="17">Salta</option>
+                      <option value="18">San Juan</option>
+                      <option value="19">San Luis</option>
+                      <option value="20">Santa Cruz</option>
+                      <option value="21">Santa Fe</option>
+                      <option value="22">Santiago del Estero</option>
+                      <option value="23">Tierra del Fuego</option>
+                      <option value="24">Tucumán</option>
+                    </select>
+                    <!-- <input type="text" class="formulario__input" name="nombre" id="nombre"> -->
+                    <i class="formulario__validacion-estado fa fa-times-circle"></i>
+                  </div>
+                  <p class="formulario__input-error">El nombre tiene que ser de 4 a 16 dígitos y solo puede utilizar letras (mayúscula y minúscula).</p>
+                </div>
+
+                <!-- Contraseña 1 -->
+                <div class="formulario__grupo" id="grupo__password">
+
+                  <label for="password" class="formulario__label">Contraseña *</label>
+
+                  <div class="formulario__grupo-input">
+
+                    <input type="password" class="formulario__input" name="password" id="password">
+                    <i class="formulario__validacion-estado fa fa-times-circle"></i>
+                  </div>
+
+                  <p class="formulario__input-error">La contraseña tiene que ser de 4 a 12 dígitos y puede utilizar letras, números y símbolos.</p>
+                </div>
+
+                <!--  Contraseña 2 -->
+                <div class="formulario__grupo" id="grupo__password2">
+
+                  <label for="password2" class="formulario__label">Repetir Contraseña *</label>
+
+                  <div class="formulario__grupo-input">
+
+                    <input type="password" class="formulario__input" name="password2" id="password2">
+                    <i class="formulario__validacion-estado fa fa-times-circle"></i>
+                  </div>
+
+                  <p class="formulario__input-error">Ambas contraseñas deben ser iguales.</p>
+                </div>
+
+                <!-- Correo -->
+                <div class="formulario__grupo" id="grupo__correo">
+
+                  <label for="correo" class="formulario__label">Correo electrónico *</label>
+
+                  <div class="formulario__grupo-input">
+
+                    <input type="email" class="formulario__input" name="correo" id="correo">
+
+                    <i class="formulario__validacion-estado fa fa-times-circle"></i>
+                  </div>
+
+                  <p class="formulario__input-error">Ejemplo: aaaa@bbb.com .</p>
+                </div>
+
+                <!-- Teléfono -->
+                <div class="formulario__grupo" id="grupo__telefono">
+
+                  <label for="telefono" class="formulario__label">Teléfono *</label>
+
+                  <div class="formulario__grupo-input">
+
+                    <input type="text" class="formulario__input" name="telefono" id="telefono">
+
+                    <i class="formulario__validacion-estado fa fa-times-circle"></i>
+                  </div>
+
+                  <p class="formulario__input-error">El télefono solo puede contener números, de 7 a 14 dígitos.</p>
+                </div>
+
+                <!-- términos y condiciones -->
+                <div class="formulario__grupo" id="grupo__terminos">
+
+                  <label class="formulario__label">
+
+                    <input class="formulario__checkbox" type="checkbox" name="terminos" id="terminos">
+                    <b> * Acepto los Términos y Condiciones</b>
+                  </label>
+                </div>
+
+                <p>* Datos obligatorios</p>
+
+                <div class="formulario__mensaje" id="formulario__mensaje">
+                  <p><i class="fa fa-exclamation-triangle"></i> <b>Error:</b> Por favor rellenar el formulario correctamente. </p>
+                </div>
+
+                <!-- Enviar -->
+                <div class="formulario__grupo formulario__grupo-btn-enviar">
+                  <button id="boton-submit" type="submit" class="formulario__btn">Enviar</button>
+                  <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">Formulario enviado exitosamente!</p>
+                </div>
+
+                <!-- cierre del form -->
+              </form>
             </div>
+
+            <!-- cierre de section -->
           </div>
         </div>
+
       </section>
-      
-      <section class="container pb-5 px-4">
-        <!-- para evitar error en validador -->
-        <h2 style="display: none;">Título</h2>
 
-        <div class="row gx-5">
-          <article class="col-md-6 long-p" style="position: relative;">
-            <div id="terminos" style="position: absolute; top: -100px; height: 0"></div>
-            <h2>Términos y condiciones</h2>
-            <hr>
-
-            <h3>Aceptación de los Términos</h3>
-            <p>Al acceder y utilizar este sitio web, aceptas cumplir con estos términos y condiciones en su totalidad. Si no estás de acuerdo con alguna parte de estos términos, por favor, no utilices nuestro sitio web.</p>
-
-            <h3>Uso del Sitio</h3>
-            <p>Este sitio web es para uso personal y no comercial. No debes utilizar este sitio web de manera que pueda dañar, inhabilitar, sobrecargar o deteriorar el sitio web o interferir con el uso y disfrute del mismo por parte de terceros.</p>
-
-            <h3>Precios y Disponibilidad</h3>
-            <p>La información sobre propiedades, precios y disponibilidad en este sitio web está sujeta a cambios sin previo aviso. Nos esforzamos por proporcionar información precisa, pero no garantizamos la exactitud o integridad de la información en el sitio.</p>
-
-            <h3>Propiedad Intelectual</h3>
-            <p>Todos los contenidos de este sitio web, incluyendo pero no limitado a texto, gráficos, logotipos, imágenes y software, están protegidos por derechos de autor y otros derechos de propiedad intelectual. Estos contenidos no pueden ser copiados, reproducidos, modificados, publicados, transmitidos, distribuidos o utilizados de ninguna manera sin nuestro permiso previo por escrito.</p>
-
-            <h3>Enlaces a Terceros</h3>
-            <p>Este sitio web puede contener enlaces a sitios web de terceros que no están bajo nuestro control. No somos responsables del contenido de dichos sitios web enlazados, ni de ningún enlace incluido en un sitio web enlazado.</p>
-
-            <h3>Privacidad</h3>
-            <p>Al utilizar este sitio web, aceptas nuestro uso de tus datos personales de acuerdo con nuestra <a href="nosotros.html#politica">Política de Privacidad</a>.</p>
-
-            <h3>Modificaciones</h3>
-            <p>Nos reservamos el derecho de modificar estos términos y condiciones en cualquier momento. Los cambios serán efectivos inmediatamente después de la publicación de los términos y condiciones revisados en el sitio web. Es tu responsabilidad revisar periódicamente estos términos y condiciones para estar al tanto de las actualizaciones.</p>
-
-            <p>Al utilizar este sitio web, aceptas cumplir con estos términos y condiciones. Si tienes alguna pregunta sobre estos términos y condiciones, contáctanos en <a href="mailto:mail@mail.com">mail@mail.com</a>.</p>
-          </article>
-
-          <article class="col-md-6 long-p" style="position: relative;">
-            <div id="politica" style="position: absolute; top: -100px; height: 0"></div>
-            <h2>Política de privacidad</h2>
-            <hr>
-
-            <p>Esta Política de Privacidad describe cómo <a href="#logo-footer">LOREM Servicios Inmobiliarios SA</a> recopila, utiliza y protege la información personal que recabamos de los usuarios de nuestro sitio web.</p>
-
-            <h3>Información que Recopilamos</h3>
-            <p>Recopilamos información personal que proporcionas voluntariamente al completar formularios en nuestro sitio web, al comunicarte con nosotros por correo electrónico o por teléfono, o al registrarte para recibir información sobre nuestros servicios. Esta información puede incluir tu nombre, dirección de correo electrónico, número de teléfono, dirección postal y cualquier otra información que decidas proporcionar.
-              <br>
-              También podemos recopilar automáticamente cierta información sobre tu visita a nuestro sitio web, incluyendo tu dirección IP, tipo de navegador, proveedor de servicios de Internet, páginas de referencia/salida, sistema operativo, sello de fecha/hora y datos de seguimiento de clics.
-            </p>
-
-            <h3>Uso de la Información</h3>
-            <p>Utilizamos la información que recopilamos para proporcionarte los servicios que solicitas, para responder a tus consultas, para personalizar tu experiencia en nuestro sitio web y para mejorar nuestros servicios y comunicaciones contigo.</p>
-
-            <h3>Divulgación de la Información</h3>
-            <p>No vendemos, intercambiamos ni transferimos de ninguna manera tu información personal a terceros sin tu consentimiento, excepto cuando sea necesario para proporcionarte los servicios solicitados o cuando la ley lo exija.</p>
-
-            <h3>Seguridad de la Información</h3>
-            <p>Implementamos medidas de seguridad para proteger tu información personal contra el acceso no autorizado, la alteración, la divulgación o la destrucción. Sin embargo, debes ser consciente de que ninguna transmisión de datos por Internet o almacenamiento electrónico es completamente segura y no podemos garantizar la seguridad absoluta de tu información.</p>
-
-            <h3>Cambios a esta Política de Privacidad</h3>
-            <p>Nos reservamos el derecho de actualizar o modificar esta Política de Privacidad en cualquier momento. Cualquier cambio entrará en vigencia inmediatamente después de su publicación en esta página. Se te notificará cualquier cambio importante mediante un aviso destacado en nuestro sitio web o por correo electrónico.</p>
-
-            <h3>Contacto</h3>
-            <p>Si tienes alguna pregunta sobre esta Política de Privacidad, por favor contáctanos en <a href="mailto:mail@mail.com">mail@mail.com</a></p>
-
-            <p style="text-align: end;"><em>Última actualización: 13 de Mayo de 2024</em></p>
-          </article>
-        </div>
-      </section>
     </main>
 
     <footer>
@@ -232,12 +422,12 @@
             <h2 class="footer-title">Mapa del Sitio</h2>
             <ul>
               <li><a href="index.html" class="hov-subr"><span>Home</span></a></li>
-              <li><a href="propiedades.html" class="hov-subr"><span>Propiedades</span></a>
+              <li><a href="" class="hov-subr"><span>Propiedades</span></a>
                 <ul>
-                  <li><a href="propiedades.html" class="hov-subr"><span>Comprar</span></a></li>
-                  <li><a href="propiedades.html" class="hov-subr"><span>Alquilar</span></a></li>
-                  <li><a href="propiedades.html" class="hov-subr"><span>Emprendimientos</span></a></li>
-                  <li><a href="propiedades.html" class="hov-subr"><span>Oportunidades</span></a></li>
+                  <li><a href="/buscar" class="hov-subr"><span>Comprar</span></a></li>
+                  <li><a href="/buscar" class="hov-subr"><span>Alquilar</span></a></li>
+                  <li><a href="/buscar" class="hov-subr"><span>Emprendimientos</span></a></li>
+                  <li><a href="/buscar" class="hov-subr"><span>Oportunidades</span></a></li>
                 </ul>
               </li>
               <li><a href="tasaciones.html" class="hov-subr"><span>Tasaciones</span></a></li>
@@ -328,7 +518,17 @@
   </a>
   <!-- Fin Botón de Whatsapp -->
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+  <!-- validación - JavaScript -->
+  <script src="./js/form.js"></script>
+
   <script src="./js/boton-menu.js"></script>
+
 </body>
 
 </html>

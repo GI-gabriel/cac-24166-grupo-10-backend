@@ -4,11 +4,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Administración - Modificar/Eliminar propiedad</title>
   <link rel="stylesheet" href="./css/crud_styles.css">
+  <link rel="shortcut icon" href="img/admin.ico" type="image/x-icon">
+  <title>Administración - Modificar/Eliminar propiedad</title>
+
+  <!-- Para evitar FOUC -->
+  <style>
+    .no-js body {
+      visibility: hidden;
+    }
+  </style>
+  <script>
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+  </script>
 </head>
 
-<body>
+<body class="no-js">
+  <header></header>
   <h1>Modificar/Eliminar Propiedad</h1><br>
   <!-- Se crea una tabla para mostrar. -->
   <table id="prop-table">
@@ -128,6 +140,7 @@
       <button type="button" id="btn-cancelar">Cancelar</button>
     </form>
   </div>
+  <footer></footer>
 
   <script src="./js/crud_modif.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

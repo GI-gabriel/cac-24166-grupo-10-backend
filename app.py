@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # from flask import request
 
 # Instalar con pip install flask-cors
-from flask_cors import CORS
+# from flask_cors import CORS
 
 # Instalar con pip install mysql-connector-python
 import mysql.connector
@@ -25,10 +25,10 @@ from keys import keys
 
 app = Flask(__name__)
 app.secret_key = keys['secret_key']
-CORS(app, resources={r"/*": {"origins": "http://localhost:5500"}}, supports_credentials=True)
+# CORS(app, resources={r"/*": {"origins": "http://localhost:5500"}}, supports_credentials=True)
 
 # Carpeta para guardar las imagenes.
-RUTA_DESTINO = './static/img/'
+RUTA_DESTINO = './static/img/prop'
 # RUTA_DESTINO = '/home/GIgabriel/mysite/static/imagenes'
 
 # Funciones para abrir y cerrar la base de datos en cada consulta
@@ -85,7 +85,7 @@ class Catalogo:
                                 url_foto_1 VARCHAR(255) NOT NULL,
                                 url_foto_2 VARCHAR(255) NOT NULL,
                                 url_foto_3 VARCHAR(255) NOT NULL,
-                                url_maps VARCHAR(255) NOT NULL,
+                                url_maps VARCHAR(512) NOT NULL,
                                 id_broker INT,
                                 precio DECIMAL(10, 2) NOT NULL,
                                 superf INT,
@@ -633,10 +633,15 @@ def eliminar_prop(id):
 
 
 # Ruta para servir archivos estáticos desde la raíz del dominio
-@app.route('/<path:filename>')
-def serve_static_files(filename):
-    return send_from_directory('static', filename)
+# @app.route('/<path:filename>')
+# def serve_static_files(filename):
+#     return send_from_directory('static', filename)
 
+
+# index.html
+@app.route('/')
+def index():
+    return redirect('static/index.html')
 
 #--------------------------------------------------------------------
 # Generar lista de propiedades según criterio de búsqueda
@@ -658,7 +663,6 @@ def buscar_ficha(id):
     propiedad = catalogo.consultar_ficha(id)
 
     return render_template('main_ficha.html', propiedad=propiedad)
-    # return f"<p>{propiedad}</p>"
  
 
 #--------------------------------------------------------------------
@@ -668,11 +672,13 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+
 class User(UserMixin):
     def __init__(self, id, username, password):
         self.id = id
         self.username = username
         self.password = password
+
 
 # Simulación de una base de datos de usuarios
 users = {'1': User(id='1', username=keys['admin_user'], password=generate_password_hash(keys['admin_pass'])),
@@ -688,7 +694,7 @@ def load_user(user_id):
 @app.route('/menu')
 def menu():
     if current_user.is_authenticated:
-        return redirect('http://localhost:5500/front/crud_menu.html')
+        return redirect('static/crud_menu.html')
     else:
         return redirect(url_for('login'))
     
@@ -701,7 +707,7 @@ def login():
         user = next((u for u in users.values() if u.username == username), None)
         if user and check_password_hash(user.password, password):
             login_user(user)
-            return redirect('http://localhost:5500/front/crud_menu.html')
+            return redirect('static/crud_menu.html')
         else:
             flash('Nombre de usuario o contraseña incorrectos')
     return render_template('login.html')
@@ -717,4 +723,3 @@ def logout():
 #--------------------------------------------------------------------
 if __name__ == "__main__":
     app.run(debug=True)
-

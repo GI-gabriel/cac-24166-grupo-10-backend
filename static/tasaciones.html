@@ -16,9 +16,19 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/style-tasac.css">
   <title>LOREM Servicios Inmobiliarios</title>
+
+  <!-- Para evitar FOUC -->
+  <style>
+    .no-js body {
+      visibility: hidden;
+    }
+  </style>
+  <script>
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+  </script>
 </head>
 
-<body>
+<body class="no-js">
   <div id="body-wrapper">
     <!-- top-banner -->
     <div id="top-banner-container" class="istok-web-regular">
@@ -98,7 +108,7 @@
               </li>
 
               <li>
-                <a href="propiedades.html">
+                <a href="/buscar">
                   <span>Propiedades</span>
                 </a>
               </li>
@@ -216,12 +226,12 @@
             <h2 class="footer-title">Mapa del Sitio</h2>
             <ul>
               <li><a href="index.html" class="hov-subr"><span>Home</span></a></li>
-              <li><a href="propiedades.html" class="hov-subr"><span>Propiedades</span></a>
+              <li><a href="/buscar" class="hov-subr"><span>Propiedades</span></a>
                 <ul>
-                  <li><a href="propiedades.html" class="hov-subr"><span>Comprar</span></a></li>
-                  <li><a href="propiedades.html" class="hov-subr"><span>Alquilar</span></a></li>
-                  <li><a href="propiedades.html" class="hov-subr"><span>Emprendimientos</span></a></li>
-                  <li><a href="propiedades.html" class="hov-subr"><span>Oportunidades</span></a></li>
+                  <li><a href="/buscar" class="hov-subr"><span>Comprar</span></a></li>
+                  <li><a href="/buscar" class="hov-subr"><span>Alquilar</span></a></li>
+                  <li><a href="/buscar" class="hov-subr"><span>Emprendimientos</span></a></li>
+                  <li><a href="/buscar" class="hov-subr"><span>Oportunidades</span></a></li>
                 </ul>
               </li>
               <li><a href="tasaciones.html" class="hov-subr"><span>Tasaciones</span></a></li>
