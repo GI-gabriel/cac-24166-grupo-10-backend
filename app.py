@@ -3,10 +3,6 @@
 from flask import Flask, request, jsonify, render_template, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-# from flask import request
-
-# Instalar con pip install flask-cors
-# from flask_cors import CORS
 
 # Instalar con pip install mysql-connector-python
 import mysql.connector
@@ -25,7 +21,6 @@ from keys import keys
 
 app = Flask(__name__)
 app.secret_key = keys['secret_key']
-# CORS(app, resources={r"/*": {"origins": "http://localhost:5500"}}, supports_credentials=True)
 
 # Carpeta para guardar las imagenes.
 RUTA_DESTINO = './static/img/prop'
@@ -87,7 +82,7 @@ class Catalogo:
                                 url_foto_3 VARCHAR(255) NOT NULL,
                                 url_maps VARCHAR(512) NOT NULL,
                                 id_broker INT,
-                                precio DECIMAL(10, 2) NOT NULL,
+                                precio INT NOT NULL,
                                 superf INT,
                                 superf_tot INT,
                                 baños INT,
@@ -193,7 +188,9 @@ class Catalogo:
             cursor = conn.cursor(dictionary=True)
 
             # Consultamos a partir de su id
-            cursor.execute(f"SELECT * FROM propiedades WHERE id = {id}")
+            query = "SELECT * FROM propiedades WHERE id = %s"
+            cursor.execute(query, (id,))
+  
             ret_val = cursor.fetchone()
         
         except ValueError as e:
@@ -340,7 +337,9 @@ class Catalogo:
             cursor = conn.cursor(dictionary=True)    
 
             # Eliminamos de la tabla a partir de su código
-            cursor.execute(f"DELETE FROM propiedades WHERE id = {id}")
+            query = "DELETE FROM propiedades WHERE id = %s"
+            cursor.execute(query, (id,))
+
             conn.commit()
             ret_val = cursor.rowcount > 0
             
@@ -355,33 +354,6 @@ class Catalogo:
         return ret_val
     
 
-    # #--------------------------------------------------------------------
-    # def buscar_prop(self, tipo_oper, tipo_prop, precio, superf):
-    #     # Conexión a la base de datos
-    #     conn = open_db_connection()
-    #     cursor = conn.cursor(dictionary=True) 
-
-    #     try:
-    #         # Realizar la consulta
-    #         query = '''SELECT id,
-    #                     tipo_prop, tipo_oper,
-    #                     descrip_corta, direccion, nota, url_foto_1, precio,
-    #                     superf, superf_tot, baños, dormitorios, cocheras
-    #                     FROM propiedades
-    #                     WHERE precio < %s
-    #                 '''
-    #         cursor.execute(query, (precio,))
-
-    #         ret_val = cursor.fetchall()
-    
-    #     finally:
-    #         # Cerrar el cursor y la conexión
-    #         cursor.close()
-    #         conn.close()
-            
-    #     return ret_val
-    
-
     #--------------------------------------------------------------------
     def filtrar_prop(self, tipo_prop, tipo_oper, precio):
         # Conexión a la base de datos
@@ -391,15 +363,6 @@ class Catalogo:
         try:
             #------------------------------------------------------------------------------
             #
-            # Obtener datos del formulario
-            # tipo_prop = request.form.getlist('tipo_prop')
-            # tipo_oper = request.form.getlist('tipo_oper')
-            # precio = request.form.getlist('precio')
-
-            # Crear la conexión a la base de datos
-            # conn = mysql.connector.connect(**db_config)
-            # cursor = conn.cursor()
-
             # Crear la consulta SQL
             query = "SELECT * FROM propiedades WHERE "
             conditions = []
@@ -457,10 +420,6 @@ class Catalogo:
 
 # Crear una instancia de la clase Catalogo
 catalogo = Catalogo()
-# catalogo = Catalogo(host='mysql4.serv00.com',
-#                     user='m10808_gigabriel',
-#                     password="",
-#                     database='m10808_miapp')
 
 
 #--------------------------------------------------------------------
@@ -700,12 +659,6 @@ def eliminar_prop(id):
         # Si la propiedad no se encuentra (por ejemplo, si no existe el id proporcionado), se devuelve
         # un mensaje de error con un código de estado HTTP 404 (No Encontrado).
         return jsonify({"mensaje": "No encontrado"}), 404
-
-
-# Ruta para servir archivos estáticos desde la raíz del dominio
-# @app.route('/<path:filename>')
-# def serve_static_files(filename):
-#     return send_from_directory('static', filename)
 
 
 # index.html

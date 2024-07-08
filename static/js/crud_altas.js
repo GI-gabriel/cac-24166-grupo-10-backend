@@ -37,7 +37,7 @@ document.getElementById('formulario').addEventListener('submit', function (event
     })
     // Limpiar el formulario en ambos casos (éxito o error)
     .finally(function () {
-      elems = document.querySelectorAll('#formulario > input');
+      elems = document.querySelectorAll('#formulario > input, #formulario > textarea');
 
       elems.forEach(elem => {
         elem.value = "";

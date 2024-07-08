@@ -88,6 +88,7 @@ function eliminarProp(id) {
         // Si es exitosa (response.ok), elimina y da mensaje de ok.
         if (response.ok) {
           // Vuelve a obtener la lista de productos para actualizar la tabla.
+          limpiarFormulario()
           obtenerLista();
           alert('Eliminado correctamente.');
         }
@@ -346,7 +347,7 @@ function guardarCambios(event) {
 // Restablece todas las variables relacionadas con el formulario a sus valores iniciales,
 // lo que efectivamente "limpia" el formulario.
 function limpiarFormulario() {
-  elems = document.querySelectorAll('#form-guardar-cambios > input');
+  elems = document.querySelectorAll('#formulario > input, #formulario > textarea');
 
   elems.forEach(elem => {
     elem.value = "";
