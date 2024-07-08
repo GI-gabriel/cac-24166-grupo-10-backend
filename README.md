@@ -90,7 +90,7 @@ Toda la aplicación (front, back y base de datos) se alojó en dos servidores gr
 
 ## A futuro...
 - Ampliar el modelo de datos para incluír datos de propietario, sucursales inmobiliarias, transacciones de compra/venta/alquiler/etc.
-- Utilizar un framework JS reactivo (React, Vue) para que al refrescar el filtrado de propiedades no cargue toda la página
+- Utilizar un framework JS reactivo (React, Vue) para que al refrescar el filtrado de propiedades no cargue toda la página de nuevo.
 
 ---
 
