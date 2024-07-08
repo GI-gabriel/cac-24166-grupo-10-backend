@@ -39,7 +39,7 @@ Se utilizó el siguiente modelo datos, con dos tablas:
 
 ## Recursos utilizados
 #### mySQL
-El modelo de datos fue implementado en mySQL, utilizando las herrmaientas XAMPP/WAMP para desarrollo en local.
+El modelo de datos fue implementado en mySQL, utilizando las herramientas XAMPP/WAMP para desarrollo en local.
 El deploy se hizo a servidores que soporten este sistema de DB (pythonanwhere, alwaysdata).
 
 #### Javascript
