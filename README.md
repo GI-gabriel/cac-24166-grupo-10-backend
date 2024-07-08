@@ -11,7 +11,7 @@ Personas interesadas en comprar, vender o realizar inversiones en el mercado de 
 ## Estructura del sitio
 [Home](https://gigabriel.pythonanywhere.com/)  
 &emsp;|  
-&emsp;|---- [Búsqueda y filtrado de Propiedades](https://gigabriel.pythonanywhere.com/buscar) - Template dinámico  
+&emsp;|---- [Búsqueda y filtrado de Propiedades](https://gigabriel.pythonanywhere.com/buscar) - Template dinámico - (permite filtrar la búsqueda)  
 &emsp;|&emsp;&emsp;|  
 &emsp;|&emsp;&emsp;|---- [Ficha de la propiedad](https://gigabriel.pythonanywhere.com/buscar/3) - Template dinámico  
 &emsp;|  
