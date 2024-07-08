@@ -1,6 +1,6 @@
 #--------------------------------------------------------------------
 # Instalar con pip install Flask
-from flask import Flask, request, jsonify, render_template, redirect, url_for, request, flash, send_from_directory
+from flask import Flask, request, jsonify, render_template, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 # from flask import request
@@ -182,7 +182,8 @@ class Catalogo:
             close_db_connection(conn)
 
         return ret_val
-    
+
+
     #----------------------------------------------------------------
     def consultar_prop(self, id):
         conn = None
@@ -354,32 +355,101 @@ class Catalogo:
         return ret_val
     
 
+    # #--------------------------------------------------------------------
+    # def buscar_prop(self, tipo_oper, tipo_prop, precio, superf):
+    #     # Conexión a la base de datos
+    #     conn = open_db_connection()
+    #     cursor = conn.cursor(dictionary=True) 
+
+    #     try:
+    #         # Realizar la consulta
+    #         query = '''SELECT id,
+    #                     tipo_prop, tipo_oper,
+    #                     descrip_corta, direccion, nota, url_foto_1, precio,
+    #                     superf, superf_tot, baños, dormitorios, cocheras
+    #                     FROM propiedades
+    #                     WHERE precio < %s
+    #                 '''
+    #         cursor.execute(query, (precio,))
+
+    #         ret_val = cursor.fetchall()
+    
+    #     finally:
+    #         # Cerrar el cursor y la conexión
+    #         cursor.close()
+    #         conn.close()
+            
+    #     return ret_val
+    
+
     #--------------------------------------------------------------------
-    def buscar_prop(self, tipo_oper, tipo_prop, precio, superf):
+    def filtrar_prop(self, tipo_prop, tipo_oper, precio):
         # Conexión a la base de datos
         conn = open_db_connection()
         cursor = conn.cursor(dictionary=True) 
 
         try:
-            # Realizar la consulta
-            query = '''SELECT id,
-                        tipo_prop, tipo_oper,
-                        descrip_corta, direccion, nota, url_foto_1, precio,
-                        superf, superf_tot, baños, dormitorios, cocheras
-                        FROM propiedades
-                        WHERE precio < %s
-                    '''
-            cursor.execute(query, (precio,))
+            #------------------------------------------------------------------------------
+            #
+            # Obtener datos del formulario
+            # tipo_prop = request.form.getlist('tipo_prop')
+            # tipo_oper = request.form.getlist('tipo_oper')
+            # precio = request.form.getlist('precio')
 
+            # Crear la conexión a la base de datos
+            # conn = mysql.connector.connect(**db_config)
+            # cursor = conn.cursor()
+
+            # Crear la consulta SQL
+            query = "SELECT * FROM propiedades WHERE "
+            conditions = []
+            values = []
+
+            if tipo_prop:
+                placeholders = ','.join(['%s'] * len(tipo_prop))
+                conditions.append(f"tipo_prop IN ({placeholders})")
+                values.extend(tipo_prop)
+
+            if tipo_oper:
+                placeholders = ','.join(['%s'] * len(tipo_oper))
+                conditions.append(f"tipo_oper IN ({placeholders})")
+                values.extend(tipo_oper)
+
+            # Construir la parte de la consulta para el campo precio
+            if precio:
+                subqueries = []
+                for p in precio:
+                    if p == '1':
+                        subqueries.append("precio < 30")
+                    elif p == '2':
+                        subqueries.append("precio >= 30 AND precio < 50")
+                    elif p == '3':
+                        subqueries.append("precio > 50")
+
+                if subqueries:
+                    conditions.append("(" + " OR ".join(subqueries) + ")")
+
+            if conditions:
+                query += " AND ".join(conditions)
+            else:
+                query = query[:-7]  # Eliminar el 'WHERE' final si no hay condiciones
+            #
+            #------------------------------------------------------------------------------
+            # Crear la consulta completa con los valores para imprimirla
+            # query_with_values = query % tuple([f"'{v}'" for v in values])
+            # print(f"Consulta SQL: {query_with_values}")
+
+            # Ejecutar la consulta
+            cursor.execute(query, values)
             ret_val = cursor.fetchall()
-    
-        finally:
-            # Cerrar el cursor y la conexión
-            cursor.close()
-            conn.close()
-            
-        return ret_val
 
+        finally:
+            if cursor:
+                cursor.close()
+            close_db_connection(conn)
+    
+        return ret_val
+    
 
 #--------------------------------------------------------------------
 # Cuerpo del programa
@@ -646,13 +716,60 @@ def index():
 #--------------------------------------------------------------------
 # Generar lista de propiedades según criterio de búsqueda
 #--------------------------------------------------------------------
+@app.route("/consulta", methods=["POST"])
+def filtrar_prop():
+    tipo_prop = request.form.getlist('tipo_prop')
+    tipo_oper = request.form.getlist('tipo_oper')
+    precio = request.form.getlist('precio')
+
+    # Realiza la búsqueda en la base de datos
+    listaProp = catalogo.filtrar_prop(tipo_prop=tipo_prop, tipo_oper=tipo_oper, precio=precio)
+
+    return render_template('main_propiedades.html', listaProp=listaProp)
+
+
 @app.route("/buscar", methods=["GET"])
 def buscar_prop():
     # Realiza la búsqueda en la base de datos
-    lista = catalogo.buscar_prop(tipo_oper=None, tipo_prop=None, superf=None, precio=100000)
+    listaProp = catalogo.filtrar_prop(None, None, None)
 
-    return render_template('main_propiedades.html', listaProp=lista)
+    return render_template('main_propiedades.html', listaProp=listaProp)
 
+#-------------------------------------------------------------------------------------
+@app.route("/buscar/casa", methods=["GET"])
+def buscar_propCasa():
+    listaProp = catalogo.filtrar_prop(tipo_prop=['Casa',], tipo_oper=[], precio=[])
+    return render_template('main_propiedades.html', listaProp=listaProp)
+
+@app.route("/buscar/departamento", methods=["GET"])
+def buscar_propDepto():
+    listaProp = catalogo.filtrar_prop(tipo_prop=['Departamento',], tipo_oper=[], precio=[])
+    return render_template('main_propiedades.html', listaProp=listaProp)
+
+@app.route("/buscar/local", methods=["GET"])
+def buscar_propLocal():
+    listaProp = catalogo.filtrar_prop(tipo_prop=['Local',], tipo_oper=[], precio=[])
+    return render_template('main_propiedades.html', listaProp=listaProp)
+
+@app.route("/buscar/otro-prop", methods=["GET"])
+def buscar_propOtroProp():
+    listaProp = catalogo.filtrar_prop(tipo_prop=['Otro',], tipo_oper=[], precio=[])
+    return render_template('main_propiedades.html', listaProp=listaProp)
+#-----------------------------------------------------------------------------------------
+@app.route("/buscar/venta", methods=["GET"])
+def buscar_propVenta():
+    listaProp = catalogo.filtrar_prop(tipo_prop=[], tipo_oper=['Venta',], precio=[])
+    return render_template('main_propiedades.html', listaProp=listaProp)
+
+@app.route("/buscar/alquiler", methods=["GET"])
+def buscar_propAlquiler():
+    listaProp = catalogo.filtrar_prop(tipo_prop=[], tipo_oper=['Alquiler',], precio=[])
+    return render_template('main_propiedades.html', listaProp=listaProp)
+
+@app.route("/buscar/otro-oper", methods=["GET"])
+def buscar_propOtroOper():
+    listaProp = catalogo.filtrar_prop(tipo_prop=[], tipo_oper=['Otro',], precio=[])
+    return render_template('main_propiedades.html', listaProp=listaProp)
 
 #--------------------------------------------------------------------
 # Generar ficha de propiedad según id

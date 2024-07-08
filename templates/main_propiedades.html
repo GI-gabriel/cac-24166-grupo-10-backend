@@ -83,81 +83,83 @@
     <!-- Aside filtros -->
     <aside class="col-lg-3">
       <div id="prop-filtros" class="px-2 bg-warning-subtle border border-warning-subtle rounded rounded-2">
-
+    
         <!-- Título del aside -->
         <h2 style="font-size: 1.3rem;" class="istok-web-bold py-3">Filtrar</h2>
-
-        <div id="filtros-container" class="d-flex flex-wrap">
-          <!-- Filtro tipo prop -->
-          <div class="flex-grow-1 mb-4 mx-1 filtro-item">
-            <h4 class="mb-1 text-center">Tipo de propiedad</h4>
-            <ul class="list-group">
-              <li class="list-group-item list-group-item-warning">
-                <input class="form-check-input me-1" type="checkbox" value="1" id="chk-1-prop">
-                <label class="form-check-label" for="chk-1-prop">Casa</label>
-              </li>
-              <li class="list-group-item list-group-item-warning">
-                <input class="form-check-input me-1" type="checkbox" value="2" id="chk-2-prop">
-                <label class="form-check-label" for="chk-2-prop">Departamento</label>
-              </li>
-              <li class="list-group-item list-group-item-warning">
-                <input class="form-check-input me-1" type="checkbox" value="3" id="chk-3-prop">
-                <label class="form-check-label" for="chk-3-prop">Local</label>
-              </li>
-              <li class="list-group-item list-group-item-warning">
-                <input class="form-check-input me-1" type="checkbox" value="4" id="chk-4-prop">
-                <label class="form-check-label" for="chk-4-prop">Otro</label>
-              </li>
-            </ul>
+    
+        <form action="/consulta" method="POST">
+          <div id="filtros-container" class="d-flex flex-wrap">
+            <!-- Filtro por tipo de propiedad -->
+            <div class="flex-grow-1 mb-4 mx-1 filtro-item">
+              <h4 class="mb-1 text-center">Tipo de propiedad</h4>
+              <ul class="list-group">
+                <li class="list-group-item list-group-item-warning">
+                  <input class="form-check-input me-1" name="tipo_prop" type="checkbox" value="Casa" id="chk-1-prop">
+                  <label class="form-check-label" for="chk-1-prop">Casa</label>
+                </li>
+                <li class="list-group-item list-group-item-warning">
+                  <input class="form-check-input me-1" name="tipo_prop" type="checkbox" value="Departamento" id="chk-2-prop">
+                  <label class="form-check-label" for="chk-2-prop">Departamento</label>
+                </li>
+                <li class="list-group-item list-group-item-warning">
+                  <input class="form-check-input me-1" name="tipo_prop" type="checkbox" value="Local" id="chk-3-prop">
+                  <label class="form-check-label" for="chk-3-prop">Local</label>
+                </li>
+                <li class="list-group-item list-group-item-warning">
+                  <input class="form-check-input me-1" name="tipo_prop" type="checkbox" value="Otro" id="chk-4-prop">
+                  <label class="form-check-label" for="chk-4-prop">Otro</label>
+                </li>
+              </ul>
+            </div>
+    
+            <!-- Filtro por tipo de operación -->
+            <div class="flex-grow-1 mb-4 mx-1 filtro-item">
+              <h4 class="mb-1 text-center">Tipo de operación</h4>
+              <ul class="list-group">
+                <li class="list-group-item list-group-item-warning">
+                  <input class="form-check-input me-1" name="tipo_oper" type="checkbox" value="Venta" id="chk-1-oper">
+                  <label class="form-check-label" for="chk-1-oper">Venta</label>
+                </li>
+                <li class="list-group-item list-group-item-warning">
+                  <input class="form-check-input me-1" name="tipo_oper" type="checkbox" value="Alquiler" id="chk-2-oper">
+                  <label class="form-check-label" for="chk-2-oper">Alquiler</label>
+                </li>
+                <li class="list-group-item list-group-item-warning">
+                  <input class="form-check-input me-1" name="tipo_oper" type="checkbox" value="Otro" id="chk-3-oper">
+                  <label class="form-check-label" for="chk-2-oper">Otro</label>
+                </li>
+              </ul>
+            </div>
+    
+            <!-- Filtro por precio -->
+            <div class="flex-grow-1 mb-4 mx-1 filtro-item">
+              <h4 class="mb-1 text-center">Precio $USD</h4>
+              <ul class="list-group">
+                <li class="list-group-item list-group-item-warning">
+                  <input class="form-check-input me-1" name="precio" type="checkbox" value="1" id="chk-1-precio">
+                  <label class="form-check-label" for="chk-1-precio">&lt; 50k</label>
+                </li>
+                <li class="list-group-item list-group-item-warning">
+                  <input class="form-check-input me-1" name="precio" type="checkbox" value="2" id="chk-2-precio">
+                  <label class="form-check-label" for="chk-2-precio">50k - 100k</label>
+                </li>
+                <li class="list-group-item list-group-item-warning">
+                  <input class="form-check-input me-1" name="precio" type="checkbox" value="3" id="chk-3-precio">
+                  <label class="form-check-label" for="chk-3-precio">&gt; 100k</label>
+                </li>
+              </ul>
+            </div>
           </div>
-
-          <!-- Filtro tipo oper -->
-          <div class="flex-grow-1 mb-4 mx-1 filtro-item">
-            <h4 class="mb-1 text-center">Tipo de operación</h4>
-            <ul class="list-group">
-              <li class="list-group-item list-group-item-warning">
-                <input class="form-check-input me-1" type="checkbox" value="1" id="chk-1-oper">
-                <label class="form-check-label" for="chk-1-oper">Venta</label>
-              </li>
-              <li class="list-group-item list-group-item-warning">
-                <input class="form-check-input me-1" type="checkbox" value="2" id="chk-2-oper">
-                <label class="form-check-label" for="chk-2-oper">Alquiler</label>
-              </li>
-              <li class="list-group-item list-group-item-warning">
-                <input class="form-check-input me-1" type="checkbox" value="3" id="chk-3-oper">
-                <label class="form-check-label" for="chk-2-oper">Otro</label>
-              </li>
-            </ul>
+    
+          <!-- Botón aplicar filtro -->
+          <div class="d-block text-center mb-4">
+            <button type="submit" class="btn btn-primary btn-sm">Aplicar</button>
           </div>
-
-          <!-- Filtro precio -->
-          <div class="flex-grow-1 mb-4 mx-1 filtro-item">
-            <h4 class="mb-1 text-center">Precio $USD</h4>
-            <ul class="list-group">
-              <li class="list-group-item list-group-item-warning">
-                <input class="form-check-input me-1" type="checkbox" value="1" id="chk-1-precio">
-                <label class="form-check-label" for="chk-1-precio">&lt;30k</label>
-              </li>
-              <li class="list-group-item list-group-item-warning">
-                <input class="form-check-input me-1" type="checkbox" value="2" id="chk-2-precio">
-                <label class="form-check-label" for="chk-2-precio">30k - 50k</label>
-              </li>
-              <li class="list-group-item list-group-item-warning">
-                <input class="form-check-input me-1" type="checkbox" value="3" id="chk-3-precio">
-                <label class="form-check-label" for="chk-3-precio">&gt;120k</label>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Botón aplicar -->
-        <div class="d-block text-center mb-4">
-          <button type="button" class="btn btn-primary btn-sm">Aplicar</button>
-        </div>
+        </form>
       </div>
     </aside>
     <!-- fin Aside filtros -->
-
+      
     <!-- spacer para pantallas chicas -->
     <div class="d-lg-none mb-5"></div>
 
