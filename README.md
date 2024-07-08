@@ -72,7 +72,7 @@ Para escalar y recortar imágenes.
 
 #### Alojamiento
 Toda la aplicación (front, back y base de datos) se alojó en dos servidores gratuitos:
-[PythonAnywhere](https://www.pythonanywhere.com/)
+[PythonAnywhere](https://www.pythonanywhere.com/)  
 [Alwaysdata](https://www.alwaysdata.com) - Este tiene la ventaja para el desarrollador de ofrecer FTP/SFTP para gestión de archivos y phpmyAdmin para gestión de la base de datos.
 
 ---
