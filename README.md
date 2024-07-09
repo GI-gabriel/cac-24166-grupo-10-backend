@@ -101,6 +101,6 @@ Toda la aplicación (front, back y base de datos) se alojó en dos servidores gr
 
 ## Agradecimientos
 - Al programa [Codo a Codo 4.0 de la Agencia de Habilidades para el Futuro](https://agenciadeaprendizaje.bue.edu.ar/) de la Ciudad de Buenos Aires, por poner a disposición la plataforma, los docentes y el material educativo que permitió generar este proyecto.
-- Al docente [Guido Santigo Varela Coletta](https://www.linkedin.com/in/guidovarelacoletta/), por su gran dedicación y paciencia.
+- Al docente [Guido Santiago Varela Coletta](https://www.linkedin.com/in/guidovarelacoletta/), por su gran dedicación y paciencia.
 - Al grupo de docentes y alumnos que realizaron y facilitaron el Modelo para Proyecto TPO 2024, CRUD, el cual fue utilizado como referencia para el código de este proyecto.
 
