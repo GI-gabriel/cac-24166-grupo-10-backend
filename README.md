@@ -59,13 +59,13 @@ Se empleó el módulo flask-login para el Menú de administración, de forma que
 Se utilizó la consola JS, el Debugger y especialmente el Network Monitor para depurar las consultas HTTP desde el front-end al back-end.
 
 #### Herramientas AI
-Se utilizaron herramientas de AI para generar contenido de imagenes [(Perchance)](https://perchance.org/ai-text-to-image-generator) y texto [(ChatGPT)](https://chatgpt.com)
+Se utilizaron herramientas de AI para generar contenido de imágenes [(Perchance)](https://perchance.org/ai-text-to-image-generator) y texto [(ChatGPT)](https://chatgpt.com)
 
 #### VSCode
 Para editar el código.
 
 #### Git/Github
-Para el control de versiones y trabajo colaborativo se utilizó.
+Para el control de versiones y trabajo colaborativo.
 
 #### GIMP
 Para escalar y recortar imágenes.
@@ -100,7 +100,7 @@ Toda la aplicación (front, back y base de datos) se alojó en dos servidores gr
 ---
 
 ## Agradecimientos
-- Al programa [Codo a Codo 4.0 de la Agencia de Habilidades para el Futuro, de la Ciudad de Buenos Aires](https://agenciadeaprendizaje.bue.edu.ar/), por poner a disposición la plataforma, los docentes y el material educativo que permitió generar este proyecto.
+- Al programa [Codo a Codo 4.0 de la Agencia de Habilidades para el Futuro](https://agenciadeaprendizaje.bue.edu.ar/) de la Ciudad de Buenos Aires, por poner a disposición la plataforma, los docentes y el material educativo que permitió generar este proyecto.
 - Al docente [Guido Santigo Varela Coletta](https://www.linkedin.com/in/guidovarelacoletta/), por su gran dedicación y paciencia.
 - Al grupo de docentes y alumnos que realizaron y facilitaron el Modelo para Proyecto TPO 2024, CRUD, el cual fue utilizado como referencia para el código de este proyecto.
 
