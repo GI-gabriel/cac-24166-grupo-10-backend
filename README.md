@@ -25,7 +25,7 @@ Personas interesadas en comprar, vender o realizar inversiones en el mercado de 
 &emsp;&emsp;&emsp;&emsp;|---- Modificar/Eliminar propiedad - (requiere ingreso con credenciales)  
 
 # Front-End
-Los detalles del front-end pueden consultarse en la [documentación](https://github.com/GI-gabriel/cac-24166-grupo-10-frontend/blob/main/README.md) del proyecto correspondiente.
+El front-end se desarrolló en un proyecto anterior y la documentación correspondiente puede consultarse [aquí](https://github.com/GI-gabriel/cac-24166-grupo-10-frontend/blob/main/README.md).
 
 ---
 
@@ -78,8 +78,8 @@ Toda la aplicación (front, back y base de datos) se alojó en dos servidores gr
 ---
 
 ## Equipo
-- [Claudia Miranda](https://github.com/claumiranda) - (Validaciones Front, Backend)
-- [Michel Diamant](https://github.com/mikeowl) - (Estilos, Backend)
+- [Claudia Miranda](https://github.com/claumiranda) - (JS Frontend, Backend)
+- [Michel Diamant](https://github.com/mikeowl) - (Estilos, Backend, QA)
 - [Gabriel Iarussi](https://github.com/GI-gabriel) - (SQL, Backend)
 - [Victoria G. Curzi](https://github.com/vixcurzi) - (Estilos, Backend)
 
