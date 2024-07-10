@@ -24,7 +24,7 @@ app.secret_key = keys['secret_key']
 
 # Carpeta para guardar las imagenes.
 RUTA_DESTINO = './static/img/prop'
-# RUTA_DESTINO = '/home/GIgabriel/mysite/static/imagenes'
+# RUTA_DESTINO = '/home/GIgabriel/mysite/static/img/prop'
 
 # Funciones para abrir y cerrar la base de datos en cada consulta
 def open_db_connection():
