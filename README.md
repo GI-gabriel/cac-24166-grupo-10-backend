@@ -1,6 +1,4 @@
 # Sitio web para empresa de servicios inmobiliarios  
-[https://gigabriel.pythonanywhere.com](https://gigabriel.pythonanywhere.com)  
-[https://gigabriel.alwaysdata.net](https://gigabriel.alwaysdata.net)  
 
 Trabajo práctico integrador Back-End
 Codo a Codo 4.0, comisión 24166, grupo 10  
@@ -9,17 +7,17 @@ Codo a Codo 4.0, comisión 24166, grupo 10
 Personas interesadas en comprar, vender o realizar inversiones en el mercado de bienes raíces.
 
 ## Estructura del sitio
-[Home](https://gigabriel.pythonanywhere.com/)  
+[Home]  
 &emsp;|  
-&emsp;|---- [Búsqueda y filtrado de Propiedades](https://gigabriel.pythonanywhere.com/buscar) - Template dinámico - (permite filtrar la búsqueda)  
+&emsp;|---- [Búsqueda y filtrado de Propiedades] - Template dinámico - (permite filtrar la búsqueda)  
 &emsp;|&emsp;&emsp;|  
-&emsp;|&emsp;&emsp;|---- [Ficha de la propiedad](https://gigabriel.pythonanywhere.com/buscar/3) - Template dinámico  
+&emsp;|&emsp;&emsp;|---- [Ficha de la propiedad] - Template dinámico  
 &emsp;|  
-&emsp;|---- [Tasaciones](https://gigabriel.pythonanywhere.com/static/tasaciones.html)  
-&emsp;|---- [Nosotros](https://gigabriel.pythonanywhere.com/static/nosotros.html)  
-&emsp;|---- [Formulario de contacto](https://gigabriel.pythonanywhere.com/static/contacto.html)  
+&emsp;|---- [Tasaciones]  
+&emsp;|---- [Nosotros]  
+&emsp;|---- [Formulario de contacto]  
 &emsp;|  
-&emsp;|---- [Panel de administración](https://gigabriel.pythonanywhere.com/menu)  
+&emsp;|---- [Panel de administración]  
 &emsp;&emsp;&emsp;&emsp;|  
 &emsp;&emsp;&emsp;&emsp;|---- Agregar propiedad - (requiere ingreso con credenciales)  
 &emsp;&emsp;&emsp;&emsp;|---- Modificar/Eliminar propiedad - (requiere ingreso con credenciales)  
